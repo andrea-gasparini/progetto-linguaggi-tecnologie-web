@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 18/04/2020 17:47:47
+ Date: 21/04/2020 16:58:39
 */
 
 
@@ -136,7 +136,8 @@ DROP TABLE IF EXISTS "public"."groupsMemberships";
 CREATE TABLE "public"."groupsMemberships" (
   "id" int4 NOT NULL DEFAULT nextval('"groupsMemberships_id_seq"'::regclass),
   "user_id" int4 NOT NULL,
-  "group_id" int4 NOT NULL
+  "group_id" int4 NOT NULL,
+  "is_admin" bool DEFAULT false
 )
 ;
 
