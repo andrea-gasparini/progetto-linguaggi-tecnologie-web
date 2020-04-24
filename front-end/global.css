@@ -2,3 +2,8 @@ html, body, #react-root {
     width: 100%;
     height: 100%;
 }
+
+.sapienzaButton {
+    background-color: #822433 !important;
+    border-color: #822433 !important;
+}

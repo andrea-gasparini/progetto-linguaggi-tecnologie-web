@@ -24,7 +24,7 @@
 .createAccount {
     transition: all .1s ease-in-out;
     font-weight: bold;
-    color: #007bff;
+    color: #822433 !important;
 }
 
 .createAccount:hover {
@@ -38,4 +38,5 @@ button:disabled {
 
 .noDecoration {
     text-decoration: none !important;
+    color: #822433 !important;
 }
