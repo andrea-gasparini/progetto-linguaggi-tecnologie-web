@@ -21,6 +21,8 @@ export const loginReducer = (state = {username: '', password: ''}, action) => {
                 usernameHasError: {$set: action.payload.usernameHasError},
                 passwordHasError: {$set: action.payload.passwordHasError},
                 messageLoginError: {$set: action.payload.message}
-            })
+            });
+
+
     }
 };

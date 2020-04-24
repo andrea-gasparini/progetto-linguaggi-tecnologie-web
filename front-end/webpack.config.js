@@ -2,9 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-    entry: {
-        main: './src/index.js' // file che carica tutto il website
-    },
+    entry: ["@babel/polyfill", "./src/index.js"],
 
     output: {
         path: path.resolve(__dirname, 'release'), // crea la cartella release

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "./style.css";
 import {connect} from "react-redux";
-import {setErrorLogin, setPassword, setUsername} from "../../redux/actions/login";
+import {setErrorLogin, setPassword, setUsername, tryAuthLogin} from "../../redux/actions/login";
 import {Link} from "react-router-dom";
 
 const mapStateToProps = (state) => ({...state.loginReducer});
@@ -18,11 +18,12 @@ class IndexComponent extends Component {
 
     signIn = (e) => {
         e.preventDefault();
-        let {username, password, dispatch} = this.props;
-        dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.
+        let {username, password, dispatch, usernameHasError, passwordHasError} = this.props;
+        if(usernameHasError || passwordHasError)
+            dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.
 
-        // questo ovviamente non viene praticamente mai fatto, ci sono prima i check da fare obv.
-        dispatch(setErrorLogin({usernameHasError: true, passwordHasError: true, message: "Compila entrambi i campi"})); // test errore
+
+        dispatch(tryAuthLogin(username, password));
     };
 
     render() {
@@ -82,9 +83,6 @@ class IndexComponent extends Component {
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                        <div className={"d-flex justify-content-center text-muted mt-5 text-center"}>
-                            Sviluppato da Edoardo Di Paolo e Andrea Gasparini.
                         </div>
                     </div>
                 </section>
