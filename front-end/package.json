@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
@@ -26,8 +27,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
     "file-loader": "^6.0.0",
+    "immutability-helper": "^3.0.2",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",

@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import {CookiesProvider} from "react-cookie";
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../global.css';
 
 const routing = (
     <Provider store={store}>

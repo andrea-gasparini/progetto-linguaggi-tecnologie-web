@@ -8,7 +8,8 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'release'), // crea la cartella release
-        filename: 'core.js' // crea il file core.js che sarà incluso <script src="core.js"></script> con tutto il codice.
+        filename: 'core.js', // crea il file core.js che sarà incluso <script src="core.js"></script> con tutto il codice.,
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -33,7 +34,7 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true,
+                            modules: false,
                         },
                     },
                 ],
@@ -48,7 +49,9 @@ module.exports = {
             },
         ]
     },
-
+    devServer: {
+        historyApiFallback: true,
+    },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./index.html",
