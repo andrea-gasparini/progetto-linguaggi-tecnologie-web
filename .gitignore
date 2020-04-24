@@ -1,5 +1,7 @@
 /front-end/node_modules/
-/front-end/.idea/
+
+# IDE - WebStorm
+.idea
 
 # IDE - VSCode
 .vscode/*
