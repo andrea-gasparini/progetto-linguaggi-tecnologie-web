@@ -40,4 +40,18 @@ export const tryAuthLogin = (username, password, cookies, history) => {
             console.log(err);
         })
     }
+};
+
+export const validateToken = (token, history) => {
+    return async dispatch => {
+        return axios.post(`${API_SERVER_URL}/validate`, null, {
+           headers: {
+               "Authorization": `Bearer ${token}`
+           }
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 }

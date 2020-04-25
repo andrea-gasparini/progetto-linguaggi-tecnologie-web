@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "./style.css";
 import {connect} from "react-redux";
-import {setErrorLogin, setPassword, setUsername, tryAuthLogin} from "../../redux/actions/login";
+import {setErrorLogin, setPassword, setUsername, tryAuthLogin, validateToken} from "../../redux/actions/login";
 import {Link} from "react-router-dom";
 import {withCookies} from "react-cookie";
 
@@ -14,7 +14,9 @@ class IndexComponent extends Component {
     }
 
     componentDidMount() {
-
+        let {dispatch, cookies, history} = this.props;
+        if(typeof cookies.cookies.token === "string")
+            dispatch(validateToken(cookies.cookies.token, history));
     }
 
     signIn = (e) => {
