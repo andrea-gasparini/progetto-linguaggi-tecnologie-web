@@ -1,7 +1,5 @@
 <?php
 
-require APPPATH . '/libraries/CreatorJwt.php';
-
 class LoginController extends \chriskacerguis\RestServer\RestController
 {
 
@@ -44,8 +42,8 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(false, "I dati inseriti non sono corretti.",
 				array("usernameHasError" => true, "passwordHasError" => true)), 200);
 
-
-		return $this->response(buildServerResponse(true, "ok"), 200);
+		$token = AUTHORIZATION::generateToken(array("userId" => $user[0]->id)); // genera il jwt per questo utente con dentro il valore dell'userid.
+		return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
 	}
 
 }
