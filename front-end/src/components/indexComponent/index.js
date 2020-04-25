@@ -95,7 +95,7 @@ class IndexComponent extends Component {
 
                                     <div className={"d-flex mt-3 justify-content-between"}>
                                         <div className={"d-flex align-items-center createAccount"}>
-                                            <Link to={"/register"} className={"noDecoration"}>Crea un account</Link>
+                                            <Link to={"/sign-up"} className={"noDecoration"}>Crea un account</Link>
                                         </div>
 
                                         <div>
