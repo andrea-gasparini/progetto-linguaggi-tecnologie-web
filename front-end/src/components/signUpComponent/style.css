@@ -1,0 +1,6 @@
+.registerBox {
+    width: 550px;
+    min-height: 500px;
+    border-radius: 10px;
+    border: 1px solid #afafaf;
+}
