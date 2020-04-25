@@ -26,14 +26,15 @@ export const setErrorLogin = (data) => ({ // data sarà della forma tipo {userna
     }
 });
 
-export const tryAuthLogin = (username, password) => {
+export const tryAuthLogin = (username, password, cookies, history) => {
     return async dispatch => {
         return axios.post(`${API_SERVER_URL}/login`, qs.stringify({username, password})).then((res) => {
             let {data, message} = res.data;
             if(!res.data.status)
                 dispatch(setErrorLogin({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
             else {
-
+                cookies.set('token', data.token); // mettiamo nei cookie il nuovo token
+                history.push('/home'); // redirect alla home.
             }
         }).catch((err) => {
             console.log(err);

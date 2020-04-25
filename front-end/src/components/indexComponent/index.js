@@ -19,12 +19,12 @@ class IndexComponent extends Component {
 
     signIn = (e) => {
         e.preventDefault();
-        let {username, password, dispatch, usernameHasError, passwordHasError} = this.props;
+        let {username, password, dispatch, usernameHasError, passwordHasError, cookies, history} = this.props;
         if(usernameHasError || passwordHasError)
             dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false
 
 
-        dispatch(tryAuthLogin(username, password));
+        dispatch(tryAuthLogin(username, password, cookies, history));
     };
 
     render() {
