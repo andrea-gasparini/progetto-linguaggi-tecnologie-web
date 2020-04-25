@@ -20,7 +20,7 @@ class IndexComponent extends Component {
         e.preventDefault();
         let {username, password, dispatch, usernameHasError, passwordHasError} = this.props;
         if(usernameHasError || passwordHasError)
-            dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false.
+            dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false
 
 
         dispatch(tryAuthLogin(username, password));

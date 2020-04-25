@@ -30,7 +30,6 @@ export const tryAuthLogin = (username, password) => {
     return async dispatch => {
         return axios.post(`${API_SERVER_URL}/login`, qs.stringify({username, password})).then((res) => {
             let {data, message} = res.data;
-            console.log(message);
             if(!res.data.status)
                 dispatch(setErrorLogin({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
         }).catch((err) => {

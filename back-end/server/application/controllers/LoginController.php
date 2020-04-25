@@ -23,7 +23,7 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 
 		if(strlen($username) > 0 && strlen($password)  <= 0) // (not secondo check)
 			return $this->response(buildServerResponse(false, "Compila il campo password per poter eseguire l'accesso.",
-				array("useranmeHasError" => false, "passwordHasError" => true)), 200);
+				array("usernameHasError" => false, "passwordHasError" => true)), 200);
 
 
 		// controlliamo che la mail sia valida lato server.
