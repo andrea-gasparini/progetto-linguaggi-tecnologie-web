@@ -1,5 +1,6 @@
 <?php
 
+require APPPATH . '/libraries/CreatorJwt.php';
 
 class LoginController extends \chriskacerguis\RestServer\RestController
 {
