@@ -36,6 +36,8 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(false, "Nessun utente registrato con questo indirizzo email.",
 				array("usernameHasError" => true, "passwordHasError" => false)), 200);
 
+		//print_r(password_hash("test1234", PASSWORD_DEFAULT)); // stampa la password test1234 hashata.
+
 		// check della password.
 		$userPassword = $user[0]->password;
 		if(!password_verify($password, $userPassword)) // la password inserita non è verificata

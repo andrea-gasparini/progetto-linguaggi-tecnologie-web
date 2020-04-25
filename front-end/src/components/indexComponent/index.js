@@ -3,6 +3,7 @@ import "./style.css";
 import {connect} from "react-redux";
 import {setErrorLogin, setPassword, setUsername, tryAuthLogin} from "../../redux/actions/login";
 import {Link} from "react-router-dom";
+import {withCookies} from "react-cookie";
 
 const mapStateToProps = (state) => ({...state.loginReducer});
 
@@ -91,4 +92,4 @@ class IndexComponent extends Component {
     }
 }
 
-export default connect(mapStateToProps)(IndexComponent);
+export default withCookies(connect(mapStateToProps)(IndexComponent));

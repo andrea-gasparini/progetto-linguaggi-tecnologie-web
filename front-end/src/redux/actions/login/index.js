@@ -32,6 +32,9 @@ export const tryAuthLogin = (username, password) => {
             let {data, message} = res.data;
             if(!res.data.status)
                 dispatch(setErrorLogin({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
+            else {
+
+            }
         }).catch((err) => {
             console.log(err);
         })
