@@ -42,13 +42,19 @@ export const tryAuthLogin = (username, password, cookies, history) => {
     }
 };
 
-export const validateToken = (token, history) => {
+export const validateToken = (cookies, history) => {
     return async dispatch => {
         return axios.post(`${API_SERVER_URL}/validate`, null, {
            headers: {
-               "Authorization": `Bearer ${token}`
+               "Authorization": `Bearer ${cookies.cookies.token}`
            }
         }).then((res) => {
+            let {status, data} = res.data;
+            if(status) {
+                cookies.set('token', data.token);
+                history.push('/home');
+            } else
+                cookies.remove('token');
 
         }).catch((err) => {
             console.log(err);

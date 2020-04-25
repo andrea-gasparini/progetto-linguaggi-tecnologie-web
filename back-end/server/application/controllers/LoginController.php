@@ -48,4 +48,31 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
 	}
 
+	public function validateToken_post() {
+		$token = $this->input->get_request_header('Authorization'); // Authorization header dalla richiesta post
+		if(strlen($token) >= 6 && substr($token, 0, 6) == "Bearer") {
+			$token = count(explode("Bearer ", $token)) > 0 ? explode("Bearer ", $token)[1] : ""; // il token ora è qualcosa della forma jwt oppure è vuoto.
+
+			if(strlen($token) <= 0) // token non valido in questo caso
+				return $this->response(buildServerResponse(false, "Token di accesso non valido. #0"), 200);
+
+			$tokenData = AUTHORIZATION::validateToken($token); // questa funzione chiama la decode di jwt che ritorna false nel caso in cui il token non sia valido, altrimenti ritorna il payload del token.
+			if(!$tokenData) // se il token non è stato decodificato correttamente
+				return $this->response(buildServerResponse(false, "Token di accesso non valido. #1"), 200);
+
+			$userId = $tokenData->userId;
+			if(!FILTER_VAR($userId, FILTER_VALIDATE_INT)) // se l'userId nel token non è un intero c'è un problema.
+				return $this->response(buildServerResponse(false, "Token di accesso non valido. #3"), 200);
+
+			$user = $this->UserModel->getUserById($userId); // i dati dell'utente.
+			if(count($user) <= 0) // utente non trovato con questo id
+				return $this->response(buildServerResponse(false, "Token di accesso non valido. #5"), 200);
+
+			$data = setUserDataToSendInRedux($user[0]);
+			$token = AUTHORIZATION::generateToken($data); // refresho il token anche col timestamp
+			return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
+		}
+		return $this->response(buildServerResponse(false, "Token di accesso non valido. #n"), 200);
+	}
+
 }
