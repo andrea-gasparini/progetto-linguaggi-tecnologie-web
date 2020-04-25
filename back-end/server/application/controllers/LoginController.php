@@ -44,7 +44,7 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 				array("usernameHasError" => true, "passwordHasError" => true)), 200);
 
 
-		return $this->response(array("status" => "success", "input" => $this->input->post()), 200);
+		return $this->response(buildServerResponse(true, "ok"), 200);
 	}
 
 }

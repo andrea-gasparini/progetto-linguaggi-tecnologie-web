@@ -7,3 +7,7 @@ html, body, #react-root {
     background-color: #822433 !important;
     border-color: #822433 !important;
 }
+
+.sapienzaButton:focus {
+    box-shadow: none;
+}
