@@ -3,7 +3,8 @@ import {
     SET_EMAIL_SIGNUP,
     SET_PASSWORD_SIGNUP,
     SET_REALNAME_SIGNUP,
-    SET_USERNAME_SIGNUP
+    SET_USERNAME_SIGNUP,
+    SET_ERROR_SIGNUP,
 } from "../../actions/signup/action";
 import update from "immutability-helper";
 
@@ -31,5 +32,14 @@ export const signUpReducer = (state = {
 
             case SET_CONFIRM_PASSWORD_SIGNUP:
                 return update(state, { signUpConfirmPassword: { $set: action.payload.signUpConfirmPassword } });
+
+            case SET_ERROR_SIGNUP:
+                return update(state, {
+                    signUpRealnameHasError: { $set: action.payload.signUpRealnameHasError },
+                    signUpUsernameHasError: { $set: action.payload.signUpUsernameHasError },
+                    signUpEmailHasError: { $set: action.payload.signUpEmailHasError },
+                    signUpPasswordHasError: { $set: action.payload.signUpPasswordHasError },
+                    signUpConfirmPasswordHasError: { $set: action.payload.signUpConfirmPasswordHasError },
+                });
         }
     };

@@ -3,7 +3,14 @@ import {withCookies} from "react-cookie";
 import "./style.css";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {setSignUpRealname, setSignUpUsername, setSignUpEmail, setSignUpPassword, setSignUpConfirmPassword} from "../../redux/actions/signup";
+import {
+    setSignUpRealname,
+    setSignUpUsername,
+    setSignUpEmail,
+    setSignUpPassword,
+    setSignUpConfirmPassword,
+    tryAuthSignUp
+} from "../../redux/actions/signup";
 
 const mapStateToProps = (state) => ({...state.signUpReducer});
 
@@ -17,9 +24,21 @@ class SignUpComponent extends Component
         return credentials.filter(c => c.length <= 0).length > 0;
     }
 
+    signUp(e) {
+        e.preventDefault();
+        let { signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError,
+            signUpConfirmPasswordHasError, dispatch, history, cookies } = this.props;
+
+        dispatch(tryAuthSignUp({signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError,
+            signUpConfirmPasswordHasError}, history, cookies));
+    }
+
     render() {
-        let {signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword, dispatch} = this.props;
+        let { signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword,
+            signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError, signUpConfirmPasswordHasError,
+            dispatch } = this.props;
         let credentials = [signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword];
+
         return (
             <Fragment>
                 <section
@@ -131,8 +150,11 @@ class SignUpComponent extends Component
                                     </div>
 
                                     <div>
-                                        <button disabled={this.credentialsLengthCheck(credentials)}
-                                                className={"btn btn-primary sapienzaButton"}>Registrati
+                                        <button
+                                            disabled={this.credentialsLengthCheck(credentials)}
+                                            className={"btn btn-primary sapienzaButton"}
+                                            onSubmit={e => this.signUp(e)}>
+                                            Registrati
                                         </button>
                                     </div>
                                 </div>
