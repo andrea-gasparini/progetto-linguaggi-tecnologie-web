@@ -13,8 +13,13 @@ class SignUpComponent extends Component
         super(props);
     }
 
+    credentialsLengthCheck(credentials) {
+        return credentials.filter(c => c.length <= 0).length > 0;
+    }
+
     render() {
         let {signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword, dispatch} = this.props;
+        let credentials = [signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword];
         return (
             <Fragment>
                 <section
@@ -126,7 +131,7 @@ class SignUpComponent extends Component
                                     </div>
 
                                     <div>
-                                        <button
+                                        <button disabled={this.credentialsLengthCheck(credentials)}
                                                 className={"btn btn-primary sapienzaButton"}>Registrati
                                         </button>
                                     </div>
