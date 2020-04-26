@@ -3,7 +3,7 @@ import {withCookies} from "react-cookie";
 import "./style.css";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {setRealname, setUsername, setEmail, setPassword, setConfirmPassword} from "../../redux/actions/signup";
+import {setSignUpRealname, setSignUpUsername, setSignUpEmail, setSignUpPassword, setSignUpConfirmPassword} from "../../redux/actions/signup";
 
 const mapStateToProps = (state) => ({...state.signUpReducer});
 
@@ -35,7 +35,7 @@ class SignUpComponent extends Component
                             <form ref={(ref) => this.signUpForm = ref} method={"post"} className={"col mt-4"}>
                                 <div className={"d-flex flex-row justify-content-between"}>
                                     <div className={"form-group"}>
-                                        <input onChange={(e) => dispatch(setRealname(e.target.value))}
+                                        <input onChange={(e) => dispatch(setSignUpRealname(e.target.value))}
                                            value={signUpRealname}
                                            required autoComplete={"off"} type={"text"}
                                            className={["form-control"].join(" ")}
@@ -54,8 +54,8 @@ class SignUpComponent extends Component
                                     </div>
 
                                     <div className={"form-group"}>
-                                        <input onChange={(e) => dispatch(setUsername(e.target.value))}
-                                           value={signUpRealname}
+                                        <input onChange={(e) => dispatch(setSignUpUsername(e.target.value))}
+                                           value={signUpUsername}
                                            required autoComplete={"off"} type={"text"}
                                            className={["form-control"].join(" ")}
                                            placeholder={"Username"}/>
@@ -74,7 +74,7 @@ class SignUpComponent extends Component
                                 </div>
 
                                 <div className={"form-group"}>
-                                    <input onChange={(e) => dispatch(setEmail(e.target.value))}
+                                    <input onChange={(e) => dispatch(setSignUpEmail(e.target.value))}
                                         value={signUpEmail}
                                         required autoComplete={"off"} type={"email"}
                                         className={["form-control"].join(" ")}
@@ -95,15 +95,15 @@ class SignUpComponent extends Component
 
                                 <div className={"form-group"}>
                                     <div className={"d-flex flex-row justify-content-between"}>
-                                        <input onChange={(e) => dispatch(setPassword(e.target.value))}
+                                        <input onChange={(e) => dispatch(setSignUpPassword(e.target.value))}
                                            value={signUpPassword}
-                                           required autoComplete={"off"} type={"signUpPassword"}
+                                           required autoComplete={"off"} type={"password"}
                                            className={["form-control mr-4"].join(" ")}
                                            aria-describedby={"passwordHelp"} placeholder={"Password"}/>
 
-                                       <input onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
+                                       <input onChange={(e) => dispatch(setSignUpConfirmPassword(e.target.value))}
                                            value={signUpConfirmPassword}
-                                           required autoComplete={"off"} type={"signUpPassword"}
+                                           required autoComplete={"off"} type={"password"}
                                            className={["form-control"].join(" ")}
                                            aria-describedby={"passwordHelp"} placeholder={"Conferma password"}/>
                                     </div>
@@ -126,7 +126,7 @@ class SignUpComponent extends Component
                                     </div>
 
                                     <div>
-                                        <button disabled={signUpUsername.length <= 0 && signUpPassword.length <= 0}
+                                        <button
                                                 className={"btn btn-primary sapienzaButton"}>Registrati
                                         </button>
                                     </div>
