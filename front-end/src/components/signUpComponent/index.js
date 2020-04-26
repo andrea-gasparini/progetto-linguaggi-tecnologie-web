@@ -21,7 +21,7 @@ class SignUpComponent extends Component
     }
 
     credentialsLengthCheck(credentials) {
-        return credentials.filter(c => c.length <= 0).length > 0;
+        return credentials.filter(c => typeof c === "undefined" || c.length <= 0).length > 0;
     }
 
     signUp(e) {

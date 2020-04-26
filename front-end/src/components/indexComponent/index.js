@@ -99,7 +99,7 @@ class IndexComponent extends Component {
                                         </div>
 
                                         <div>
-                                            <button disabled={username.length <= 0 && password.length <= 0}
+                                            <button disabled={typeof username === "undefined" || typeof password === "undefined" || username.length <= 0 || password.length <= 0}
                                                     onClick={(e) => this.signIn(e)}
                                                     className={"btn btn-primary sapienzaButton"}>Accedi
                                             </button>
