@@ -52,4 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['test'] = "TestController/index";
+$route['login'] = "LoginController/doLogin";
+$route['validate'] = "LoginController/validateToken";

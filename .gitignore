@@ -1,5 +1,9 @@
+/back-end/server/web.config
+
 /front-end/node_modules/
-/front-end/.idea/
+
+# IDE - WebStorm
+.idea
 
 # IDE - VSCode
 .vscode/*

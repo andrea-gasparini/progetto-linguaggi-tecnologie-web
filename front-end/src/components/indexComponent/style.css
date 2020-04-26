@@ -1,4 +1,42 @@
-.test {
+.loginBox {
+    width: 400px;
+    min-height: 450px;
+    border-radius: 10px;
+    border: 1px solid #afafaf;
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    background: url("../../images/logoSapienza.jpg") no-repeat;
+    background-size: contain;
+}
+
+.titleLogin {
     font-size: 30px;
+    cursor: default;
+}
+
+.signInText {
+    font-size: 22px;
+}
+
+.createAccount {
+    transition: all .1s ease-in-out;
     font-weight: bold;
+    color: #822433 !important;
+}
+
+.createAccount:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.noDecoration {
+    text-decoration: none !important;
+    color: #822433 !important;
 }
