@@ -100,7 +100,7 @@ class IndexComponent extends Component {
 
                                         <div>
                                             <button disabled={username.length <= 0 || password.length <= 0}
-                                                    onClick={(e) => this.signIn(e)}
+                                                    onSubmit={(e) => this.signIn(e)}
                                                     className={"btn btn-primary sapienzaButton"}>Accedi
                                             </button>
                                         </div>
