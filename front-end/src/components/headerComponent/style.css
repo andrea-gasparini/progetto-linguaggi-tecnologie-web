@@ -1,0 +1,40 @@
+.navbarClassroom {
+    height: 65px;
+    border-bottom: 1px solid #822433;
+}
+
+.navbarContainer {
+    max-width: 1150px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.navbarElement:not(:last-child) {
+    margin-right: 30px;
+}
+
+.navbarText {
+    font-weight: bold;
+    font-size: 23px;
+    transition: all .3s ease-in-out;
+    color: rgba(18,18,18,0.75);
+    transform: scale(.75);
+}
+
+.navbarText.active {
+    color: #0c0c0c;
+    transform: scale(1);
+    transition: all .3s ease-in-out;
+}
+
+.navbarText:hover {
+    cursor: pointer;
+}
+
+.navbarText:not(.active):hover {
+    transform: scale(1);
+    color: #0c0c0c;
+    transition: all .3s ease-in-out;
+}
+
