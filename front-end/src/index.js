@@ -7,6 +7,7 @@ import {CookiesProvider} from "react-cookie";
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../global.css';
+import HomeComponent from "./components/homeComponent";
 
 const routing = (
     <Provider store={store}>
@@ -14,6 +15,7 @@ const routing = (
             <Router>
                 <Switch>
                     <Route exact path={"/"} component={IndexComponent} />
+                    <Route path={"/home"} component={HomeComponent} />
                 </Switch>
             </Router>
         </CookiesProvider>
