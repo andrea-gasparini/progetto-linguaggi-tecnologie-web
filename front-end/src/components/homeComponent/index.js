@@ -23,8 +23,6 @@ class HomeComponent extends Component {
                                 Crea un gruppo
                                 <PlusCircle style={{marginLeft: 5}} />
                             </div>
-                        <div className={"myGroupsTitle text-muted"}>
-                            I miei gruppi (5)
                         </div>
 
                         <div className={"d-flex flex-row flex-wrap groupsList mb-5"}>
