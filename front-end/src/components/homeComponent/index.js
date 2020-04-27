@@ -20,7 +20,7 @@ class HomeComponent extends Component {
 
                         <div className={"d-flex flex-row flex-wrap groupsList"}>
                             {[0, 1, 2, 3].map((value, index) => (
-                                <GroupCardComponent key={index} />
+                                <GroupCardComponent groupTitle={"Titolo del gruppo"} groupOwner={"Utente abc"} groupDescription={"Descrizione del gruppo"} key={index} />
                             ))}
 
                         </div>
