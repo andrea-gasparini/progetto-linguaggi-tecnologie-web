@@ -1,11 +1,8 @@
 import React, {Component, Fragment} from "react";
 import HeaderComponent from "../headerComponent";
-<<<<<<< Updated upstream
-=======
 import './style.css';
 import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 import {PlusCircle} from "react-feather";
->>>>>>> Stashed changes
 
 class HomeComponent extends Component {
     constructor(props) {
@@ -16,8 +13,6 @@ class HomeComponent extends Component {
         return(
             <Fragment>
                 <HeaderComponent />
-<<<<<<< Updated upstream
-=======
                 <section className={"d-flex justify-content-center"}>
                     <div className={"d-flex homeContainerGroups flex-column"}>
                         <div className={"d-flex myGroupsTitle text-muted justify-content-between"}>
@@ -37,7 +32,6 @@ class HomeComponent extends Component {
                         </div>
                     </div>
                 </section>
->>>>>>> Stashed changes
             </Fragment>
         )
     }
