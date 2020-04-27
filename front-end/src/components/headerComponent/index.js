@@ -34,6 +34,18 @@ class HeaderComponent extends Component {
         ]
     }
 
+    componentDidMount() {
+        document.body.addEventListener('scroll', this.scrollBody);
+    }
+
+    componentWillUnmount() {
+        document.body.removeEventListener('scroll', this.scrollBody);
+    }
+
+    scrollBody = () => {
+
+    }
+
     switchActive = (e) => {
         let tg = e.target;
 
@@ -43,7 +55,6 @@ class HeaderComponent extends Component {
 
     switchNavigationPage = (pathName, path) => {
         this.setState({currentActive: pathName});
-        // redirect to path.
     };
 
     render() {

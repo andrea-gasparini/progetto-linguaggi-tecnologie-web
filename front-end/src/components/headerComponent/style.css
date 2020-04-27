@@ -1,6 +1,16 @@
 .navbarClassroom {
     height: 65px;
     border-bottom: 1px solid #822433;
+    position: fixed;
+    z-index: 2;
+    background-color: white;
+    width: 100%;
+}
+
+.navbarScroll {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
+    box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
 }
 
 .navbarContainer {
