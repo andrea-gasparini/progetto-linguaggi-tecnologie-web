@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import HeaderComponent from "../headerComponent";
 import './style.css';
+import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 
 class HomeComponent extends Component {
     constructor(props) {
@@ -18,6 +19,9 @@ class HomeComponent extends Component {
                         </div>
 
                         <div className={"d-flex flex-row flex-wrap groupsList"}>
+                            {[0, 1, 2, 3].map((value, index) => (
+                                <GroupCardComponent key={index} />
+                            ))}
 
                         </div>
                     </div>

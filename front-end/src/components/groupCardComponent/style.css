@@ -1,0 +1,39 @@
+.groupCard {
+    border-radius: 15px;
+    border: 1px solid #afafaf;
+    min-width: 300px;
+    min-height: 300px;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+.groupCard:nth-child(3n) {
+    margin-right: 0px;
+}
+
+
+@media only screen and (max-width: 977px) {
+    .groupCard:nth-child(2n) {
+        margin-right: 0px !important;
+    }
+
+    .groupCard:nth-child(3n) {
+        margin-right: 30px;
+    }
+}
+
+@media only screen and (max-width: 647px) {
+
+    .groupCard {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .groupCard:nth-child(2n) {
+        margin-right: 30px !important;
+    }
+
+    .groupCard:nth-child(3n) {
+        margin-right: 30px !important;
+    }
+}

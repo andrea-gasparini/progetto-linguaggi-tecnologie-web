@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import "./style.css";
 
 class GroupCardComponent extends Component {
     constructor(props) {
@@ -8,8 +9,8 @@ class GroupCardComponent extends Component {
     render() {
         return(
             <Fragment>
-                <div className={"groupCard"}>
-                    
+                <div className={"d-flex groupCard"}>
+
                 </div>
             </Fragment>
         )

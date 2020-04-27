@@ -7,6 +7,16 @@
 .myGroupsTitle {
     font-weight: bold;
     border-bottom: 1px solid #afafaf;
-    width: 30%;
+    width: 100%;
     padding-bottom: 3px;
+}
+
+.groupsList {
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 977px) {
+    .groupsList {
+        justify-content: center;
+    }
 }
