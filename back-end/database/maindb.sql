@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 21/04/2020 16:58:39
+ Date: 27/04/2020 15:15:06
 */
 
 
@@ -54,6 +54,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groups_id_seq";
 CREATE SEQUENCE "public"."groups_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for invitations_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."invitations_id_seq";
+CREATE SEQUENCE "public"."invitations_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -142,6 +153,19 @@ CREATE TABLE "public"."groupsMemberships" (
 ;
 
 -- ----------------------------
+-- Table structure for invitations
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."invitations";
+CREATE TABLE "public"."invitations" (
+  "id" int4 NOT NULL DEFAULT nextval('invitations_id_seq'::regclass),
+  "from_id" int4 NOT NULL,
+  "to_id" int4 NOT NULL,
+  "group_id" int4 NOT NULL,
+  "invited_at" timestamp(6) NOT NULL
+)
+;
+
+-- ----------------------------
 -- Table structure for posts
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."posts";
@@ -170,6 +194,7 @@ CREATE TABLE "public"."users" (
 ;
 
 -- ----------------------------
+
 -- Primary Key structure for table chats
 -- ----------------------------
 ALTER TABLE "public"."chats" ADD CONSTRAINT "chats_pkey" PRIMARY KEY ("id");
@@ -200,6 +225,23 @@ ALTER TABLE "public"."groups" ADD CONSTRAINT "groups_pkey" PRIMARY KEY ("id");
 ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupsMemberships_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
+-- Uniques structure for table invitations
+-- ----------------------------
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "uniqueInvitation" UNIQUE ("from_id", "to_id", "group_id");
+COMMENT ON CONSTRAINT "uniqueInvitation" ON "public"."invitations" IS 'controlla che sia unico l''invito per quel determinato gruppo
+';
+
+-- ----------------------------
+-- Checks structure for table invitations
+-- ----------------------------
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "checkToIdOneId" CHECK (to_id <> from_id);
+
+-- ----------------------------
+-- Primary Key structure for table invitations
+-- ----------------------------
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "invitations_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
 -- Primary Key structure for table posts
 -- ----------------------------
 ALTER TABLE "public"."posts" ADD CONSTRAINT "posts_pkey" PRIMARY KEY ("id");
@@ -208,6 +250,7 @@ ALTER TABLE "public"."posts" ADD CONSTRAINT "posts_pkey" PRIMARY KEY ("id");
 -- Uniques structure for table users
 -- ----------------------------
 ALTER TABLE "public"."users" ADD CONSTRAINT "emailUser" UNIQUE ("email");
+ALTER TABLE "public"."users" ADD CONSTRAINT "usernameUser" UNIQUE ("username");
 
 -- ----------------------------
 -- Primary Key structure for table users
@@ -236,6 +279,13 @@ ALTER TABLE "public"."comments" ADD CONSTRAINT "userIdComment" FOREIGN KEY ("use
 -- ----------------------------
 ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "userIdGroup" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table invitations
+-- ----------------------------
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "groupId" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "userOneId" FOREIGN KEY ("from_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "userTwoId" FOREIGN KEY ("to_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table posts
