@@ -1,0 +1,12 @@
+.homeContainerGroups {
+    max-width: 960px;
+    margin-top: 75px;
+    width: 100%;
+}
+
+.myGroupsTitle {
+    font-weight: bold;
+    border-bottom: 1px solid #afafaf;
+    width: 30%;
+    padding-bottom: 3px;
+}
