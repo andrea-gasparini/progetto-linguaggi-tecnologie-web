@@ -3,10 +3,19 @@ import HeaderComponent from "../headerComponent";
 import './style.css';
 import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 import {PlusCircle} from "react-feather";
+import InviteModalComponent from "../modalsComponents/inviteModalComponent/inviteModalComponent";
 
 class HomeComponent extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            showInviteModal: false
+        }
+    }
+
+    showInviteModal = () =>  {
+        this.setState({showInviteModal: !this.state.showInviteModal});
     }
 
     render() {
@@ -32,6 +41,7 @@ class HomeComponent extends Component {
                         </div>
                     </div>
                 </section>
+                <InviteModalComponent />
             </Fragment>
         )
     }
