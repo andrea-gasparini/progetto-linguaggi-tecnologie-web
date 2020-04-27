@@ -41,6 +41,11 @@ class HeaderComponent extends Component {
             this.setState({showActive: !this.state.showActive});
     };
 
+    switchNavigationPage = (pathName, path) => {
+        this.setState({currentActive: pathName});
+        // redirect to path.
+    };
+
     render() {
         let {currentActive, showActive} = this.state;
         return(
@@ -50,7 +55,7 @@ class HeaderComponent extends Component {
                         <div className={"logo"} style={{width: 50, height: 50}} />
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
                             {this.navigationElements.map((value, index) => (
-                                <li key={index} onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)}onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={"navbarElement"}>
+                                <li onClick={(e) => this.switchNavigationPage(value.pathName, value.path)} key={index} onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={"navbarElement"}>
                                     <div className={["navbarText", currentActive === value.pathName && showActive ? "active" : ""].join(" ")}>
                                         {value.text}
                                     </div>
