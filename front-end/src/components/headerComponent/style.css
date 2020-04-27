@@ -38,3 +38,30 @@
     transition: all .3s ease-in-out;
 }
 
+.navbarText:after {
+    opacity: 0;
+    transition: all .3s ease-in-out;
+    display: flex;
+    width: 50%;
+    height: 2px;
+    background-color: #822433;
+    bottom: 0;
+    content: '';
+    margin: 0 auto;
+}
+
+.navbarText.active:after {
+    opacity: 1;
+    transition: all .3s ease-in-out;
+    display: flex;
+    width: 50%;
+    height: 2px;
+    background-color: #822433;
+    bottom: 0;
+    content: '';
+    margin: 0 auto;
+}
+
+.navbarText:hover:after {
+    opacity: 1;
+}

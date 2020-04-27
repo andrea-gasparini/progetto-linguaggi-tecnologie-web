@@ -11,11 +11,32 @@ class HeaderComponent extends Component {
         this.state = {
             currentActive: 'Home', // fisso per test
             showActive: true
-        }
+        };
+
+        this.navigationElements = [
+            {
+                text: "I miei gruppi",
+                path: "/home",
+                pathName: "Home"
+            },
+
+            {
+                text: "Impostazioni",
+                path: "/settings",
+                pathName: "Settings"
+            },
+
+            {
+                text: "Esci",
+                path: "/logout",
+                pathName: "Logout"
+            }
+        ]
     }
 
     switchActive = (e) => {
         let tg = e.target;
+
         if(!tg.classList.contains("active"))
             this.setState({showActive: !this.state.showActive});
     };
@@ -28,22 +49,13 @@ class HeaderComponent extends Component {
                     <div className={"d-flex navbarContainer justify-content-around"}>
                         <div className={"logo"} style={{width: 50, height: 50}} />
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
-                            <li className={"navbarElement"}>
-                                <div onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={["navbarText", currentActive === "Home" && showActive ? "active" : ""].join(" ")}>
-                                    I miei gruppi
-                                </div>
-                            </li>
-                            <li className={"navbarElement"}>
-                                <div onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={"navbarText"}>
-                                    Impostazioni
-                                </div>
-                            </li>
-
-                            <li className={"navbarElement"}>
-                                <div onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={"navbarText"}>
-                                    Esci
-                                </div>
-                            </li>
+                            {this.navigationElements.map((value, index) => (
+                                <li key={index} onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)}onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={"navbarElement"}>
+                                    <div className={["navbarText", currentActive === value.pathName && showActive ? "active" : ""].join(" ")}>
+                                        {value.text}
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
 
                         <div className={"btn btn-primary sapienzaButton"}>
