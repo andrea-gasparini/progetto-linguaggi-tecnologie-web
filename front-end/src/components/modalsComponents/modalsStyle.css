@@ -10,11 +10,12 @@
 
 .inviteModal {
     width: 500px;
-    height: 250px;
     background: white;
     border-radius: 5px;
     border: 1px solid #4a4a4a;
-    position: relative;
+    position: fixed;
+    height: auto;
+    padding-top: 30px;
 }
 
 .inviteModalTitle {

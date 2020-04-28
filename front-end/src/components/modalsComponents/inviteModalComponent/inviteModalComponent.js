@@ -33,7 +33,7 @@ class InviteModalComponent extends Component {
         return(
             <Fragment>
                 <section className={"d-flex justify-content-center modalContainer"}>
-                    <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center justify-content-center flex-column"}>
+                    <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center flex-column"}>
                         <div className={"closeInviteModal"}>
                             <X />
                         </div>
@@ -42,7 +42,7 @@ class InviteModalComponent extends Component {
                         </div>
                         <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
 
-                            <div className={"d-flex flex-row usersInvitedList"}>
+                            <div className={"d-flex flex-row usersInvitedList flex-wrap"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
                                         <div className={"usernameChip"}>
@@ -78,7 +78,20 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex form-group justify-content-center"} style={{width: "100%"}}>
-                                <button disabled={readyToSendInvite.length <= 0} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>Invia invito</button>
+                                <button disabled={readyToSendInvite.length <= 0} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
+                                    {readyToSendInvite.length <= 0 &&
+                                        "Aggiungi utenti da invitare"
+                                    }
+
+                                    {readyToSendInvite.length == 1 &&
+                                        "Invia invito"
+                                    }
+
+                                    {readyToSendInvite.length > 1 &&
+                                        `Invia invito a ${readyToSendInvite.length} utenti`
+                                    }
+
+                                </button>
                             </div>
                         </form>
                     </div>
