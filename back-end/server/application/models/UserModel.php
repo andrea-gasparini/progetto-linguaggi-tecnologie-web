@@ -22,4 +22,14 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+
+	public function searchUser($username) {
+		$this->db->select("username"); // SELECT username FROM users WHERE username LIKE '%username%' OR email LIKE '%username%' LIMIT 50.
+		$this->db->like("username", $username);
+		$this->db->or_like("email", $username);
+		$this->db->limit(50); // limitato a 50 per motivi di efficienza (se ci sono molti utenti registrati).
+		$query = $this->db->get("users");
+		return $query->result();
+	}
+
 }

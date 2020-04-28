@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['login'] = "LoginController/doLogin";
 $route['validate'] = "LoginController/validateToken";
+$route['searchUser'] = "SearchUserController/searchUser";
