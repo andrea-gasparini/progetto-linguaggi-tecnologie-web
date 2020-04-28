@@ -1,5 +1,5 @@
 import {
-    ADD_USER_TO_INVITE_TO_LIST,
+    ADD_USER_TO_INVITE_TO_LIST, REMOVE_USER_FROM_INVITATIONS_LIST, REMOVE_USER_FROM_INVITATIONS_LIT,
     SET_SEARCH_USER_INVITATION_QUERY,
     SET_SEARCH_USER_INVITATION_RESULT
 } from "./actions";
@@ -48,5 +48,8 @@ export const addUserToInvitations = (user) => ({
 });
 
 export const removeUserFromInvitations = (user) => ({
-    
+    type: REMOVE_USER_FROM_INVITATIONS_LIST,
+    payload: {
+        user
+    }
 })

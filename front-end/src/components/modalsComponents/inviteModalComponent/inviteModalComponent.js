@@ -3,7 +3,11 @@ import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import '../modalsStyle.css';
 import {X, XCircle} from "react-feather";
-import {addUserToInvitations, searchUserForInvitation} from "../../../redux/actions/invitations";
+import {
+    addUserToInvitations,
+    removeUserFromInvitations,
+    searchUserForInvitation
+} from "../../../redux/actions/invitations";
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
 
@@ -44,7 +48,7 @@ class InviteModalComponent extends Component {
                                         <div className={"usernameChip"}>
                                             {value.username}
                                         </div>
-                                        <XCircle onClick={() => dispatch()} color={"white"} className={"removeChipUser"} size={20}/>
+                                        <XCircle onClick={() => dispatch(removeUserFromInvitations(value.username))} color={"white"} className={"removeChipUser"} size={20}/>
                                     </div>
                                 ))}
                             </div>
