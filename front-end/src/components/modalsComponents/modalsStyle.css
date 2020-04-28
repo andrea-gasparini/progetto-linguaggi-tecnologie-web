@@ -19,9 +19,10 @@
 
 .inviteModalTitle {
     font-size: 25px;
+    cursor: default;
 }
 
-.inviteModalButton:hover {
+.inviteModalButton:hover:not(:disabled) {
     opacity: .8;
 }
 

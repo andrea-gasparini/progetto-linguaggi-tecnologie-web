@@ -1,7 +1,7 @@
 import {SET_SEARCH_USER_INVITATION_QUERY, SET_SEARCH_USER_INVITATION_RESULT} from "../../actions/invitations/actions";
 import update from "immutability-helper";
 
-export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: []}, action) => {
+export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: []}, action) => {
     switch(action.type) {
         default:
             return state;

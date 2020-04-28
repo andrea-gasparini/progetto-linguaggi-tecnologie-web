@@ -19,13 +19,13 @@ class InviteModalComponent extends Component {
 
 
     checkCloseSearchUserResult = (e) => {
-        if(e.target.classList.contains("inviteModal"))
+        if(e.target.classList.contains("inviteModal") || e.target.classList.contains("inviteModalTitle"))
             this.setState({clickedToClose: true});
     };
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite} = this.props;
         return(
             <Fragment>
                 <section className={"d-flex justify-content-center modalContainer"}>
@@ -62,7 +62,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex form-group justify-content-center"} style={{width: "100%"}}>
-                                <button className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>Invia invito</button>
+                                <button disabled={readyToSendInvite.length <= 0} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>Invia invito</button>
                             </div>
                         </form>
                     </div>
