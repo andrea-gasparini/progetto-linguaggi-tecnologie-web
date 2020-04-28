@@ -1,4 +1,8 @@
-import {SET_SEARCH_USER_INVITATION_QUERY, SET_SEARCH_USER_INVITATION_RESULT} from "./actions";
+import {
+    ADD_USER_TO_INVITE_TO_LIST,
+    SET_SEARCH_USER_INVITATION_QUERY,
+    SET_SEARCH_USER_INVITATION_RESULT
+} from "./actions";
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
@@ -33,5 +37,12 @@ export const setResultSearchQuery = (result) => ({
     type: SET_SEARCH_USER_INVITATION_RESULT,
     payload: {
         result
+    }
+});
+
+export const addUserToInvitations = (user) => ({
+    type: ADD_USER_TO_INVITE_TO_LIST,
+    payload: {
+        user
     }
 });

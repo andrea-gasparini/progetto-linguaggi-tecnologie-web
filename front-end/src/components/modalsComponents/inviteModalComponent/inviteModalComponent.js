@@ -2,8 +2,8 @@ import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import '../modalsStyle.css';
-import {X} from "react-feather";
-import {searchUserForInvitation} from "../../../redux/actions/invitations";
+import {X, XCircle} from "react-feather";
+import {addUserToInvitations, searchUserForInvitation} from "../../../redux/actions/invitations";
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
 
@@ -19,7 +19,7 @@ class InviteModalComponent extends Component {
 
 
     checkCloseSearchUserResult = (e) => {
-        if(e.target.classList.contains("inviteModal") || e.target.classList.contains("inviteModalTitle"))
+        if(e.target.classList.contains("inviteModal") || e.target.classList.contains("inviteModalTitle") || e.target.classList.contains("usersInvitedList"))
             this.setState({clickedToClose: true});
     };
 
@@ -37,6 +37,18 @@ class InviteModalComponent extends Component {
                             Invita amici nel gruppo
                         </div>
                         <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
+
+                            <div className={"usersInvitedList"}>
+                                {readyToSendInvite.map((value, index) => (
+                                    <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
+                                        <div className={"usernameChip"}>
+                                            {value.username}
+                                        </div>
+                                        <XCircle color={"white"} className={"removeChipUser"} size={20}/>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div className={"form-group"}>
                                 <input onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
                             </div>
@@ -52,7 +64,7 @@ class InviteModalComponent extends Component {
                                 }
 
                                 {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.map((value, index) => (
-                                    <div key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
+                                    <div onClick={() => {dispatch(addUserToInvitations([{username: value.username, id: value.id}])); this.setState({clickedToClose: true})}} key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
                                         <div className={"userSearchResultModalInviteImage"}/>
                                         <div className={"userSearchResultModalInviteUsername"}>
                                             {value.username}

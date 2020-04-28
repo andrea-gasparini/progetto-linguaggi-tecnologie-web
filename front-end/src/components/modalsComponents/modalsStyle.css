@@ -10,7 +10,7 @@
 
 .inviteModal {
     width: 500px;
-    height: 200px;
+    height: 250px;
     background: white;
     border-radius: 5px;
     border: 1px solid #4a4a4a;
@@ -77,4 +77,34 @@
     margin-left: 5px;
     font-size: 15px;
     font-weight: bold;
+}
+
+.userAddedToInvitation {
+    max-width: 100px;
+    border-radius: 5px;
+    background: #822433;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: white;
+    transition: all .3s ease-in-out;
+}
+
+.usernameChip {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70px;
+    cursor: default;
+    padding-right: 1px;
+}
+
+.removeChipUser {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    margin-left: 10px;
+}
+
+.removeChipUser:hover {
+    opacity: .8;
 }

@@ -1,4 +1,8 @@
-import {SET_SEARCH_USER_INVITATION_QUERY, SET_SEARCH_USER_INVITATION_RESULT} from "../../actions/invitations/actions";
+import {
+    ADD_USER_TO_INVITE_TO_LIST,
+    SET_SEARCH_USER_INVITATION_QUERY,
+    SET_SEARCH_USER_INVITATION_RESULT
+} from "../../actions/invitations/actions";
 import update from "immutability-helper";
 
 export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: []}, action) => {
@@ -15,5 +19,10 @@ export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: 
             return update(state, {
                 searchQueryResult: {$set: action.payload.result}
             });
+
+        case ADD_USER_TO_INVITE_TO_LIST:
+            return update(state, {
+                readyToSendInvite: {$push: action.payload.user}
+            })
     }
 };
