@@ -100,7 +100,7 @@
     color: white;
     transition: all .3s ease-in-out;
     margin-right: 5px;
-    width: 100%;
+    width: auto;
 }
 
 .usernameChip {
@@ -109,7 +109,7 @@
     text-overflow: ellipsis;
     max-width: 80px;
     cursor: default;
-    padding-right: 1px;
+    margin-right: 20px;
 }
 
 .removeChipUser {
