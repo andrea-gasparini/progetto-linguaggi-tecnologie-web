@@ -1,5 +1,8 @@
 import {
-    ADD_USER_TO_INVITE_TO_LIST, REMOVE_USER_FROM_INVITATIONS_LIST, REMOVE_USER_FROM_INVITATIONS_LIT,
+    ADD_USER_TO_INVITE_TO_LIST,
+    REMOVE_USER_FROM_INVITATIONS_LIST,
+    REMOVE_USER_FROM_INVITATIONS_LIT,
+    RESET_INVITATIONS_DATA,
     SET_SEARCH_USER_INVITATION_QUERY,
     SET_SEARCH_USER_INVITATION_RESULT
 } from "../../actions/invitations/actions";
@@ -30,6 +33,14 @@ export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: 
             return update(state, {
                 readyToSendInvite: arr => arr.filter(user => user.username != action.payload.user),
                 usernameListInvitations: arr => arr.filter(user => user != action.payload.user),
+            });
+
+        case RESET_INVITATIONS_DATA:
+            return update(state, {
+                searchQueryResult: {$set: []},
+                searchQuery: {$set: ''},
+                readyToSendInvite: {$set: []},
+                usernameListInvitations: {$set: []}
             })
     }
 };

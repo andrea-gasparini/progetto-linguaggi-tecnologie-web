@@ -16,9 +16,10 @@ class HomeComponent extends Component {
 
     showInviteModal = () =>  {
         this.setState({showInviteModal: !this.state.showInviteModal});
-    }
+    };
 
     render() {
+        let {showInviteModal} = this.state;
         return(
             <Fragment>
                 <HeaderComponent />
@@ -36,12 +37,14 @@ class HomeComponent extends Component {
 
                         <div className={"d-flex flex-row flex-wrap groupsList mb-5"}>
                             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value, index) => (
-                                <GroupCardComponent groupTitle={"Titolo del gruppo"} groupOwner={"Utente abc"} groupDescription={"Descrizione del gruppo"} key={index} />
+                                <GroupCardComponent openInviteModal={this.showInviteModal} groupTitle={"Titolo del gruppo"} groupOwner={"Utente abc"} groupDescription={"Descrizione del gruppo"} key={index} />
                             ))}
                         </div>
                     </div>
                 </section>
-                <InviteModalComponent />
+                {showInviteModal &&
+                    <InviteModalComponent closeModal={this.showInviteModal} />
+                }
             </Fragment>
         )
     }

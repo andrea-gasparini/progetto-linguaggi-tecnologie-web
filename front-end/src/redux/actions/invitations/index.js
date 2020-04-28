@@ -1,5 +1,8 @@
 import {
-    ADD_USER_TO_INVITE_TO_LIST, REMOVE_USER_FROM_INVITATIONS_LIST, REMOVE_USER_FROM_INVITATIONS_LIT,
+    ADD_USER_TO_INVITE_TO_LIST,
+    REMOVE_USER_FROM_INVITATIONS_LIST,
+    REMOVE_USER_FROM_INVITATIONS_LIT,
+    RESET_INVITATIONS_DATA,
     SET_SEARCH_USER_INVITATION_QUERY,
     SET_SEARCH_USER_INVITATION_RESULT
 } from "./actions";
@@ -52,4 +55,9 @@ export const removeUserFromInvitations = (user) => ({
     payload: {
         user
     }
-})
+});
+
+export const resetDataInvitations = () => ({
+    type: RESET_INVITATIONS_DATA,
+    payload: {}
+});
