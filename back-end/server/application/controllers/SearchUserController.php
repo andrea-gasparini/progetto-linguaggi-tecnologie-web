@@ -32,7 +32,7 @@ class SearchUserController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Token di accesso non valido. #5"), 200);
 
 			$searchQuery = $this->input->post('query');
-			$result = $this->UserModel->searchUser($searchQuery);
+			$result = $this->UserModel->searchUser($searchQuery, $userId);
 			return $this->response(buildServerResponse(true, "ok", array("searchResult" => $result)));
 		}
 	}
