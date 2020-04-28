@@ -46,3 +46,7 @@ export const addUserToInvitations = (user) => ({
         user
     }
 });
+
+export const removeUserFromInvitations = (user) => ({
+    
+})

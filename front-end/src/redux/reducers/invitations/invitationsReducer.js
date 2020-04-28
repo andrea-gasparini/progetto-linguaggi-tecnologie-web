@@ -5,7 +5,7 @@ import {
 } from "../../actions/invitations/actions";
 import update from "immutability-helper";
 
-export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: []}, action) => {
+export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: [], usernameListInvitations: []}, action) => {
     switch(action.type) {
         default:
             return state;
@@ -22,7 +22,8 @@ export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: 
 
         case ADD_USER_TO_INVITE_TO_LIST:
             return update(state, {
-                readyToSendInvite: {$push: action.payload.user}
-            })
+                readyToSendInvite: {$push: action.payload.user},
+                usernameListInvitations: {$push: [action.payload.user[0].username]}
+            });
     }
 };

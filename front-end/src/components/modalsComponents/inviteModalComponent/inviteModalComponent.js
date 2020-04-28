@@ -25,7 +25,7 @@ class InviteModalComponent extends Component {
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations} = this.props;
         return(
             <Fragment>
                 <section className={"d-flex justify-content-center modalContainer"}>
@@ -38,13 +38,13 @@ class InviteModalComponent extends Component {
                         </div>
                         <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
 
-                            <div className={"usersInvitedList"}>
+                            <div className={"d-flex flex-row usersInvitedList"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
                                         <div className={"usernameChip"}>
                                             {value.username}
                                         </div>
-                                        <XCircle color={"white"} className={"removeChipUser"} size={20}/>
+                                        <XCircle onClick={() => dispatch()} color={"white"} className={"removeChipUser"} size={20}/>
                                     </div>
                                 ))}
                             </div>
@@ -55,7 +55,7 @@ class InviteModalComponent extends Component {
 
                             <div className={"searchUserDropdown"} style={{display: searchQuery.length > 0 && !clickedToClose ? "" : "none"}}>
 
-                                {searchQuery.length > 0 && searchQueryResult.length <= 0 &&
+                                {searchQuery.length > 0 && (searchQueryResult.length <= 0 || searchQueryResult.length == usernameListInvitations.length) &&
                                     <div className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
                                         <div className={"userSearchResultModalInviteUsername"}>
                                             Non abbiamo trovato nessun utente con {searchQuery}
@@ -63,7 +63,7 @@ class InviteModalComponent extends Component {
                                     </div>
                                 }
 
-                                {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.map((value, index) => (
+                                {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.filter(x => usernameListInvitations.indexOf(x.username) < 0).map((value, index) => (
                                     <div onClick={() => {dispatch(addUserToInvitations([{username: value.username, id: value.id}])); this.setState({clickedToClose: true})}} key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
                                         <div className={"userSearchResultModalInviteImage"}/>
                                         <div className={"userSearchResultModalInviteUsername"}>

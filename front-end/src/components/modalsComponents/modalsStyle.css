@@ -80,20 +80,22 @@
 }
 
 .userAddedToInvitation {
-    max-width: 100px;
+    max-width: 120px;
     border-radius: 5px;
     background: #822433;
     padding: 10px;
     margin-bottom: 10px;
     color: white;
     transition: all .3s ease-in-out;
+    margin-right: 5px;
+    width: 100%;
 }
 
 .usernameChip {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 70px;
+    max-width: 80px;
     cursor: default;
     padding-right: 1px;
 }
