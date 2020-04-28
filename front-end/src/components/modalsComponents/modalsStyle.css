@@ -1,0 +1,79 @@
+.modalContainer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 99;
+}
+
+.inviteModal {
+    width: 500px;
+    height: 200px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #4a4a4a;
+    position: relative;
+}
+
+.inviteModalTitle {
+    font-size: 25px;
+}
+
+.inviteModalButton:hover {
+    opacity: .8;
+}
+
+.closeInviteModal {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.closeInviteModal:hover {
+    cursor: pointer;
+    opacitty: .8;
+}
+
+.searchUserDropdown {
+    width: 100%;
+    position: absolute;
+    min-height: 30px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(21, 21, 21, 0.75);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(21, 21, 21, 0.75);
+    box-shadow: 0px 0px 3px 1px rgba(21, 21, 21, 0.75);
+    background: white;
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.userSearchResultModalInvite {
+    padding: 7px;
+    cursor: pointer;
+}
+
+.userSearchResultModalInvite:hover {
+    background-color: rgba(130, 36, 51, .9);
+}
+
+.userSearchResultModalInvite:hover > .userSearchResultModalInviteUsername {
+    color: white;
+    font-weight: bold;
+}
+
+
+.userSearchResultModalInviteImage {
+    background: url("http://via.placeholder.com/50.png");
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+}
+
+.userSearchResultModalInviteUsername {
+    margin-left: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}

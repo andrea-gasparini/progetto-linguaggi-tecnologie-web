@@ -1,6 +1,6 @@
 .homeContainerGroups {
     max-width: 960px;
-    margin-top: 75px;
+    margin-top: 105px;
     width: 100%;
 }
 
@@ -14,6 +14,17 @@
 .groupsList {
     margin-top: 20px;
 }
+
+.createGroupText {
+    color: #822433;
+    font-weight: bold;
+}
+
+.createGroupText:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
 
 @media only screen and (max-width: 977px) {
     .groupsList {

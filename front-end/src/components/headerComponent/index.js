@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import './style.css';
+import {Bell} from "react-feather";
 
 const mapStateToProps = (state) => ({});
 
@@ -10,7 +11,8 @@ class HeaderComponent extends Component {
 
         this.state = {
             currentActive: 'Home', // fisso per test
-            showActive: true
+            showActive: true,
+            showShadow: false
         };
 
         this.navigationElements = [
@@ -34,6 +36,21 @@ class HeaderComponent extends Component {
         ]
     }
 
+    componentDidMount() {
+        window.addEventListener('scroll', this.scrollBody);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.scrollBody);
+    }
+
+    scrollBody = () => {
+        if(document !== undefined && document.documentElement.scrollTop > 0)
+            this.setState({showShadow: true});
+        else
+            this.setState({showShadow: false});
+    };
+
     switchActive = (e) => {
         let tg = e.target;
 
@@ -43,14 +60,13 @@ class HeaderComponent extends Component {
 
     switchNavigationPage = (pathName, path) => {
         this.setState({currentActive: pathName});
-        // redirect to path.
     };
 
     render() {
-        let {currentActive, showActive} = this.state;
+        let {currentActive, showActive, showShadow} = this.state;
         return(
             <Fragment>
-                <nav className={"d-flex navbar navbarClassroom justify-content-center"}>
+                <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
                     <div className={"d-flex navbarContainer justify-content-around"}>
                         <div className={"logo"} style={{width: 50, height: 50}} />
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
@@ -63,8 +79,8 @@ class HeaderComponent extends Component {
                             ))}
                         </ul>
 
-                        <div className={"btn btn-primary sapienzaButton"}>
-                            Unisciti ad un gruppo
+                        <div data-count={9} className={"invitationsIcon"}>
+                            <Bell />
                         </div>
                     </div>
                 </nav>
