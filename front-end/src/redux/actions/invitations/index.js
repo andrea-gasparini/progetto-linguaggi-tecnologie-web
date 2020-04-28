@@ -1,4 +1,4 @@
-import {SET_SEARCH_USER_INVITATION_QUERY} from "./actions";
+import {SET_SEARCH_USER_INVITATION_QUERY, SET_SEARCH_USER_INVITATION_RESULT} from "./actions";
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
@@ -19,9 +19,19 @@ export const searchUserForInvitation = (query, token) => {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((res) => {
-                console.log(res);
+                let {status, data} = res.data;
+                if(status)
+                    dispatch(setResultSearchQuery(data.searchResult)); // settiamo nel redux il risultato
+
             }).catch((err) => {
                 console.log(err);
             });
         }
 };
+
+export const setResultSearchQuery = (result) => ({
+    type: SET_SEARCH_USER_INVITATION_RESULT,
+    payload: {
+        result
+    }
+});

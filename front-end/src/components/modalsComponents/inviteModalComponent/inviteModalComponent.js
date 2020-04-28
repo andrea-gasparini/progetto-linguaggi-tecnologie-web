@@ -25,7 +25,7 @@ class InviteModalComponent extends Component {
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult} = this.props;
         return(
             <Fragment>
                 <section className={"d-flex justify-content-center modalContainer"}>
@@ -42,11 +42,20 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"searchUserDropdown"} style={{display: searchQuery.length > 0 && !clickedToClose ? "" : "none"}}>
-                                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value, index) => (
+
+                                {searchQuery.length > 0 && searchQueryResult.length <= 0 &&
+                                    <div className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
+                                        <div className={"userSearchResultModalInviteUsername"}>
+                                            Non abbiamo trovato nessun utente con {searchQuery}
+                                        </div>
+                                    </div>
+                                }
+
+                                {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.map((value, index) => (
                                     <div key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
                                         <div className={"userSearchResultModalInviteImage"}/>
                                         <div className={"userSearchResultModalInviteUsername"}>
-                                            Username
+                                            {value.username}
                                         </div>
                                     </div>
                                 ))}

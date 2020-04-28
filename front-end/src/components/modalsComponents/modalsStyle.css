@@ -39,7 +39,7 @@
 .searchUserDropdown {
     width: 100%;
     position: absolute;
-    min-height: 30px;
+    min-height: 35px;
     border-radius: 5px;
     -webkit-box-shadow: 0px 0px 3px 1px rgba(21, 21, 21, 0.75);
     -moz-box-shadow: 0px 0px 3px 1px rgba(21, 21, 21, 0.75);
@@ -47,7 +47,7 @@
     background: white;
     z-index: 100;
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .userSearchResultModalInvite {
