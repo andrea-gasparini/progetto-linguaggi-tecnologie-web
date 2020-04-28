@@ -22,4 +22,17 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+
+	public function searchUser($username, $userId) {
+		$this->db->select("id, username"); // seleziona id, username
+		$this->db->group_start();
+		$this->db->like("username", $username);
+		$this->db->or_like("email", $username);
+		$this->db->group_end();
+		$this->db->where("id !=", $userId); // userId differente dal mio.
+		$this->db->limit(50); // limitato a 50 per motivi di efficienza (se ci sono molti utenti registrati).
+		$query = $this->db->get("users");
+		return $query->result();
+	}
+
 }
