@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import '../modalsStyle.css';
 import {X} from "react-feather";
-import {setSearchQueryUserInvitation} from "../../../redux/actions/invitations";
+import {searchUserForInvitation} from "../../../redux/actions/invitations";
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
 
@@ -25,7 +25,7 @@ class InviteModalComponent extends Component {
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch} = this.props;
+        let {searchQuery, dispatch, cookies} = this.props;
         return(
             <Fragment>
                 <section className={"d-flex justify-content-center modalContainer"}>
@@ -38,7 +38,7 @@ class InviteModalComponent extends Component {
                         </div>
                         <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
                             <div className={"form-group"}>
-                                <input onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(setSearchQueryUserInvitation(e.target.value)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
+                                <input onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
                             </div>
 
                             <div className={"searchUserDropdown"} style={{display: searchQuery.length > 0 && !clickedToClose ? "" : "none"}}>
