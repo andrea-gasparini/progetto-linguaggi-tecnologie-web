@@ -6,7 +6,7 @@ import {X, XCircle} from "react-feather";
 import {
     addUserToInvitations,
     removeUserFromInvitations, resetDataInvitations,
-    searchUserForInvitation, setResultSearchQuery, setSearchQueryUserInvitation
+    searchUserForInvitation, sendInvitations, setResultSearchQuery, setSearchQueryUserInvitation
 } from "../../../redux/actions/invitations";
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
@@ -37,29 +37,47 @@ class InviteModalComponent extends Component {
 
     checkIfCloseModal = (e) => {
         let {dispatch, closeModal} = this.props;
-        console.log(e.target);
         if(e.target.classList.contains("modalContainer")) {
             // resetto tutto.
-            dispatch(resetDataInvitations());
+            dispatch(resetDataInvitations(false));
             closeModal();
         }
 
     };
 
+    sendInvitations = (e) => {
+        e.preventDefault();
+        let {dispatch, cookies, readyToSendInvite} = this.props;
+        dispatch(sendInvitations(JSON.stringify(readyToSendInvite), 1, cookies.cookies.token));
+    };
+
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation, showErrorInvitation, errorMessageInvitation} = this.props;
         return(
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center flex-column"}>
                         <div className={"closeInviteModal"}>
-                            <X onClick={() => closeModal()} />
+                            <X onClick={() => {closeModal(); dispatch(resetDataInvitations(false));}} />
                         </div>
                         <div className={"text-muted inviteModalTitle"}>
                             Invita amici nel gruppo
                         </div>
-                        <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
+
+                        {showSuccessInvitation &&
+                            <div className={"alert alert-success mt-2"}>
+                                <b>Inviti inviati con successo.</b>
+                            </div>
+                        }
+
+                        {showErrorInvitation &&
+                            <div className={"alert alert-danger mt-2"}>
+                                <b>{errorMessageInvitation}</b>
+                            </div>
+                        }
+
+                        <form onSubmit={(e) => this.sendInvitations(e)} className={[!showSuccessInvitation && !showErrorInvitation ? "mt-3" : "mt-2"]} style={{width: "calc(100% - 30px)", position: "relative"}}>
                             <div className={"d-flex flex-row usersInvitedList flex-wrap"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
@@ -72,7 +90,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"form-group"}>
-                                <input onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
+                                <input value={searchQuery} onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
                             </div>
 
                             <div className={"searchUserDropdown"} style={{display: searchQuery.length > 0 && !clickedToClose ? "" : "none"}}>
@@ -96,7 +114,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex form-group justify-content-center"} style={{width: "100%"}}>
-                                <button disabled={readyToSendInvite.length <= 0} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
+                                <button disabled={readyToSendInvite.length <= 0} type={"submit"} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
                                     {readyToSendInvite.length <= 0 &&
                                         "Aggiungi utenti da invitare"
                                     }
