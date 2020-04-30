@@ -6,7 +6,7 @@ import {X, XCircle} from "react-feather";
 import {
     addUserToInvitations,
     removeUserFromInvitations, resetDataInvitations,
-    searchUserForInvitation, setResultSearchQuery, setSearchQueryUserInvitation
+    searchUserForInvitation, sendInvitations, setResultSearchQuery, setSearchQueryUserInvitation
 } from "../../../redux/actions/invitations";
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
@@ -45,6 +45,12 @@ class InviteModalComponent extends Component {
 
     };
 
+    sendInvitations = (e) => {
+        e.preventDefault();
+        let {dispatch, cookies, readyToSendInvite} = this.props;
+        dispatch(sendInvitations(readyToSendInvite, 1, cookies.cookies.token));
+    };
+
     render() {
         let {clickedToClose} = this.state;
         let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal} = this.props;
@@ -58,7 +64,7 @@ class InviteModalComponent extends Component {
                         <div className={"text-muted inviteModalTitle"}>
                             Invita amici nel gruppo
                         </div>
-                        <form className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
+                        <form onSubmit={(e) => this.sendInvitations(e)} className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
                             <div className={"d-flex flex-row usersInvitedList flex-wrap"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
@@ -95,7 +101,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex form-group justify-content-center"} style={{width: "100%"}}>
-                                <button disabled={readyToSendInvite.length <= 0} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
+                                <button disabled={readyToSendInvite.length <= 0} type={"submit"} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
                                     {readyToSendInvite.length <= 0 &&
                                         "Aggiungi utenti da invitare"
                                     }

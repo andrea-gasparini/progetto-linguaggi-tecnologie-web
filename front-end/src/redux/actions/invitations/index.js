@@ -61,3 +61,17 @@ export const resetDataInvitations = () => ({
     type: RESET_INVITATIONS_DATA,
     payload: {}
 });
+
+export const sendInvitations = (users, groupId, token) => {
+    return async dispatch => {
+        return axios.post(`${API_SERVER_URL}/sendInvitations`, qs.stringify({users, groupId}), {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+}
