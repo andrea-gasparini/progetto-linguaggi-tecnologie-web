@@ -28,6 +28,9 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 			$users = json_decode($this->input->post('users'));
 
+			if(count($users) <= 0)
+				return $this->response(buildServerResponse(false, "Seleziona degli utenti da invitare."), 200);
+
 			foreach($users as $key => $value) {
 				if(!FILTER_VAR($value->id, FILTER_VALIDATE_INT)) // intero non valido.
 					continue;

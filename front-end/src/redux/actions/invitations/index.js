@@ -75,6 +75,8 @@ export const sendInvitations = (users, groupId, token) => {
             if(res.data.status) {
                 dispatch(setSuccessSentInvitation());
                 dispatch(resetDataInvitations(true));
+            } else {
+                dispatch(setErrorSetInvitation(res.data.message));
             }
         }).catch((err) => {
             console.log(err);

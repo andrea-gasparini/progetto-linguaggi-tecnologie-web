@@ -53,7 +53,7 @@ class InviteModalComponent extends Component {
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation, showErrorInvitation, errorMessageInvitation} = this.props;
         return(
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
@@ -71,7 +71,13 @@ class InviteModalComponent extends Component {
                             </div>
                         }
 
-                        <form onSubmit={(e) => this.sendInvitations(e)} className={[!showSuccessInvitation ? "mt-3" : "mt-2"]} style={{width: "calc(100% - 30px)", position: "relative"}}>
+                        {showErrorInvitation &&
+                            <div className={"alert alert-danger mt-2"}>
+                                <b>{errorMessageInvitation}</b>
+                            </div>
+                        }
+
+                        <form onSubmit={(e) => this.sendInvitations(e)} className={[!showSuccessInvitation && !showErrorInvitation ? "mt-3" : "mt-2"]} style={{width: "calc(100% - 30px)", position: "relative"}}>
                             <div className={"d-flex flex-row usersInvitedList flex-wrap"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>

@@ -41,7 +41,8 @@ export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: 
                 searchQuery: {$set: ''},
                 readyToSendInvite: {$set: []},
                 usernameListInvitations: {$set: []},
-                showSuccessInvitation: {$set: action.payload.showSuccessMessage}
+                showSuccessInvitation: {$set: action.payload.showSuccessMessage},
+                showErrorInvitation: {$set: false}
             });
 
         case SET_SUCCESS_SENT_INVITATION:
