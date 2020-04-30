@@ -37,7 +37,6 @@ class InviteModalComponent extends Component {
 
     checkIfCloseModal = (e) => {
         let {dispatch, closeModal} = this.props;
-        console.log(e.target);
         if(e.target.classList.contains("modalContainer")) {
             // resetto tutto.
             dispatch(resetDataInvitations());
@@ -54,7 +53,7 @@ class InviteModalComponent extends Component {
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center flex-column"}>
                         <div className={"closeInviteModal"}>
-                            <X onClick={() => closeModal()} />
+                            <X onClick={() => {closeModal(); dispatch(resetDataInvitations());}} />
                         </div>
                         <div className={"text-muted inviteModalTitle"}>
                             Invita amici nel gruppo
