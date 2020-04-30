@@ -10,7 +10,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 	}
 
 
-	public function sendInvites_post() {
+	public function sendInvitations_post() {
 		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
 		if($tokenData["status"]) {
 			$userId = $tokenData["data"]["userId"];
