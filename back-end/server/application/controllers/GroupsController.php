@@ -23,7 +23,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			if(count($groupInfo) <= 0)
 				return $this->response(buildServerResponse(false, "Questo gruppo non esiste."), 200); // il gruppo non esiste.
 
-			if(!$this->GroupsModel->isMember($userId, $groupId))
+			if(!$this->GroupsModel->isGroupMember($userId, $groupId))
 				return $this->response(buildServerResponse(false, "Non puoi invitare utenti in un gruppo di cui non fai parte."), 200);
 
 			return $this->response(buildServerResponse(true, "ok"));
