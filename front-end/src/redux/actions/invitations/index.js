@@ -2,9 +2,9 @@ import {
     ADD_USER_TO_INVITE_TO_LIST,
     REMOVE_USER_FROM_INVITATIONS_LIST,
     REMOVE_USER_FROM_INVITATIONS_LIT,
-    RESET_INVITATIONS_DATA,
+    RESET_INVITATIONS_DATA, SET_ERROR_SENT_INVITATION,
     SET_SEARCH_USER_INVITATION_QUERY,
-    SET_SEARCH_USER_INVITATION_RESULT
+    SET_SEARCH_USER_INVITATION_RESULT, SET_SUCCESS_SENT_INVITATION
 } from "./actions";
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
@@ -57,9 +57,11 @@ export const removeUserFromInvitations = (user) => ({
     }
 });
 
-export const resetDataInvitations = () => ({
+export const resetDataInvitations = (showSuccessMessage) => ({
     type: RESET_INVITATIONS_DATA,
-    payload: {}
+    payload: {
+        showSuccessMessage
+    }
 });
 
 export const sendInvitations = (users, groupId, token) => {
@@ -69,9 +71,24 @@ export const sendInvitations = (users, groupId, token) => {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => {
-
+            console.log(res.data.status);
+            if(res.data.status) {
+                dispatch(setSuccessSentInvitation());
+                dispatch(resetDataInvitations(true));
+            }
         }).catch((err) => {
             console.log(err);
         });
     }
-}
+};
+
+export const setSuccessSentInvitation = () => ({
+    type: SET_SUCCESS_SENT_INVITATION,
+});
+
+export const setErrorSetInvitation = (errorMessage) => ({
+    type: SET_ERROR_SENT_INVITATION,
+    payload: {
+        errorMessage
+    }
+});

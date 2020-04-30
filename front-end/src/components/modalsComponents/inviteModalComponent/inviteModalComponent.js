@@ -39,7 +39,7 @@ class InviteModalComponent extends Component {
         let {dispatch, closeModal} = this.props;
         if(e.target.classList.contains("modalContainer")) {
             // resetto tutto.
-            dispatch(resetDataInvitations());
+            dispatch(resetDataInvitations(false));
             closeModal();
         }
 
@@ -48,23 +48,30 @@ class InviteModalComponent extends Component {
     sendInvitations = (e) => {
         e.preventDefault();
         let {dispatch, cookies, readyToSendInvite} = this.props;
-        dispatch(sendInvitations(readyToSendInvite, 1, cookies.cookies.token));
+        dispatch(sendInvitations(JSON.stringify(readyToSendInvite), 1, cookies.cookies.token));
     };
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal} = this.props;
+        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation} = this.props;
         return(
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center flex-column"}>
                         <div className={"closeInviteModal"}>
-                            <X onClick={() => {closeModal(); dispatch(resetDataInvitations());}} />
+                            <X onClick={() => {closeModal(); dispatch(resetDataInvitations(false));}} />
                         </div>
                         <div className={"text-muted inviteModalTitle"}>
                             Invita amici nel gruppo
                         </div>
-                        <form onSubmit={(e) => this.sendInvitations(e)} className={"mt-3"} style={{width: "calc(100% - 30px)", position: "relative"}}>
+
+                        {showSuccessInvitation &&
+                            <div className={"alert alert-success mt-2"}>
+                                <b>Inviti inviati con successo.</b>
+                            </div>
+                        }
+
+                        <form onSubmit={(e) => this.sendInvitations(e)} className={[!showSuccessInvitation ? "mt-3" : "mt-2"]} style={{width: "calc(100% - 30px)", position: "relative"}}>
                             <div className={"d-flex flex-row usersInvitedList flex-wrap"}>
                                 {readyToSendInvite.map((value, index) => (
                                     <div title={value.username} key={index} className={"d-flex userAddedToInvitation align-items-center"} style={{position: "relative"}}>
@@ -77,7 +84,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"form-group"}>
-                                <input onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
+                                <input value={searchQuery} onClick={() => this.setState({clickedToClose: false})} onChange={(e) => {dispatch(searchUserForInvitation(e.target.value, cookies.cookies.token)); this.setState({clickedToClose: false})}} type="text" className={"form-control"} placeholder="Cerca un username oppure un indirizzo email"/>
                             </div>
 
                             <div className={"searchUserDropdown"} style={{display: searchQuery.length > 0 && !clickedToClose ? "" : "none"}}>

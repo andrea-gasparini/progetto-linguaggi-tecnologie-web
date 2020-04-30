@@ -26,6 +26,25 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			if(!$this->GroupsModel->isGroupMember($userId, $groupId))
 				return $this->response(buildServerResponse(false, "Non puoi invitare utenti in un gruppo di cui non fai parte."), 200);
 
+			$users = json_decode($this->input->post('users'));
+
+			foreach($users as $key => $value) {
+				if(!FILTER_VAR($value->id, FILTER_VALIDATE_INT)) // intero non valido.
+					continue;
+
+				$getUser = $this->UserModel->getUserById($value->id);
+				if(count($getUser) <= 0)
+					continue; // utente non esiste.
+
+				if($userId == $value->id)
+					continue; // mi auto invito e non va bene.
+
+				$invitationAlreadyExists = $this->GroupsModel->invitationAlreadyExists($userId, $value->id, $groupId);
+				$data = array("from_id" => $userId, "to_id" => $value->id, "group_id" => $groupId, "invited_at" => "now()");
+				$this->GroupsModel->addInvitation($data, $invitationAlreadyExists);
+			}
+
+
 			return $this->response(buildServerResponse(true, "ok"));
 
 		}
