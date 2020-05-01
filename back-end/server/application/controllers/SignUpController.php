@@ -15,7 +15,6 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 		$EMAIL_MAX_LENGTH = 255;
 		$PASSWORD_MAX_LENGTH = 30;
 
-
 		$values = array(
 			"signUpRealname" 		=> NULL,
 			"signUpUsername"		=> NULL,
@@ -67,6 +66,27 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			$errors["signUpEmailHasError"] = true;
 			return $this->response(buildServerResponse(
 				false, "L'email inserita non è valida.", $errors), 200);
+		}
+
+		// Check email maxlength
+		if (strlen($values["signUpEmail"]) > $EMAIL_MAX_LENGTH) {
+			$errors["signUpEmailHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "L'email non può contenere più di " . $EMAIL_MAX_LENGTH . " caratteri.", $errors), 200);
+		}
+
+		// Check realname maxlength
+		if (strlen($values["signUpRealname"]) > $REALNAME_MAX_LENGTH) {
+			$errors["signUpRealnameHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "Massimo " . $REALNAME_MAX_LENGTH . " caratteri.", $errors), 200);
+		}
+
+		// Check username maxlength
+		if (strlen($values["signUpUsername"]) > $USERNAME_MAX_LENGTH) {
+			$errors["signUpUsernameHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "Massimo " . $USERNAME_MAX_LENGTH . " caratteri.", $errors), 200);
 		}
 
 		return $this->response(buildServerResponse(true, "ok"), 200);
