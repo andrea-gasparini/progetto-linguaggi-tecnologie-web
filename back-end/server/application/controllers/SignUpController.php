@@ -2,7 +2,6 @@
 
 class SignUpController extends \chriskacerguis\RestServer\RestController
 {
-
 	public function __construct($config = 'rest')
 	{
 		parent::__construct($config);
@@ -14,6 +13,7 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 		$USERNAME_MAX_LENGTH = 25;
 		$EMAIL_MAX_LENGTH = 255;
 		$PASSWORD_MAX_LENGTH = 30;
+		$PASSWORD_MIN_LENGTH = 8;
 
 		$values = array(
 			"signUpRealname" 		=> NULL,
@@ -53,12 +53,19 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 		}
 
 		// Check password maxlength
-		if (strlen($values["signUpPassword"]) > $PASSWORD_MAX_LENGTH ||
-		strlen($values["signUpConfirmPassword"]) > $PASSWORD_MAX_LENGTH) {
+		if (strlen($values["signUpPassword"]) > $PASSWORD_MAX_LENGTH) {
 			$errors["signUpPasswordHasError"] = true;
 			$errors["signUpConfirmPasswordHasError"] = true;
 			return $this->response(buildServerResponse(
 				false, "La password non può contenere più di " . $PASSWORD_MAX_LENGTH . " caratteri.", $errors), 200);
+		}
+
+		// Check password minlegth
+		if (strlen($values["signUpPassword"]) < $PASSWORD_MIN_LENGTH) {
+			$errors["signUpPasswordHasError"] = true;
+			$errors["signUpConfirmPasswordHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "La password deve contenere almeno " . $PASSWORD_MIN_LENGTH . " caratteri.", $errors), 200);
 		}
 
 		// Check email valida
