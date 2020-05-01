@@ -53,6 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['login'] = "LoginController/doLogin";
+$route['signup'] = "SignUpController/doSignUp";
 $route['validate'] = "LoginController/validateToken";
 $route['searchUser'] = "SearchUserController/searchUser";
 $route['sendInvitations'] = "GroupsController/sendInvitations";

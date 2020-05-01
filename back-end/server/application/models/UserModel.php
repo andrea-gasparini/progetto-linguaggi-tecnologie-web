@@ -4,6 +4,26 @@
 
 class UserModel extends CI_Model
 {
+	public function usernameIsAvaiable($username) {
+		$this->db->select("*");
+		$this->db->where(array("username" => $username));
+		$query = $this->db->get("users");
+		return $query->num_rows() == 0;
+	}
+
+
+	public function createUser($realname, $username, $email, $password) {
+		$data = array(
+			"realname" => $realname,
+			"username" => $username,
+			"email" => $email,
+			"password" => $password,
+			"created_at" => "now()"
+		);
+		$this->db->insert("users", $data);
+		return $this->db->insert_id("users_id_seq");
+	}
+
 
 	public function getUserByEmail($email) {
 		$this->db->select("*");
