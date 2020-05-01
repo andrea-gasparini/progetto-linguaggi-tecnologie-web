@@ -4,6 +4,9 @@ import './style.css';
 import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 import {PlusCircle} from "react-feather";
 import InviteModalComponent from "../modalsComponents/inviteModalComponent/inviteModalComponent";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state) => ({...state.userReducer});
 
 class HomeComponent extends Component {
     constructor(props) {
@@ -50,4 +53,4 @@ class HomeComponent extends Component {
     }
 }
 
-export default HomeComponent;
+export default connect(mapStateToProps)(HomeComponent);
