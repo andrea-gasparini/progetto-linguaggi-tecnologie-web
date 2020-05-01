@@ -44,8 +44,10 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(false, "I dati inseriti non sono corretti.",
 				array("usernameHasError" => true, "passwordHasError" => true)), 200);
 
+
+		$userData = loadDataUser($user[0]->id, $user[0]->username);
 		$token = AUTHORIZATION::generateToken(array("userId" => $user[0]->id)); // genera il jwt per questo utente con dentro il valore dell'userid.
-		return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
+		return $this->response(buildServerResponse(true, "ok", array("token" => $token, "userData" => $userData)), 200);
 	}
 
 	public function validateToken_post() {

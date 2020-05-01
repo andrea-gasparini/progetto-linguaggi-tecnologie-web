@@ -34,6 +34,7 @@ export const tryAuthLogin = (username, password, cookies, history) => {
             if(!res.data.status)
                 dispatch(setErrorLogin({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
             else {
+                dispatch(setUserData(data.userData));
                 cookies.set('token', data.token); // mettiamo nei cookie il nuovo token
                 history.push('/home'); // redirect alla home.
             }
