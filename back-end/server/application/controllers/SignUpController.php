@@ -114,6 +114,13 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			}
 		}
 
-		return $this->response(buildServerResponse(true, "ok"), 200);
+		$userId = $this->UserModel->createUser(
+			$values["signUpRealname"],
+			$values["signUpUsername"],
+			$values["signUpEmail"],
+			password_hash($values["signUpPassword"], PASSWORD_DEFAULT)
+		);
+		$token = AUTHORIZATION::generateToken(array("userId" => $userId));
+		return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
 	}
 }
