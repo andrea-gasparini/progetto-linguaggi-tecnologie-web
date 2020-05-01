@@ -47,6 +47,13 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 				false, "Le due password devono corrispondere.", $errors), 200);
 		}
 
+		// Check email valida
+		if (!FILTER_VAR($values["signUpEmail"], FILTER_VALIDATE_EMAIL)) {
+			$errors["signUpEmailHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "L'email inserita non è valida.", $errors), 200);
+		}
+
 		return $this->response(buildServerResponse(true, "ok"), 200);
 	}
 }
