@@ -7,6 +7,7 @@ import {
     SET_ERROR_SIGNUP
 } from "./action";
 import axios from "axios";
+import qs from 'querystring';
 import {API_SERVER_URL} from "../../../globalConstants";
 
 export const setSignUpRealname = (signUpRealname) => ({
@@ -56,8 +57,7 @@ export const tryAuthSignUp = (credentials, cookies, history) => {
         return axios.post(`${API_SERVER_URL}/signup`, qs.stringify(credentials)).then((res) => {
             let {data, message} = res.data;
             if(!res.data.status)
-                //dispatch(setErrorSignUp({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
-                console.log(res.data, data);
+                dispatch(setErrorSignUp({ ...data, message: message}));
             else {
                 cookies.set('token', data.token); // mettiamo nei cookie il nuovo token
                 history.push('/home'); // redirect alla home.

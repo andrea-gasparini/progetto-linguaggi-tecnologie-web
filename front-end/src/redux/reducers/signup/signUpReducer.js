@@ -35,11 +35,12 @@ export const signUpReducer = (state = {
 
             case SET_ERROR_SIGNUP:
                 return update(state, {
-                    signUpRealnameHasError: { $set: action.payload.signUpRealnameHasError },
-                    signUpUsernameHasError: { $set: action.payload.signUpUsernameHasError },
-                    signUpEmailHasError: { $set: action.payload.signUpEmailHasError },
-                    signUpPasswordHasError: { $set: action.payload.signUpPasswordHasError },
-                    signUpConfirmPasswordHasError: { $set: action.payload.signUpConfirmPasswordHasError },
+                    signUpRealnameHasError:         { $set: action.payload.signUpRealnameHasError },
+                    signUpUsernameHasError:         { $set: action.payload.signUpUsernameHasError },
+                    signUpEmailHasError:            { $set: action.payload.signUpEmailHasError },
+                    signUpPasswordHasError:         { $set: action.payload.signUpPasswordHasError },
+                    signUpConfirmPasswordHasError:  { $set: action.payload.signUpConfirmPasswordHasError },
+                    messageSignUpError:             { $set: action.payload.message }
                 });
         }
     };
