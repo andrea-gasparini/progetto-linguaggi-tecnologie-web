@@ -9,7 +9,7 @@ import {
     setSignUpEmail,
     setSignUpPassword,
     setSignUpConfirmPassword,
-    tryAuthSignUp
+    tryAuthSignUp, setErrorSignUp
 } from "../../redux/actions/signup";
 
 const mapStateToProps = (state) => ({...state.signUpReducer});
@@ -28,6 +28,10 @@ class SignUpComponent extends Component
         e.preventDefault();
         let { signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword,
             dispatch, history, cookies } = this.props;
+
+        // Reset stati errore
+        dispatch(setErrorSignUp({ signUpRealnameHasError: false, signUpUsernameHasError: false,
+            signUpEmailHasError: false, signUpPasswordHasError: false, signUpConfirmPasswordHasError: false }));
 
         dispatch(tryAuthSignUp({signUpRealname, signUpUsername, signUpEmail, signUpPassword,
             signUpConfirmPassword}, history, cookies));
