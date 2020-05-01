@@ -24,6 +24,7 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 		$hasError = false;	// true se c'è almeno un errore
 		$errors = array();	// array di errori: (signUpRealNameHasError => true, etc.. )
 
+		// Double check required e milength
 		foreach ($values as $key => $value)
 		{
 			if (!$value || strlen($value) <= 0 || strlen(trim($value)) <= 0) {
@@ -38,6 +39,14 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse( // util definita in ../helpers/response_helper.php
 				false, "Compila questo campo!", $errors), 200);
 
-		return $this->response(buildServerResponse(false, "wtf"), 200);
+		// Check signUpPassword e signUpConfirmPassword match
+		if ($values["signUpPassword"] != $values["signUpConfirmPassword"]) {
+			$errors["signUpPasswordHasError"] = true;
+			$errors["signUpConfirmPasswordHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "Le due password devono corrispondere.", $errors), 200);
+		}
+
+		return $this->response(buildServerResponse(true, "ok"), 200);
 	}
 }
