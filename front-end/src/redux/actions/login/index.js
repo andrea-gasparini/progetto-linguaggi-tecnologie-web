@@ -55,8 +55,7 @@ export const validateToken = (cookies, history, fromLogin=false) => {
             if(status) {
                 dispatch(setUserData(data.userData));
                 cookies.set('token', data.token);
-                if(fromLogin)
-                    history.push({pathname: '/home', search: '', state: {fromLogin}});
+                history.push({pathname: '/home', search: '', state: {fromLogin}});
             } else {
                 cookies.remove('token');
                 if(history.location !== '/')
