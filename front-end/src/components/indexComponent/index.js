@@ -32,7 +32,6 @@ class IndexComponent extends Component {
         if(usernameHasError || passwordHasError)
             dispatch(setErrorLogin({usernameHasError: false, passwordHasError: false})); // resetto i dati a false
 
-
         dispatch(tryAuthLogin(username, password, cookies, history));
     };
 
@@ -57,7 +56,7 @@ class IndexComponent extends Component {
                                 </div>
                             </div>
                             <div className={"d-flex flex-column"}>
-                                <form ref={(ref) => this.loginForm = ref} method={"post"} className={"col mt-4"}>
+                                <form ref={(ref) => this.loginForm = ref} onSubmit={(e) => this.signIn(e)} method={"post"} action={"/"} className={"col mt-4"}>
                                     <div className={"form-group"}>
                                         <input onChange={(e) => dispatch(setUsername(e.target.value))} value={username}
                                                required autoComplete={"off"} type={"email"}
@@ -99,8 +98,8 @@ class IndexComponent extends Component {
                                         </div>
 
                                         <div>
-                                            <button disabled={typeof username === "undefined" || typeof password === "undefined" || username.length <= 0 || password.length <= 0}
-                                                    onClick={(e) => this.signIn(e)}
+                                            <button disabled={username.length <= 0 || password.length <= 0}
+                                                    type={"submit"}
                                                     className={"btn btn-primary sapienzaButton"}>Accedi
                                             </button>
                                         </div>
