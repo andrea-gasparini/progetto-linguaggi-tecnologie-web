@@ -12,6 +12,19 @@ class UserModel extends CI_Model
 	}
 
 
+	public function createUser($realname, $username, $email, $password) {
+		$data = array(
+			"realname" => $realname,
+			"username" => $username,
+			"email" => $email,
+			"password" => $password,
+			"created_at" => "now()"
+		);
+		$this->db->insert("users", $data);
+		return $this->db->insert_id("users_id_seq");
+	}
+
+
 	public function getUserByEmail($email) {
 		$this->db->select("*");
 		$this->db->where(array("email" => $email));
