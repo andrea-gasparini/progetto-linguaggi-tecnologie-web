@@ -70,7 +70,11 @@ class LoginController extends \chriskacerguis\RestServer\RestController
 
 			$data = setUserDataToSendInRedux($user[0]);
 			$token = AUTHORIZATION::generateToken($data); // refresho il token anche col timestamp
-			return $this->response(buildServerResponse(true, "ok", array("token" => $token)), 200);
+
+			// pesco i dati dell'utente.
+			$userData = loadDataUser($userId, $user[0]->username);
+
+			return $this->response(buildServerResponse(true, "ok", array("token" => $token, "userData" => $userData)), 200);
 		}
 		return $this->response(buildServerResponse(false, "Token di accesso non valido. #n"), 200);
 	}

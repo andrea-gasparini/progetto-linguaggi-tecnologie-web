@@ -31,3 +31,11 @@ function validateAuthorizationToken($token) {
 
 	return buildServerResponse(false, "Token di accesso non valido. #3");;
 }
+
+
+function loadDataUser($userId, $username) {
+	$ci = & get_instance();
+	$userGroups = $ci->UserModel->getUserGroups($userId);
+	$userNotificationsCount = $ci->UserModel->getInvitationsCountToRead($userId);
+	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username));
+}
