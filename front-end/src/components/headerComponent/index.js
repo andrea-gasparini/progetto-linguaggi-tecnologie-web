@@ -2,8 +2,9 @@ import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import './style.css';
 import {Bell} from "react-feather";
+import DropDownInvitations from "../dropdownInvitations";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({...state.userReducer});
 
 class HeaderComponent extends Component {
     constructor(props) {
@@ -64,6 +65,7 @@ class HeaderComponent extends Component {
 
     render() {
         let {currentActive, showActive, showShadow} = this.state;
+        let {userData} = this.props;
         return(
             <Fragment>
                 <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
@@ -79,9 +81,13 @@ class HeaderComponent extends Component {
                             ))}
                         </ul>
 
-                        <div data-count={9} className={"invitationsIcon"}>
-                            <Bell />
-                        </div>
+                        {typeof userData !== "undefined" &&
+                            <div data-count={userData.userNotifications}
+                                 className={["invitationsIcon", userData.userNotifications <= 0 ? "hideAfter" : ""].join(" ")}>
+                                <Bell/>
+                                <DropDownInvitations />
+                            </div>
+                        }
                     </div>
                 </nav>
             </Fragment>

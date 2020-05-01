@@ -36,4 +36,21 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+
+	public function getInvitationsCountToRead($userId) {
+		$this->db->select("*");
+		$this->db->where(array("to_id" => $userId, "is_read" => "f"));
+		$query = $this->db->get("invitations");
+		return $query->num_rows();
+	}
+
+
+	public function getUserGroups($userId) {
+		$this->db->select("groups.id, groups.code, groups.created_at, groups.group_title");
+		$this->db->join("groups", "groups.id = groupsMemberships.group_id");
+		$this->db->where(array("groupsMemberships.group_id" => $userId));
+		$query = $this->db->get("groupsMemberships");
+		return $query->result();
+	}
+
 }
