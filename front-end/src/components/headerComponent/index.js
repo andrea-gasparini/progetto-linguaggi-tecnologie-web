@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import './style.css';
 import {Bell} from "react-feather";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({...state.userReducer});
 
 class HeaderComponent extends Component {
     constructor(props) {
