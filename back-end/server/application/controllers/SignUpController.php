@@ -10,6 +10,12 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 
 	public function doSignUp_post()
 	{
+		$REALNAME_MAX_LENGTH = 255;
+		$USERNAME_MAX_LENGTH = 25;
+		$EMAIL_MAX_LENGTH = 255;
+		$PASSWORD_MAX_LENGTH = 30;
+
+
 		$values = array(
 			"signUpRealname" 		=> NULL,
 			"signUpUsername"		=> NULL,
@@ -48,13 +54,13 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 		}
 
 		// Check password maxlength
-		if (strlen($values["signUpPassword"]) > 30 || strlen($values["signUpConfirmPassword"]) > 30) {
+		if (strlen($values["signUpPassword"]) > $PASSWORD_MAX_LENGTH ||
+		strlen($values["signUpConfirmPassword"]) > $PASSWORD_MAX_LENGTH) {
 			$errors["signUpPasswordHasError"] = true;
 			$errors["signUpConfirmPasswordHasError"] = true;
 			return $this->response(buildServerResponse(
-				false, "La password non può contenere più di 30 caratteri.", $errors), 200);
+				false, "La password non può contenere più di " . $PASSWORD_MAX_LENGTH . " caratteri.", $errors), 200);
 		}
-
 
 		// Check email valida
 		if (!FILTER_VAR($values["signUpEmail"], FILTER_VALIDATE_EMAIL)) {
