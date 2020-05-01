@@ -51,21 +51,22 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(
 				false, "Le due password devono corrispondere.", $errors), 200);
 		}
+		else {
+			// Check password maxlength
+			if (strlen($values["signUpPassword"]) > $PASSWORD_MAX_LENGTH) {
+				$errors["signUpPasswordHasError"] = true;
+				$errors["signUpConfirmPasswordHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "La password non può contenere più di " . $PASSWORD_MAX_LENGTH . " caratteri.", $errors), 200);
+			}
 
-		// Check password maxlength
-		if (strlen($values["signUpPassword"]) > $PASSWORD_MAX_LENGTH) {
-			$errors["signUpPasswordHasError"] = true;
-			$errors["signUpConfirmPasswordHasError"] = true;
-			return $this->response(buildServerResponse(
-				false, "La password non può contenere più di " . $PASSWORD_MAX_LENGTH . " caratteri.", $errors), 200);
-		}
-
-		// Check password minlegth
-		if (strlen($values["signUpPassword"]) < $PASSWORD_MIN_LENGTH) {
-			$errors["signUpPasswordHasError"] = true;
-			$errors["signUpConfirmPasswordHasError"] = true;
-			return $this->response(buildServerResponse(
-				false, "La password deve contenere almeno " . $PASSWORD_MIN_LENGTH . " caratteri.", $errors), 200);
+			// Check password minlegth
+			if (strlen($values["signUpPassword"]) < $PASSWORD_MIN_LENGTH) {
+				$errors["signUpPasswordHasError"] = true;
+				$errors["signUpConfirmPasswordHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "La password deve contenere almeno " . $PASSWORD_MIN_LENGTH . " caratteri.", $errors), 200);
+			}
 		}
 
 		// Check email valida
@@ -74,12 +75,13 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(
 				false, "L'email inserita non è valida.", $errors), 200);
 		}
-
-		// Check email maxlength
-		if (strlen($values["signUpEmail"]) > $EMAIL_MAX_LENGTH) {
-			$errors["signUpEmailHasError"] = true;
-			return $this->response(buildServerResponse(
-				false, "L'email non può contenere più di " . $EMAIL_MAX_LENGTH . " caratteri.", $errors), 200);
+		else {
+			// Check email maxlength
+			if (strlen($values["signUpEmail"]) > $EMAIL_MAX_LENGTH) {
+				$errors["signUpEmailHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "L'email non può contenere più di " . $EMAIL_MAX_LENGTH . " caratteri.", $errors), 200);
+			}
 		}
 
 		// Check realname maxlength
