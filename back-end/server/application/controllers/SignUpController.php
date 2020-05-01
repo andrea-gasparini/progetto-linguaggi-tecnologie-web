@@ -82,6 +82,13 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(
 					false, "L'email non può contenere più di " . $EMAIL_MAX_LENGTH . " caratteri.", $errors), 200);
 			}
+
+			$user = $this->UserModel->getUserByEmail($values["signUpEmail"]);
+			if (count($user) > 0) { // l'email è già presente nel sistema
+				$errors["signUpEmailHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "L'email è associata ad un account già esistente.", $errors), 200);
+			}
 		}
 
 		// Check realname maxlength
