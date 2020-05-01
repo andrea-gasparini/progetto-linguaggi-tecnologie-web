@@ -4,6 +4,13 @@
 
 class UserModel extends CI_Model
 {
+	public function usernameIsAvaiable($username) {
+		$this->db->select("*");
+		$this->db->where(array("username" => $username));
+		$query = $this->db->get("users");
+		return $query->num_rows() == 0;
+	}
+
 
 	public function getUserByEmail($email) {
 		$this->db->select("*");
