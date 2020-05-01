@@ -47,6 +47,15 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 				false, "Le due password devono corrispondere.", $errors), 200);
 		}
 
+		// Check password maxlength
+		if (strlen($values["signUpPassword"]) > 30 || strlen($values["signUpConfirmPassword"]) > 30) {
+			$errors["signUpPasswordHasError"] = true;
+			$errors["signUpConfirmPasswordHasError"] = true;
+			return $this->response(buildServerResponse(
+				false, "La password non può contenere più di 30 caratteri.", $errors), 200);
+		}
+
+
 		// Check email valida
 		if (!FILTER_VAR($values["signUpEmail"], FILTER_VALIDATE_EMAIL)) {
 			$errors["signUpEmailHasError"] = true;
