@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 27/04/2020 15:15:06
+ Date: 01/05/2020 16:11:19
 */
 
 
@@ -161,7 +161,8 @@ CREATE TABLE "public"."invitations" (
   "from_id" int4 NOT NULL,
   "to_id" int4 NOT NULL,
   "group_id" int4 NOT NULL,
-  "invited_at" timestamp(6) NOT NULL
+  "invited_at" timestamp(6) NOT NULL,
+  "is_read" bool NOT NULL DEFAULT false
 )
 ;
 
@@ -194,7 +195,6 @@ CREATE TABLE "public"."users" (
 ;
 
 -- ----------------------------
-
 -- Primary Key structure for table chats
 -- ----------------------------
 ALTER TABLE "public"."chats" ADD CONSTRAINT "chats_pkey" PRIMARY KEY ("id");
