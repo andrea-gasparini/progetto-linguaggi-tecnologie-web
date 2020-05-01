@@ -20,7 +20,7 @@ class IndexComponent extends Component {
     async componentDidMount() {
         let {dispatch, cookies, history} = this.props;
         if(typeof cookies.cookies.token === "string") // se abbiamo un token di accesso, proviamo a convalidarlo.
-            await dispatch(validateToken(cookies, history));
+            await dispatch(validateToken(cookies, history, true));
 
         if(typeof cookies.cookies.token === "undefined")
             this.setState({showLogin: true}); // se non abbiamo il token, o comunque non siamo stati redirectati mostriamo il login.
