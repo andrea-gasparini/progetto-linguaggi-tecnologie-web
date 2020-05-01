@@ -83,8 +83,9 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 					false, "L'email non può contenere più di " . $EMAIL_MAX_LENGTH . " caratteri.", $errors), 200);
 			}
 
+			// Check email già utilizzata
 			$user = $this->UserModel->getUserByEmail($values["signUpEmail"]);
-			if (count($user) > 0) { // l'email è già presente nel sistema
+			if (count($user) > 0) {
 				$errors["signUpEmailHasError"] = true;
 				return $this->response(buildServerResponse(
 					false, "L'email è associata ad un account già esistente.", $errors), 200);
@@ -103,6 +104,14 @@ class SignUpController extends \chriskacerguis\RestServer\RestController
 			$errors["signUpUsernameHasError"] = true;
 			return $this->response(buildServerResponse(
 				false, "Massimo " . $USERNAME_MAX_LENGTH . " caratteri.", $errors), 200);
+		}
+		else {
+			// Check username già utilizzato
+			if (! $this->UserModel->usernameIsAvaiable($values["signUpUsername"])) {
+				$errors["signUpUsernameHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "Username non disponibile.", $errors), 200);
+			}
 		}
 
 		return $this->response(buildServerResponse(true, "ok"), 200);
