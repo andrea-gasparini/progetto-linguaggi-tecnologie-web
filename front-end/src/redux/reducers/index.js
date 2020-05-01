@@ -7,5 +7,6 @@ import {userReducer} from "./user/userReducer";
 export default combineReducers({
     loginReducer,
     signUpReducer,
-    invitationsReducer
+    invitationsReducer,
+    userReducer
 });
