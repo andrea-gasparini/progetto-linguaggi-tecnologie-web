@@ -26,17 +26,17 @@ class SignUpComponent extends Component
 
     signUp(e) {
         e.preventDefault();
-        let { signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError,
-            signUpConfirmPasswordHasError, dispatch, history, cookies } = this.props;
+        let { signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword,
+            dispatch, history, cookies } = this.props;
 
-        dispatch(tryAuthSignUp({signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError,
-            signUpConfirmPasswordHasError}, history, cookies));
+        dispatch(tryAuthSignUp({signUpRealname, signUpUsername, signUpEmail, signUpPassword,
+            signUpConfirmPassword}, history, cookies));
     }
 
     render() {
-        let { signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword,
-            signUpRealnameHasError, signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError, signUpConfirmPasswordHasError,
-            dispatch } = this.props;
+        let { signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword, signUpRealnameHasError,
+            signUpUsernameHasError, signUpEmailHasError, signUpPasswordHasError, signUpConfirmPasswordHasError,
+            messageSignUpError, dispatch } = this.props;
         let credentials = [signUpRealname, signUpUsername, signUpEmail, signUpPassword, signUpConfirmPassword];
 
         return (
@@ -56,23 +56,23 @@ class SignUpComponent extends Component
                             </div>
                         </div>
                         <div className={"d-flex flex-column"}>
-                            <form ref={(ref) => this.signUpForm = ref} method={"post"} className={"col mt-4"}>
+                            <form ref={(ref) => this.signUpForm = ref} onSubmit={e => this.signUp(e)} method={"post"} className={"col mt-4"}>
                                 <div className={"d-flex flex-row justify-content-between"}>
                                     <div className={"form-group"}>
                                         <input onChange={(e) => dispatch(setSignUpRealname(e.target.value))}
                                            value={signUpRealname}
                                            required autoComplete={"off"} type={"text"}
-                                           className={["form-control"].join(" ")}
+                                           className={["form-control", signUpRealnameHasError ? "is-invalid" : ""].join(" ")}
                                            placeholder={"Nome e cognome"}/>
-                                        {
+                                        {! signUpRealnameHasError &&
                                             <small id={"realnameHelp"} className={"form-text text-muted"}>
                                                 Inserisci il tuo nome e il tuo cognome.
                                             </small>
                                         }
 
-                                        {
+                                        {signUpRealnameHasError &&
                                             <div className={"invalid-feedback"}>
-                                                Test errore
+                                                {messageSignUpError}
                                             </div>
                                         }
                                     </div>
@@ -81,17 +81,17 @@ class SignUpComponent extends Component
                                         <input onChange={(e) => dispatch(setSignUpUsername(e.target.value))}
                                            value={signUpUsername}
                                            required autoComplete={"off"} type={"text"}
-                                           className={["form-control"].join(" ")}
+                                           className={["form-control", signUpUsernameHasError ? "is-invalid" : ""].join(" ")}
                                            placeholder={"Username"}/>
-                                        {
+                                        {! signUpUsernameHasError &&
                                             <small id={"usernameHelp"} className={"form-text text-muted"}>
                                                 Inserisci un username per il tuo account.
                                             </small>
                                         }
 
-                                        {
+                                        {signUpUsernameHasError &&
                                             <div className={"invalid-feedback"}>
-                                                Test errore
+                                                {messageSignUpError}
                                             </div>
                                         }
                                     </div>
@@ -101,17 +101,17 @@ class SignUpComponent extends Component
                                     <input onChange={(e) => dispatch(setSignUpEmail(e.target.value))}
                                         value={signUpEmail}
                                         required autoComplete={"off"} type={"email"}
-                                        className={["form-control"].join(" ")}
+                                        className={["form-control", signUpEmailHasError ? "is-invalid" : ""].join(" ")}
                                         aria-describedby={"emailHelp"} placeholder={"Indirizzo email"}/>
-                                    {
+                                    {! signUpEmailHasError &&
                                         <small id={"emailHelp"} className={"form-text text-muted"}>
                                             Inserisci il tuo indirizzo email.
                                         </small>
                                     }
 
-                                    {
+                                    {signUpEmailHasError &&
                                         <div className={"invalid-feedback"}>
-                                            Test errore
+                                            {messageSignUpError}
                                         </div>
                                     }
                                 </div>
@@ -122,24 +122,24 @@ class SignUpComponent extends Component
                                         <input onChange={(e) => dispatch(setSignUpPassword(e.target.value))}
                                            value={signUpPassword}
                                            required autoComplete={"off"} type={"password"}
-                                           className={["form-control mr-4"].join(" ")}
+                                           className={["form-control mr-4", signUpPasswordHasError ? "is-invalid" : ""].join(" ")}
                                            aria-describedby={"passwordHelp"} placeholder={"Password"}/>
 
                                        <input onChange={(e) => dispatch(setSignUpConfirmPassword(e.target.value))}
                                            value={signUpConfirmPassword}
                                            required autoComplete={"off"} type={"password"}
-                                           className={["form-control"].join(" ")}
-                                           aria-describedby={"passwordHelp"} placeholder={"Conferma password"}/>
+                                           className={["form-control", signUpConfirmPasswordHasError ? "is-invalid" : ""].join(" ")}
+                                           aria-describedby={"confirmPasswordHelp"} placeholder={"Conferma password"}/>
                                     </div>
-                                        {
+                                        {!(signUpPasswordHasError || signUpConfirmPasswordHasError) &&
                                             <small id={"passwordHelp"} className={"form-text text-muted"}>
                                                 Inserisci una password di almeno 8 caratteri per il tuo account.
                                             </small>
                                         }
 
-                                        {
-                                            <div className={"invalid-feedback"}>
-                                                Test
+                                        {(signUpPasswordHasError || signUpConfirmPasswordHasError) &&
+                                            <div className={"invalid-feedback"} style={{display: "block"}}>
+                                                {messageSignUpError}
                                             </div>
                                         }
                                 </div>
@@ -153,7 +153,7 @@ class SignUpComponent extends Component
                                         <button
                                             disabled={this.credentialsLengthCheck(credentials)}
                                             className={"btn btn-primary sapienzaButton"}
-                                            onSubmit={e => this.signUp(e)}>
+                                            type={"submit"}>
                                             Registrati
                                         </button>
                                     </div>
