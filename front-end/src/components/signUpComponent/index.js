@@ -34,7 +34,7 @@ class SignUpComponent extends Component
             signUpEmailHasError: false, signUpPasswordHasError: false, signUpConfirmPasswordHasError: false }));
 
         dispatch(tryAuthSignUp({signUpRealname, signUpUsername, signUpEmail, signUpPassword,
-            signUpConfirmPassword}, history, cookies));
+            signUpConfirmPassword}, cookies, history));
     }
 
     render() {

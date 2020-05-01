@@ -16,7 +16,7 @@ const routing = (
             <Router>
                 <Switch>
                     <Route exact path={"/"} component={IndexComponent} />
-                    <Route path={"/sign-up"} component={SignUpComponent} />
+                    <Route path={"/signup"} component={SignUpComponent} />
                     <Route path={"/home"} component={HomeComponent} />
                 </Switch>
             </Router>
