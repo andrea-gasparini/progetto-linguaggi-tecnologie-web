@@ -1,4 +1,4 @@
-import {SET_USER_DATA} from "../../actions/user/actions";
+import {SET_USER_DATA, SET_USER_INVITATIONS_DATA} from "../../actions/user/actions";
 import update from "immutability-helper";
 
 export const userReducer = (state = {}, action) => {
