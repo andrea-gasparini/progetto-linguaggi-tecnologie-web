@@ -1,6 +1,6 @@
 import {SET_USER_DATA, SET_USER_INVITATIONS_DATA} from "../../actions/user/actions";
 import update from "immutability-helper";
-import {RESET_INVITATIONS_COUNT_NOTIFICATION} from "../../actions/user/actions";
+import {RESET_INVITATIONS_COUNT_NOTIFICATION, REPLY_TO_INVITATION} from "../../actions/user/actions";
 
 export const userReducer = (state = {}, action) => {
     switch(action.type) {
@@ -24,6 +24,13 @@ export const userReducer = (state = {}, action) => {
             return update(state, {
                 userData: {
                     userNotifications: {$set: 0}
+                }
+            });
+
+        case REPLY_TO_INVITATION:
+            return update(state, {
+                userData: {
+                    invitationsList: arr => arr.filter(invitation => invitation.id != action.payload.groupId)
                 }
             });
     }

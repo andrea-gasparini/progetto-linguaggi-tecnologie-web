@@ -30,8 +30,8 @@ class DropDownInvitationsComponent extends Component {
                                 <div dangerouslySetInnerHTML={{__html: this.buildText(value.users, value.group_title)}} style={{marginRight: 5, fontSize: 15}}>
                                 </div>
                                 <div className={"d-flex flex-row align-items-center"}>
-                                    <CheckCircle onClick={() => dispatch(replyToInvitation(token, 1, 1))} color={"#155724"} className={"invitationIcon"} />
-                                    <XCircle onClick={() => dispatch(token, 1, 0)} color={"#721c24"} className={"invitationIcon"} />
+                                    <CheckCircle onClick={() => dispatch(replyToInvitation(token, value.id, 1))} color={"#155724"} className={"invitationIcon"} />
+                                    <XCircle onClick={() => dispatch(replyToInvitation(token, value.id, 0))} color={"#721c24"} className={"invitationIcon"} />
                                 </div>
                             </div>
                         ))}

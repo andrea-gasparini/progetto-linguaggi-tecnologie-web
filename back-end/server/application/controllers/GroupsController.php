@@ -100,7 +100,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
 
 			$groupId = $this->input->post("groupId");
-			if(!FILTER_VALIDATE($groupId, FILTER_VALIDATE_INT))
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
 				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
 
 			if(!$this->UserModel->existsInvitation($userId, $groupId)) // se non esiste un invito per questo utente per questo gruppo allora non va avanti

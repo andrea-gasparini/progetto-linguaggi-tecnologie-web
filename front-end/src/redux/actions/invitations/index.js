@@ -10,7 +10,7 @@ import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
 import {setUserInvitations} from "../user";
-import {RESET_INVITATIONS_COUNT_NOTIFICATION} from "../user/actions";
+import {REPLY_TO_INVITATION, RESET_INVITATIONS_COUNT_NOTIFICATION} from "../user/actions";
 
 export const setSearchQueryUserInvitation = (username) => ({
     type: SET_SEARCH_USER_INVITATION_QUERY,
@@ -152,9 +152,18 @@ export const replyToInvitation = (token, groupId, type) => {
                 'Authorization': `Bearer ${token}`
             }
         }).then((res) => {
-
+            let {status, data} = res.data;
+            if(status)
+                dispatch(setInvitationAfterReply(groupId));
         }).catch((err) => {
             console.log(err);
         });
     }
-}
+};
+
+export const setInvitationAfterReply = (groupId) => ({
+    type: REPLY_TO_INVITATION,
+    payload: {
+        groupId
+    }
+});
