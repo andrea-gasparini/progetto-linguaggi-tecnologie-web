@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 import './style.css'
 import {CheckCircle, XCircle} from "react-feather";
 
-class DropDownInvitations extends Component {
+class DropDownInvitationsComponent extends Component {
     constructor(props) {
         super(props);
     }
@@ -29,8 +29,8 @@ class DropDownInvitations extends Component {
                                 <div dangerouslySetInnerHTML={{__html: this.buildText(value.users, value.group_title)}} style={{marginRight: 5, fontSize: 15}}>
                                 </div>
                                 <div className={"d-flex flex-row align-items-center"}>
-                                    <CheckCircle title={"Accetta invito"} color={"#155724"} className={"invitationIcon"} />
-                                    <XCircle title={"Rifiuta invito"} color={"#721c24"} className={"invitationIcon"} />
+                                    <CheckCircle color={"#155724"} className={"invitationIcon"} />
+                                    <XCircle color={"#721c24"} className={"invitationIcon"} />
                                 </div>
                             </div>
                         ))}
@@ -47,4 +47,4 @@ class DropDownInvitations extends Component {
     }
 }
 
-export default DropDownInvitations;
+export default DropDownInvitationsComponent;

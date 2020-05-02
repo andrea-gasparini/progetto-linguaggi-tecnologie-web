@@ -58,8 +58,9 @@ class UserModel extends CI_Model
 
 
 	public function getInvitationsCountToRead($userId) {
-		$this->db->select("*");
+		$this->db->select("group_id");
 		$this->db->where(array("to_id" => $userId, "is_read" => "f"));
+		$this->db->group_by("group_id");
 		$query = $this->db->get("invitations");
 		return $query->num_rows();
 	}

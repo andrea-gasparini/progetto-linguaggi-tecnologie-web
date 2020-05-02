@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import './style.css';
 import {Bell} from "react-feather";
-import DropDownInvitations from "../dropdownInvitations";
+import DropDownInvitationsComponent from "../dropdownInvitations";
 import {getMyInvitation} from "../../redux/actions/invitations";
 import {withCookies} from "react-cookie";
 
@@ -87,7 +87,7 @@ class HeaderComponent extends Component {
                             <div data-count={userData.userNotifications}
                                  className={["invitationsIcon", userData.userNotifications <= 0 ? "hideAfter" : ""].join(" ")}>
                                 <Bell onClick={() => dispatch(getMyInvitation(cookies.cookies.token))} />
-                                <DropDownInvitations userInvitations={userData.invitationsList} loadingMyInvitation={loadingMyInvitation} />
+                                <DropDownInvitationsComponent userInvitations={userData.invitationsList} loadingMyInvitation={loadingMyInvitation} />
                             </div>
                         }
                     </div>
