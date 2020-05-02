@@ -1,4 +1,4 @@
-import {SET_USER_DATA, SET_USER_INVITATIONS_DATA} from "../../actions/user/actions";
+import {ADD_NEW_GROUP, SET_USER_DATA, SET_USER_INVITATIONS_DATA} from "../../actions/user/actions";
 import update from "immutability-helper";
 import {RESET_INVITATIONS_COUNT_NOTIFICATION, REPLY_TO_INVITATION} from "../../actions/user/actions";
 
@@ -30,8 +30,15 @@ export const userReducer = (state = {}, action) => {
         case REPLY_TO_INVITATION:
             return update(state, {
                 userData: {
-                    invitationsList: arr => arr.filter(invitation => invitation.id != action.payload.groupId)
+                    invitationsList: arr => arr.filter(invitation => invitation.id != action.payload.groupId),
                 }
+            });
+
+        case ADD_NEW_GROUP:
+            return update(state, {
+               userData: {
+                   userGroups: {$unshift: [action.payload.group]}
+               }
             });
     }
 };

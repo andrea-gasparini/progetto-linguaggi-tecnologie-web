@@ -24,7 +24,7 @@ class DropDownInvitationsComponent extends Component {
         return(
             <Fragment>
                 <div className={["dropdownNotification"].join(" ")}>
-                    <div className={["dropdownNotificationContainer d-flex flex-column", loadingMyInvitation ? "align-items-center justify-content-center" : ""].join(" ")}>
+                    <div className={["dropdownNotificationContainer d-flex flex-column", loadingMyInvitation || typeof userInvitations !== "undefined" && userInvitations.length <= 0 ? "align-items-center justify-content-center" : ""].join(" ")}>
                         {!loadingMyInvitation && typeof userInvitations !== "undefined" && userInvitations.map((value, index) => (
                             <div key={index} className={"d-flex p-2 invitationElement justify-content-between"}>
                                 <div dangerouslySetInnerHTML={{__html: this.buildText(value.users, value.group_title)}} style={{marginRight: 5, fontSize: 15}}>
@@ -35,6 +35,13 @@ class DropDownInvitationsComponent extends Component {
                                 </div>
                             </div>
                         ))}
+
+                        {!loadingMyInvitation && typeof userInvitations !== "undefined" && userInvitations.length <= 0 &&
+                            <div className={"text-muted"}>
+                                <b>Nessun invito da mostrare.</b>
+                            </div>
+                        }
+
                         {loadingMyInvitation &&
                             <div className="spinner-border" role="status" style={{color: "#822433"}}>
                                 <span className="sr-only">Loading...</span>

@@ -10,7 +10,7 @@ import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
 import {setUserInvitations} from "../user";
-import {REPLY_TO_INVITATION, RESET_INVITATIONS_COUNT_NOTIFICATION} from "../user/actions";
+import {ADD_NEW_GROUP, REPLY_TO_INVITATION, RESET_INVITATIONS_COUNT_NOTIFICATION} from "../user/actions";
 
 export const setSearchQueryUserInvitation = (username) => ({
     type: SET_SEARCH_USER_INVITATION_QUERY,
@@ -153,8 +153,11 @@ export const replyToInvitation = (token, groupId, type) => {
             }
         }).then((res) => {
             let {status, data} = res.data;
-            if(status)
+            if(status) {
                 dispatch(setInvitationAfterReply(groupId));
+                if(typeof data.group !== "undefined")
+                    dispatch(addGroupToGroups(data.group));
+            }
         }).catch((err) => {
             console.log(err);
         });
@@ -165,5 +168,13 @@ export const setInvitationAfterReply = (groupId) => ({
     type: REPLY_TO_INVITATION,
     payload: {
         groupId
+    }
+});
+
+
+export const addGroupToGroups = (group) => ({
+    type: ADD_NEW_GROUP,
+    payload: {
+        group
     }
 });

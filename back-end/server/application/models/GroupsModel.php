@@ -50,4 +50,5 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+
 }

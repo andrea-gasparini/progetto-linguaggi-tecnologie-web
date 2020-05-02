@@ -103,6 +103,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
 				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
 
+			$group = $this->GroupsModel->getGroupById($groupId);
+			if(count($group) <= 0)
+				return $this->response(buildServerResponse(false, "L'invito al gruppo non è più valido poiché il gruppo non esiste."), 200);
+
 			if(!$this->UserModel->existsInvitation($userId, $groupId)) // se non esiste un invito per questo utente per questo gruppo allora non va avanti
 				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
 
@@ -118,7 +122,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				$membership = array("user_id" => $userId, "group_id" => $groupId, "is_admin" => "0");
 				if($this->UserModel->addMembership($membership)) {
 					if($this->UserModel->deleteNotificationGroupForUser($userId, $groupId))
-						return $this->response(buildServerResponse(true, "ok"),  200);
+						return $this->response(buildServerResponse(true, "ok", array("group" => $group[0])),  200);
 				}
 			}
 		}

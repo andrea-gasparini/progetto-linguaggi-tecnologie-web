@@ -15,7 +15,8 @@ class HeaderComponent extends Component {
         this.state = {
             currentActive: 'Home', // fisso per test
             showActive: true,
-            showShadow: false
+            showShadow: false,
+            showDropdown: false
         };
 
         this.navigationElements = [
@@ -41,11 +42,19 @@ class HeaderComponent extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.scrollBody);
+        window.addEventListener('click', this.checkClick);
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scrollBody);
+        window.removeEventListener('click', this.checkClick);
     }
+
+    checkClick = (e) => {
+        let dropdown = document.getElementsByClassName("invitationsIcon")[0];
+        if(dropdown !== e.target && !dropdown.contains(e.target) && this.state.showDropdown)
+            this.setState({showDropdown: false});
+    };
 
     scrollBody = () => {
         if(document !== undefined && document.documentElement.scrollTop > 0)
@@ -66,7 +75,7 @@ class HeaderComponent extends Component {
     };
 
     render() {
-        let {currentActive, showActive, showShadow} = this.state;
+        let {currentActive, showActive, showShadow, showDropdown} = this.state;
         let {userData, dispatch, cookies, loadingMyInvitation} = this.props;
         return(
             <Fragment>
@@ -86,8 +95,12 @@ class HeaderComponent extends Component {
                         {typeof userData !== "undefined" &&
                             <div data-count={userData.userNotifications}
                                  className={["invitationsIcon", userData.userNotifications <= 0 ? "hideAfter" : ""].join(" ")}>
-                                <Bell onClick={() => dispatch(getMyInvitation(cookies.cookies.token))} />
-                                <DropDownInvitationsComponent token={cookies.cookies.token} dispatch={dispatch} userInvitations={userData.invitationsList} loadingMyInvitation={loadingMyInvitation} />
+                                <Bell onClick={() => {this.setState({showDropdown: !this.state.showDropdown}); dispatch(getMyInvitation(cookies.cookies.token)); }} />
+                                {showDropdown &&
+                                    <DropDownInvitationsComponent token={cookies.cookies.token} dispatch={dispatch}
+                                                                  userInvitations={userData.invitationsList}
+                                                                  loadingMyInvitation={loadingMyInvitation}/>
+                                }
                             </div>
                         }
                     </div>
