@@ -1,0 +1,9 @@
+.logo {
+    background: url("../../images/logoSapienza.jpg") no-repeat;
+    background-size: contain;
+}
+
+.titleLogo {
+    font-size: 30px;
+    cursor: default;
+}

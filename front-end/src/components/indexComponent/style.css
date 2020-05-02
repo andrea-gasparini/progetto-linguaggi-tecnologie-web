@@ -5,18 +5,6 @@
     border: 1px solid #afafaf;
 }
 
-.logo {
-    width: 75px;
-    height: 75px;
-    background: url("../../images/logoSapienza.jpg") no-repeat;
-    background-size: contain;
-}
-
-.titleLogin {
-    font-size: 30px;
-    cursor: default;
-}
-
 .signInText {
     font-size: 22px;
 }
