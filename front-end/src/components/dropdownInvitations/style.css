@@ -6,7 +6,7 @@
     width: 350px;
     right: -15px;
     top: 40px;
-    border: 1px solid black;
+    border: 1px solid #9c9c9c;
     background-color: white;
     cursor: default !important;
 }
@@ -30,7 +30,7 @@
 }
 .dropdownNotification:before {
     border-color: rgba(245, 245, 245, 0);
-    border-bottom-color: black;
+    border-bottom-color: #9c9c9c;
     border-width: 11px;
     margin-left: -11px;
 }
@@ -44,22 +44,39 @@
 }
 
 
-/* width */
 .dropdownNotificationContainer::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
 .dropdownNotificationContainer::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-/* Handle */
 .dropdownNotificationContainer::-webkit-scrollbar-thumb {
     background: #822433;
 }
 
-/* Handle on hover */
-.dropdownNotificationContainer::-webkit-scrollbar-thumb:hover {
-    background: #822433;
+
+.invitationElement {
+    cursor: default;
+    transition: all .2s ease-in-out;
 }
+
+.invitationElement:not(:last-child) {
+    border-bottom: 1px solid #afafaf;
+}
+
+.invitationIcon {
+    transition: all .3s ease-in-out;
+}
+
+.invitationIcon:hover {
+    cursor: pointer;
+    opacity: .6;
+}
+
+
+.invitationIcon:not(:last-child) {
+    margin-right: 5px;
+}
+

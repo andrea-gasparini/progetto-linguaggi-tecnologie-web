@@ -54,4 +54,79 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
 
+
+	public function getUserInvitations_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$userInvitations = $this->GroupsModel->getUserInvitation($userId);
+			return $this->response(buildServerResponse(true, "ok", array("invitations" => $userInvitations)), 200);
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+
+	public function resetUserCountInvitations_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			if($this->UserModel->resetCountNotification($userId))
+				return $this->response(buildServerResponse(true, "ok"), 200);
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+
+	public function replyInvitation_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$typeReply = $this->input->post('type');
+			if($typeReply != 1 && $typeReply != 0)
+				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
+
+			$groupId = $this->input->post("groupId");
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
+
+			$group = $this->GroupsModel->getGroupById($groupId);
+			if(count($group) <= 0)
+				return $this->response(buildServerResponse(false, "L'invito al gruppo non è più valido poiché il gruppo non esiste."), 200);
+
+			if(!$this->UserModel->existsInvitation($userId, $groupId)) // se non esiste un invito per questo utente per questo gruppo allora non va avanti
+				return $this->response(buildServerResponse(false, "Invito non valido."), 200);
+
+			// se il type è 1 allora accetto l'invito, se è 0 no.
+			if($typeReply == 0) {
+				if($this->UserModel->deleteNotificationGroupForUser($userId, $groupId))
+					return $this->response(buildServerResponse(true, "ok"), 200);
+				else
+					return $this->response(buildServerResponse(false, "Errore durante l'eliminazione degli inviti."), 200);
+			} else {
+
+				// l'utente ha accettato e quindi dobbiamo aggiungerlo al gruppo.
+				$membership = array("user_id" => $userId, "group_id" => $groupId, "is_admin" => "0");
+				if($this->UserModel->addMembership($membership)) {
+					if($this->UserModel->deleteNotificationGroupForUser($userId, $groupId))
+						return $this->response(buildServerResponse(true, "ok", array("group" => $group[0])),  200);
+				}
+			}
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
 }

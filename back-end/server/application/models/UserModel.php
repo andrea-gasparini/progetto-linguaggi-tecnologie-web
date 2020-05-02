@@ -58,8 +58,9 @@ class UserModel extends CI_Model
 
 
 	public function getInvitationsCountToRead($userId) {
-		$this->db->select("*");
+		$this->db->select("group_id");
 		$this->db->where(array("to_id" => $userId, "is_read" => "f"));
+		$this->db->group_by("group_id");
 		$query = $this->db->get("invitations");
 		return $query->num_rows();
 	}
@@ -71,6 +72,29 @@ class UserModel extends CI_Model
 		$this->db->where(array("groupsMemberships.group_id" => $userId));
 		$query = $this->db->get("groupsMemberships");
 		return $query->result();
+	}
+
+
+	public function resetCountNotification($userId) {
+		$this->db->set("is_read", "1");
+		$this->db->where(array("to_id" => $userId, "is_read" => "0"));
+		return $this->db->update("invitations");
+	}
+
+	public function deleteNotificationGroupForUser($userId, $groupId) {
+		$this->db->where(array("to_id" => $userId, "group_id" => $groupId));
+		return $this->db->delete("invitations");
+	}
+
+	public function existsInvitation($userId, $groupId) {
+		$this->db->select("*");
+		$this->db->where(array("to_id" => $userId, "group_id" => $groupId));
+		$query = $this->db->get("invitations");
+		return $query->num_rows() > 0;
+	}
+
+	public function addMembership($data) {
+		return $this->db->insert("groupsMemberships", $data);
 	}
 
 }

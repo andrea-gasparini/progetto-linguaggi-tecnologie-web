@@ -2,13 +2,13 @@ import {
     ADD_USER_TO_INVITE_TO_LIST,
     REMOVE_USER_FROM_INVITATIONS_LIST,
     REMOVE_USER_FROM_INVITATIONS_LIT,
-    RESET_INVITATIONS_DATA, SET_ERROR_SENT_INVITATION,
+    RESET_INVITATIONS_DATA, SET_ERROR_SENT_INVITATION, SET_LOADING_MY_INVITATION,
     SET_SEARCH_USER_INVITATION_QUERY,
     SET_SEARCH_USER_INVITATION_RESULT, SET_SUCCESS_SENT_INVITATION
 } from "../../actions/invitations/actions";
 import update from "immutability-helper";
 
-export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: [], usernameListInvitations: []}, action) => {
+export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: [], readyToSendInvite: [], usernameListInvitations: [], loadingMyInvitation: true}, action) => {
     switch(action.type) {
         default:
             return state;
@@ -55,6 +55,11 @@ export const invitationsReducer = (state = {searchQuery: '', searchQueryResult: 
                 errorMessageInvitation: {$set: action.payload.errorMessage},
                 showErrorInvitation: {$set: true},
                 showSuccessInvitation: {$set: false} // nel caso in cui si vedeva il success.
+            });
+
+        case SET_LOADING_MY_INVITATION:
+            return update(state, {
+                loadingMyInvitation: {$set: action.payload.loading}
             });
     }
 };
