@@ -59,3 +59,4 @@ $route['searchUser'] = "SearchUserController/searchUser";
 $route['sendInvitations'] = "GroupsController/sendInvitations";
 $route['getInvitations'] = "GroupsController/getUserInvitations";
 $route['resetInvitationsCount'] = "GroupsController/resetUserCountInvitations";
+$route['replyInvitation'] = "GroupsController/replyInvitation";

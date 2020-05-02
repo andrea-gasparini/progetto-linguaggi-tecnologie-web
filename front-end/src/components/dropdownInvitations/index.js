@@ -19,7 +19,7 @@ class DropDownInvitationsComponent extends Component {
     };
 
     render() {
-        let {loadingMyInvitation, userInvitations} = this.props;
+        let {loadingMyInvitation, userInvitations, dispatch} = this.props;
         return(
             <Fragment>
                 <div className={["dropdownNotification"].join(" ")}>
@@ -29,8 +29,8 @@ class DropDownInvitationsComponent extends Component {
                                 <div dangerouslySetInnerHTML={{__html: this.buildText(value.users, value.group_title)}} style={{marginRight: 5, fontSize: 15}}>
                                 </div>
                                 <div className={"d-flex flex-row align-items-center"}>
-                                    <CheckCircle color={"#155724"} className={"invitationIcon"} />
-                                    <XCircle color={"#721c24"} className={"invitationIcon"} />
+                                    <CheckCircle onClick={() => dispatch()} color={"#155724"} className={"invitationIcon"} />
+                                    <XCircle onClick={() => dispatch()} color={"#721c24"} className={"invitationIcon"} />
                                 </div>
                             </div>
                         ))}
