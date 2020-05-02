@@ -1,0 +1,65 @@
+.dropdownNotification {
+    z-index: 3;
+    position: absolute;
+    border-radius: 5px;
+    min-height: 200px;
+    width: 350px;
+    right: -15px;
+    top: 40px;
+    border: 1px solid black;
+    background-color: white;
+    cursor: default !important;
+}
+
+.dropdownNotification:after, .dropdownNotification:before {
+    bottom: 100%;
+    left: calc(100% - 26px);
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.dropdownNotification:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #ffffff;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.dropdownNotification:before {
+    border-color: rgba(245, 245, 245, 0);
+    border-bottom-color: black;
+    border-width: 11px;
+    margin-left: -11px;
+}
+
+.dropdownNotificationContainer {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    height: 200px;
+    scrollbar-width: thin;
+}
+
+
+/* width */
+.dropdownNotificationContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.dropdownNotificationContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.dropdownNotificationContainer::-webkit-scrollbar-thumb {
+    background: #822433;
+}
+
+/* Handle on hover */
+.dropdownNotificationContainer::-webkit-scrollbar-thumb:hover {
+    background: #822433;
+}

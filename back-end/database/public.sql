@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 01/05/2020 16:11:19
+ Date: 01/05/2020 20:11:35
 */
 
 
@@ -104,6 +104,10 @@ CREATE TABLE "public"."chats" (
 ;
 
 -- ----------------------------
+-- Records of chats
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for chats_messages
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."chats_messages";
@@ -115,6 +119,10 @@ CREATE TABLE "public"."chats_messages" (
   "created_at" timestamp(6) NOT NULL
 )
 ;
+
+-- ----------------------------
+-- Records of chats_messages
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for comments
@@ -130,15 +138,25 @@ CREATE TABLE "public"."comments" (
 ;
 
 -- ----------------------------
+-- Records of comments
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for groups
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."groups";
 CREATE TABLE "public"."groups" (
   "id" int4 NOT NULL DEFAULT nextval('groups_id_seq'::regclass),
   "code" varchar(8) COLLATE "pg_catalog"."default" NOT NULL,
-  "created_at" timestamp(6) NOT NULL
+  "created_at" timestamp(6) NOT NULL,
+  "group_title" varchar(255) COLLATE "pg_catalog"."default" NOT NULL
 )
 ;
+
+-- ----------------------------
+-- Records of groups
+-- ----------------------------
+INSERT INTO "public"."groups" VALUES (1, '1', '2020-04-22 09:15:14', 'test');
 
 -- ----------------------------
 -- Table structure for groupsMemberships
@@ -151,6 +169,11 @@ CREATE TABLE "public"."groupsMemberships" (
   "is_admin" bool DEFAULT false
 )
 ;
+
+-- ----------------------------
+-- Records of groupsMemberships
+-- ----------------------------
+INSERT INTO "public"."groupsMemberships" VALUES (1, 1, 1, 't');
 
 -- ----------------------------
 -- Table structure for invitations
@@ -167,6 +190,16 @@ CREATE TABLE "public"."invitations" (
 ;
 
 -- ----------------------------
+-- Records of invitations
+-- ----------------------------
+INSERT INTO "public"."invitations" VALUES (5, 1, 13, 1, '2020-04-30 10:04:13.93307', 'f');
+INSERT INTO "public"."invitations" VALUES (2, 1, 10, 1, '2020-05-01 16:01:59.374301', 'f');
+INSERT INTO "public"."invitations" VALUES (6, 1, 11, 1, '2020-05-01 16:01:59.377059', 'f');
+INSERT INTO "public"."invitations" VALUES (3, 1, 8, 1, '2020-05-01 20:05:36.333475', 'f');
+INSERT INTO "public"."invitations" VALUES (4, 1, 12, 1, '2020-05-01 20:05:36.33727', 'f');
+INSERT INTO "public"."invitations" VALUES (1, 1, 7, 1, '2020-05-01 20:05:36.338391', 'f');
+
+-- ----------------------------
 -- Table structure for posts
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."posts";
@@ -181,6 +214,10 @@ CREATE TABLE "public"."posts" (
 ;
 
 -- ----------------------------
+-- Records of posts
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."users";
@@ -193,6 +230,67 @@ CREATE TABLE "public"."users" (
   "created_at" timestamp(6) NOT NULL
 )
 ;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO "public"."users" VALUES (1, 'edoardo', 'edoardo', 'test@test.vg', '$2y$10$1jxprpOOgwlZTNgr.gCvu.eYvoKg1HW3Lup/LVQLQV5nJoiqphC6K', '2020-04-23 17:17:16');
+INSERT INTO "public"."users" VALUES (8, 'edoardo3', 'testutente2', 'edoardo@òaa.vg', 'asdpos', '2020-04-23 12:23:34');
+INSERT INTO "public"."users" VALUES (10, 'edoardo4', 'edoardo2', 'e@a.vg', 'asdpo', '2020-04-22 12:46:08');
+INSERT INTO "public"."users" VALUES (11, 'edoardo5', 'edoardo3', 'e@b.vg', 'apsdopod', '2020-04-22 12:46:07');
+INSERT INTO "public"."users" VALUES (12, 'edoardo6', 'edoardo5', 'e@c.vg', 'psadospdo', '2020-04-22 12:59:54');
+INSERT INTO "public"."users" VALUES (13, 'tet', 'testt1', 'edoardo@edo.vg', 'asd', '2020-04-22 12:10:20');
+INSERT INTO "public"."users" VALUES (7, 'edoardo', 'testutente', 'edoardo@test.vg', '$2y$10$1jxprpOOgwlZTNgr.gCvu.eYvoKg1HW3Lup/LVQLQV5nJoiqphC6K', '2020-05-01 11:33:24');
+INSERT INTO "public"."users" VALUES (14, 'edoardo', 'edoardo23', 'test@test.vgg', '$2y$10$JUgwrV3jTaB9e6Dx7kBP8OkxdqReMSNLI4Z28ngycI6IWLkFOJJqu', '2020-05-01 20:08:37.403206');
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."chats_messages_id_seq"
+OWNED BY "public"."chats_messages"."id";
+SELECT setval('"public"."chats_messages_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."comments_id_seq"
+OWNED BY "public"."comments"."id";
+SELECT setval('"public"."comments_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."groupsMemberships_id_seq"
+OWNED BY "public"."groupsMemberships"."id";
+SELECT setval('"public"."groupsMemberships_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."groups_id_seq"
+OWNED BY "public"."groups"."id";
+SELECT setval('"public"."groups_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."invitations_id_seq"
+OWNED BY "public"."invitations"."id";
+SELECT setval('"public"."invitations_id_seq"', 7, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."posts_id_seq"
+OWNED BY "public"."posts"."id";
+SELECT setval('"public"."posts_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."users_id_seq"
+OWNED BY "public"."users"."id";
+SELECT setval('"public"."users_id_seq"', 15, true);
 
 -- ----------------------------
 -- Primary Key structure for table chats

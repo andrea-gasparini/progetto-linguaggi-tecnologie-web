@@ -5,12 +5,13 @@
     z-index: 2;
     background-color: white;
     width: 100%;
+    transition: all .5s ease-in-out;
 }
 
-.navbarScroll {
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
-    -moz-box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
-    box-shadow: 0px 2px 5px 0px rgba(130,36,51,1);
+.navbarScrollShadow {
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(130,36,51,1);
+    -moz-box-shadow: 0px 2px 2px 0px rgba(130,36,51,1);
+    box-shadow: 0px 2px 2px 0px rgba(130,36,51,1);
 }
 
 .navbarContainer {
@@ -74,4 +75,29 @@
 
 .navbarText:hover:after {
     opacity: 1;
+}
+
+.invitationsIcon {
+    position: relative;
+    cursor: pointer;
+}
+
+.invitationsIcon::after {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: attr(data-count);
+    background: #822433;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+}
+
+.invitationsIcon.hideAfter::after {
+    display: none !important;
 }
