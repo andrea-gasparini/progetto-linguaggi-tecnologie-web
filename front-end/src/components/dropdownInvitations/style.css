@@ -6,7 +6,7 @@
     width: 350px;
     right: -15px;
     top: 40px;
-    border: 1px solid black;
+    border: 1px solid #9c9c9c;
     background-color: white;
     cursor: default !important;
 }
@@ -30,7 +30,7 @@
 }
 .dropdownNotification:before {
     border-color: rgba(245, 245, 245, 0);
-    border-bottom-color: black;
+    border-bottom-color: #9c9c9c;
     border-width: 11px;
     margin-left: -11px;
 }

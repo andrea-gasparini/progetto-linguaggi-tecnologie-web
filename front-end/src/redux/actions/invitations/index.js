@@ -94,3 +94,17 @@ export const setErrorSetInvitation = (errorMessage) => ({
         errorMessage
     }
 });
+
+export const getMyInvitation = (token) => {
+    return async dispatch => {
+        return axios.post(`${API_SERVER_URL}/getInvitations`, null, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+};

@@ -10,6 +10,14 @@ export const userReducer = (state = {}, action) => {
             return update(state, {
                 userData: {$set: action.payload.userData}
             });
+
+        case SET_USER_INVITATIONS_DATA: {
+            return update(state, {
+                userData: {
+                    invitationsList: {$set: action.payload.invitations}
+                }
+            })
+        }
     }
 };
 

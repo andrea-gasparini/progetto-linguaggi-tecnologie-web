@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import './style.css';
 import {Bell} from "react-feather";
 import DropDownInvitations from "../dropdownInvitations";
+import {getMyInvitation} from "../../redux/actions/invitations";
+import {withCookies} from "react-cookie";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -65,7 +67,7 @@ class HeaderComponent extends Component {
 
     render() {
         let {currentActive, showActive, showShadow} = this.state;
-        let {userData} = this.props;
+        let {userData, dispatch, cookies} = this.props;
         return(
             <Fragment>
                 <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
@@ -84,7 +86,7 @@ class HeaderComponent extends Component {
                         {typeof userData !== "undefined" &&
                             <div data-count={userData.userNotifications}
                                  className={["invitationsIcon", userData.userNotifications <= 0 ? "hideAfter" : ""].join(" ")}>
-                                <Bell/>
+                                <Bell onClick={() => dispatch(getMyInvitation(cookies.cookies.token))} />
                                 <DropDownInvitations />
                             </div>
                         }
@@ -95,4 +97,4 @@ class HeaderComponent extends Component {
     }
 }
 
-export default connect(mapStateToProps)(HeaderComponent);
+export default withCookies(connect(mapStateToProps)(HeaderComponent));

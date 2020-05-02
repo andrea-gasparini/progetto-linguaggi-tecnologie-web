@@ -39,5 +39,13 @@ class GroupsModel extends CI_Model {
 		}
 	}
 
-
+	public function getUserInvitation($userId) {
+		$this->db->select("g.id, g.group_title, max(i.invited_at) as lastInvitationTime, array_to_json(array_agg(u.username)) as users, count(u.username) as usersCountInvitation");
+		$this->db->where(array("i.to_id" => $userId));
+		$this->db->where("g.id", "i.group_id", FALSE);
+		$this->db->where("u.id", "i.from_id", FALSE);
+		$this->db->group_by("g.id");
+		$query = $this->db->get("invitations i, groups g, users u");
+		return $query->result();
+	}
 }
