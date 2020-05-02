@@ -47,13 +47,13 @@ class InviteModalComponent extends Component {
 
     sendInvitations = (e) => {
         e.preventDefault();
-        let {dispatch, cookies, readyToSendInvite} = this.props;
-        dispatch(sendInvitations(JSON.stringify(readyToSendInvite), 1, cookies.cookies.token));
+        let {dispatch, cookies, readyToSendInvite, groupId} = this.props;
+        dispatch(sendInvitations(JSON.stringify(readyToSendInvite), groupId, cookies.cookies.token));
     };
 
     render() {
         let {clickedToClose} = this.state;
-        let {searchQuery, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation, showErrorInvitation, errorMessageInvitation} = this.props;
+        let {searchQuery, groupId, dispatch, cookies, searchQueryResult, readyToSendInvite, usernameListInvitations, closeModal, showSuccessInvitation, showErrorInvitation, errorMessageInvitation} = this.props;
         return(
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
