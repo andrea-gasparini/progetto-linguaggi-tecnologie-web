@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import './style.css';
 import {Bell} from "react-feather";
 import DropDownInvitations from "../dropdownInvitations";
+import LogoComponent from "../logoComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -70,7 +71,7 @@ class HeaderComponent extends Component {
             <Fragment>
                 <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
                     <div className={"d-flex navbarContainer justify-content-around"}>
-                        <div className={"logo"} style={{width: 50, height: 50}} />
+                        <LogoComponent size={50}/>
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
                             {this.navigationElements.map((value, index) => (
                                 <li onClick={(e) => this.switchNavigationPage(value.pathName, value.path)} key={index} className={"navbarElement"}>
