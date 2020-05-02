@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import './style.css'
 import {CheckCircle, XCircle} from "react-feather";
+import {replyToInvitation} from "../../redux/actions/invitations";
 
 class DropDownInvitationsComponent extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class DropDownInvitationsComponent extends Component {
     };
 
     render() {
-        let {loadingMyInvitation, userInvitations, dispatch} = this.props;
+        let {loadingMyInvitation, userInvitations, dispatch, token} = this.props;
         return(
             <Fragment>
                 <div className={["dropdownNotification"].join(" ")}>
@@ -29,8 +30,8 @@ class DropDownInvitationsComponent extends Component {
                                 <div dangerouslySetInnerHTML={{__html: this.buildText(value.users, value.group_title)}} style={{marginRight: 5, fontSize: 15}}>
                                 </div>
                                 <div className={"d-flex flex-row align-items-center"}>
-                                    <CheckCircle onClick={() => dispatch()} color={"#155724"} className={"invitationIcon"} />
-                                    <XCircle onClick={() => dispatch()} color={"#721c24"} className={"invitationIcon"} />
+                                    <CheckCircle onClick={() => dispatch(replyToInvitation(token, 1, 1))} color={"#155724"} className={"invitationIcon"} />
+                                    <XCircle onClick={() => dispatch(token, 1, 0)} color={"#721c24"} className={"invitationIcon"} />
                                 </div>
                             </div>
                         ))}

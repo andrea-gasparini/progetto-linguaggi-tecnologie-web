@@ -144,3 +144,17 @@ export const resetCountNotification = () => ({
     type: RESET_INVITATIONS_COUNT_NOTIFICATION,
     payload: {}
 });
+
+export const replyToInvitation = (token, groupId, type) => {
+    return async dispatch => {
+        return axios.post(`${API_SERVER_URL}/replyInvitation`, qs.stringify({groupId, type}), {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+}

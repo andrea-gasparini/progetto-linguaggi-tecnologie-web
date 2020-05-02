@@ -87,7 +87,7 @@ class HeaderComponent extends Component {
                             <div data-count={userData.userNotifications}
                                  className={["invitationsIcon", userData.userNotifications <= 0 ? "hideAfter" : ""].join(" ")}>
                                 <Bell onClick={() => dispatch(getMyInvitation(cookies.cookies.token))} />
-                                <DropDownInvitationsComponent userInvitations={userData.invitationsList} loadingMyInvitation={loadingMyInvitation} />
+                                <DropDownInvitationsComponent token={cookies.cookies.token} dispatch={dispatch} userInvitations={userData.invitationsList} loadingMyInvitation={loadingMyInvitation} />
                             </div>
                         }
                     </div>
