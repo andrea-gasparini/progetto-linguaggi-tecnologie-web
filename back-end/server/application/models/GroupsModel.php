@@ -45,7 +45,9 @@ class GroupsModel extends CI_Model {
 		$this->db->where("g.id", "i.group_id", FALSE);
 		$this->db->where("u.id", "i.from_id", FALSE);
 		$this->db->group_by("g.id");
+		$this->db->order_by("lastinvitationtime", "DESC");
 		$query = $this->db->get("invitations i, groups g, users u");
 		return $query->result();
 	}
+
 }

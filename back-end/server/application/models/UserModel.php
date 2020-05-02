@@ -74,4 +74,11 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+
+	public function resetCountNotification($userId) {
+		$this->db->set("is_read", "1");
+		$this->db->where(array("to_id" => $userId, "is_read" => 0));
+		return $this->db->update("invitations");
+	}
+
 }

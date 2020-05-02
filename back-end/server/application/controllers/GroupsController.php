@@ -70,4 +70,20 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
 
+
+	public function resetUserCountInvitations_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			if($this->UserModel->resetCountNotification($userId))
+				return $this->response(buildServerResponse(true, "ok"), 200);
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
 }

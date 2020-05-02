@@ -10,6 +10,7 @@ import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
 import {setUserInvitations} from "../user";
+import {RESET_INVITATIONS_COUNT_NOTIFICATION} from "../user/actions";
 
 export const setSearchQueryUserInvitation = (username) => ({
     type: SET_SEARCH_USER_INVITATION_QUERY,
@@ -98,6 +99,7 @@ export const setErrorSetInvitation = (errorMessage) => ({
 
 export const getMyInvitation = (token) => {
     return async dispatch => {
+        dispatch(resetCountInvitationRequest(token));
         dispatch(setMyInvitationLoading(true));
         return axios.post(`${API_SERVER_URL}/getInvitations`, null, {
             headers: {
@@ -120,4 +122,25 @@ export const setMyInvitationLoading = (loading) => ({
     payload: {
         loading
     }
+});
+
+export const resetCountInvitationRequest = (token) => {
+    return async dispatch => {
+        return axios.post(`${API_SERVER_URL}/resetInvitationsCount`, null, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            let {status} = res.data;
+            if(status)
+                dispatch(resetCountNotification());
+        }).catch((err) => {
+
+        })
+    }
+};
+
+export const resetCountNotification = () => ({
+    type: RESET_INVITATIONS_COUNT_NOTIFICATION,
+    payload: {}
 });

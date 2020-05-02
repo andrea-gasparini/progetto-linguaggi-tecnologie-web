@@ -1,5 +1,6 @@
 import {SET_USER_DATA, SET_USER_INVITATIONS_DATA} from "../../actions/user/actions";
 import update from "immutability-helper";
+import {RESET_INVITATIONS_COUNT_NOTIFICATION} from "../../actions/user/actions";
 
 export const userReducer = (state = {}, action) => {
     switch(action.type) {
@@ -18,6 +19,13 @@ export const userReducer = (state = {}, action) => {
                 }
             })
         }
+
+        case RESET_INVITATIONS_COUNT_NOTIFICATION:
+            return update(state, {
+                userData: {
+                    userNotifications: {$set: 0}
+                }
+            });
     }
 };
 
