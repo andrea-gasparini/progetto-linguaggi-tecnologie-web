@@ -20,6 +20,7 @@ class UserModel extends CI_Model
 
 	public function updateUserSettingsData($userInfo, $data) {
 		$this->db->where($userInfo);
+		$this->db->limit(1);
 		$this->db->update("users", $data);
 	}
 

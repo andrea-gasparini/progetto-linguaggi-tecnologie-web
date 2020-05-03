@@ -48,14 +48,41 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 
 			if($this->UserModel->updateUserSettingsData($userInfo, $data))
 				return $this->response(buildServerResponse(true, "Indirizzo email modificato con successo."));
-			else
-				return $this->response(buildServerResponse(false, "Errore inaspettato."), 200);
-
 		}
+		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
 
 	public function changePassword_post() {
+		/*
+		 * parametri post da passare: oldPassword, newPassword, confirmNewPassword.
+		 *
+		 */
+		$token = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($token["status"]) {
+			$oldPassword = $this->input->post('oldPassword');
+			$newPassword = $this->input->post('newPassword');
+			$confirmNewPassword = $this->input->post('confirmNewPassword');
+			$userId = $token["data"]["userId"];
 
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente inesistente."), 200);
+
+			if(!password_verify($oldPassword, $user[0]->password))
+				return $this->response(buildServerResponse(false, "La vecchia password è errata.", array("oldPasswordHasError" => true)), 200);
+
+			if(strlen($newPassword) < 8)
+				return $this->response(buildServerResponse(false, "La nuova password deve contenere almeno 8 caratteri."), 200);
+
+			if($newPassword != $confirmNewPassword)
+				return $this->response(buildServerResponse(false, "Le due nuove password non coincidono.", array("newPasswordHasError" => true, "confirmNewPasswordHasError" => true)));
+
+			$userInfo = array("id" => $user[0]->id);
+			$data = array("password" => password_hash($newPassword, PASSWORD_DEFAULT));
+			if($this->UserModel->updateUserSettingsData($userInfo, $data))
+				return $this->response(buildServerResponse(true, "Hai cambiato la password con succeso!"), 200);
+		}
+		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
 
 	public function changeProfilePicture_post() {
