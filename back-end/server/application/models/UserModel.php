@@ -69,7 +69,7 @@ class UserModel extends CI_Model
 	public function getUserGroups($userId) {
 		$this->db->select("groups.id, groups.code, groups.created_at, groups.group_title");
 		$this->db->join("groups", "groups.id = groupsMemberships.group_id");
-		$this->db->where(array("groupsMemberships.group_id" => $userId));
+		$this->db->where(array("groupsMemberships.user_id" => $userId));
 		$query = $this->db->get("groupsMemberships");
 		return $query->result();
 	}
