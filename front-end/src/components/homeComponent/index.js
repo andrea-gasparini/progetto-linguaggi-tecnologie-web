@@ -35,10 +35,10 @@ class HomeComponent extends Component {
 
     render() {
         let {showInviteModal, currentGroupId} = this.state;
-        let {userData} = this.props;
+        let {userData, history} = this.props;
         return(
             <Fragment>
-                <HeaderComponent />
+                <HeaderComponent history={history} />
                 <section className={"d-flex justify-content-center"}>
                     <div className={"d-flex homeContainerGroups flex-column"}>
                         <div className={"d-flex myGroupsTitle text-muted justify-content-between"}>
