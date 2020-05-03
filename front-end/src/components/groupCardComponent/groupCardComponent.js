@@ -8,7 +8,7 @@ class GroupCardComponent extends Component {
     }
 
     render() {
-        let {groupOwner, groupTitle, groupDescription, openInviteModal} = this.props;
+        let {groupOwner, groupTitle, groupDescription, openInviteModal, setGroupId, groupId} = this.props;
         return(
             <Fragment>
                 <div className={"d-flex groupCard flex-column"}>
@@ -32,7 +32,7 @@ class GroupCardComponent extends Component {
                         </div>
                     </div>
                     <div className={"d-flex cardGroupFooter align-bottom align-items-center justify-content-center"}>
-                        <div onClick={() => openInviteModal()} className={"d-flex inviteFriends align-bottom align-items-center p-2"}>
+                        <div onClick={() => {openInviteModal(); setGroupId(groupId)}} className={"d-flex inviteFriends align-bottom align-items-center p-2"}>
                             Invita amici nel gruppo
                         </div>
                     </div>

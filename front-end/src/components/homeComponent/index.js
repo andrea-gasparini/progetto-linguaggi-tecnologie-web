@@ -15,7 +15,8 @@ class HomeComponent extends Component {
         super(props);
 
         this.state = {
-            showInviteModal: false
+            showInviteModal: false,
+            currentGroupId: -1
         }
     }
 
@@ -28,8 +29,12 @@ class HomeComponent extends Component {
         this.setState({showInviteModal: !this.state.showInviteModal});
     };
 
+    setGroupId = (groupId) => {
+        this.setState({currentGroupId: groupId});
+    }
+
     render() {
-        let {showInviteModal} = this.state;
+        let {showInviteModal, currentGroupId} = this.state;
         let {userData} = this.props;
         return(
             <Fragment>
@@ -48,7 +53,7 @@ class HomeComponent extends Component {
 
                         <div className={"d-flex flex-row flex-wrap groupsList mb-5"}>
                             {typeof userData !== "undefined" && userData.userGroups.map((value, index) => (
-                                <GroupCardComponent openInviteModal={this.showInviteModal} groupTitle={value.group_title} groupOwner={"Utente abc"} groupDescription={"Descrizione del gruppo"} key={index} />
+                                <GroupCardComponent setGroupId={this.setGroupId} groupId={value.id} openInviteModal={this.showInviteModal} groupTitle={value.group_title} groupOwner={"Utente abc"} groupDescription={"Descrizione del gruppo"} key={index} />
                             ))}
 
                             {(typeof userData === "undefined" || userData.userGroups.length <= 0) &&
@@ -60,7 +65,7 @@ class HomeComponent extends Component {
                     </div>
                 </section>
                 {showInviteModal &&
-                    <InviteModalComponent closeModal={this.showInviteModal} />
+                    <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />
                 }
             </Fragment>
         )
