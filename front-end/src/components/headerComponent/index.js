@@ -7,6 +7,7 @@ import {getMyInvitation} from "../../redux/actions/invitations";
 import {withCookies} from "react-cookie";
 import DropDownInvitations from "../dropdownInvitations";
 import LogoComponent from "../logoComponent";
+import {Link} from "react-router-dom";
 
 const mapStateToProps = (state) => ({...state.userReducer, ...state.invitationsReducer});
 
@@ -73,7 +74,9 @@ class HeaderComponent extends Component {
     };
 
     switchNavigationPage = (pathName, path) => {
+        let {history} = this.props;
         this.setState({currentActive: pathName});
+        history.push(path);
     };
 
     render() {
