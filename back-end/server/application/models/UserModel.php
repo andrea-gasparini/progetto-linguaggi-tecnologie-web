@@ -11,6 +11,17 @@ class UserModel extends CI_Model
 		return $query->num_rows() == 0;
 	}
 
+	public function checkEmailAvailable($email) {
+		$this->db->select("*");
+		$this->db->where(array("email" => $email));
+		$query = $this->db->get("users");
+		return $query->num_rows() > 0;
+	}
+
+	public function updateUserSettingsData($userInfo, $data) {
+		$this->db->where($userInfo);
+		$this->db->update("users", $data);
+	}
 
 	public function createUser($realname, $username, $email, $password) {
 		$data = array(
