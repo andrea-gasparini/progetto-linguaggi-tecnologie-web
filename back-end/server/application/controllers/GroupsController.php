@@ -42,6 +42,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				if($userId == $value->id)
 					continue; // mi auto invito e non va bene.
 
+				// controlliamo che l'utente che stiamo invitando non sia già nel gruppo
+				if($this->GroupsModel->isGroupMember($value->id, $groupId))
+					continue;
+
 				$invitationAlreadyExists = $this->GroupsModel->invitationAlreadyExists($userId, $value->id, $groupId);
 				$data = array("from_id" => $userId, "to_id" => $value->id, "group_id" => $groupId, "invited_at" => "now()");
 				$this->GroupsModel->addInvitation($data, $invitationAlreadyExists);
