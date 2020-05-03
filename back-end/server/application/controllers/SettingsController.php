@@ -85,8 +85,31 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
 
-	public function changeProfilePicture_post() {
+	public function changeProfilePicture_post()
+	{
+		$config['upload_path'] = 'C:\inetpub\wwwroot\upload\\';
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';
+		$config['max_size'] = 100;
+		$config['max_width'] = 3440;
+		$config['max_height'] = 1080;
+		$this->load->library('upload', $config);
 
+		$token = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if ($token["status"]) {
+			//$fileImage = $this->input->post('file');
+			//var_dump($fileImage);
+			$userId = $token["data"]["userId"];
+
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente inesistente."), 200);
+
+			if(!$this->upload->do_upload("file"))
+				return $this->response(buildServerResponse(false, $this->upload->display_errors()), 200);
+
+			return $this->response(buildServerResponse(true, "Immagine caricata"), 200);
+		}
+		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
 
 }

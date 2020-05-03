@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../global.css';
 import SignUpComponent from "./components/signUpComponent";
 import HomeComponent from "./components/homeComponent";
+import TestComponent from "./components/TestComponent";
 
 const routing = (
     <Provider store={store}>
@@ -18,6 +19,7 @@ const routing = (
                     <Route exact path={"/"} component={IndexComponent} />
                     <Route path={"/signup"} component={SignUpComponent} />
                     <Route path={"/home"} component={HomeComponent} />
+                    <Route path={"/test"} component={TestComponent} />
                 </Switch>
             </Router>
         </CookiesProvider>
