@@ -36,10 +36,13 @@ class CreateGroupModalComponent extends Component {
 
         axios.post(
             `${API_SERVER_URL}/createGroup`,
-            qs.stringify(groupName, groupDesc),
+            qs.stringify({groupName, groupDesc}),
             { headers: { "Authorization": `Bearer ${this.props.cookies.cookies.token}` } }
-        ).then( (res) => { console.log(res); }
-        ).catch( (err) => { console.log(err); });
+        ).then( (res) => {
+            let {status, message, data} = res.data;
+            if(!status)
+                this.setState({messageCreateGroupError: message, ...data});
+        }).catch( (err) => { console.log(err); });
     };
 
     render() {

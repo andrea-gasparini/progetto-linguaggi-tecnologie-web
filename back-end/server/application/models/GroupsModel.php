@@ -23,7 +23,7 @@ class GroupsModel extends CI_Model {
 			"group_title" => $groupName,
 			"description" => $groupDesc,
 			"group_owner" => $groupOwner,
-			"created_at" => "now()"
+			"created_at" => "now()",
 		);
 
 		$this->db->insert("groups", $data);
