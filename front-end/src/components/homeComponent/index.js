@@ -3,10 +3,11 @@ import HeaderComponent from "../headerComponent";
 import './style.css';
 import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 import {PlusCircle} from "react-feather";
-import InviteModalComponent from "../modalsComponents/inviteModalComponent/inviteModalComponent";
+import InviteModalComponent from "../modalsComponents/inviteModalComponent";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {validateToken} from "../../redux/actions/login";
+import CreateGroupModalComponent from "../modalsComponents/createGroupModalComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -16,6 +17,7 @@ class HomeComponent extends Component {
 
         this.state = {
             showInviteModal: false,
+            showCreateGroupModal: true,
             currentGroupId: -1
         }
     }
@@ -34,7 +36,7 @@ class HomeComponent extends Component {
     }
 
     render() {
-        let {showInviteModal, currentGroupId} = this.state;
+        let {showCreateGroupModal, showInviteModal, currentGroupId} = this.state;
         let {userData, history} = this.props;
         return(
             <Fragment>
@@ -66,6 +68,9 @@ class HomeComponent extends Component {
                 </section>
                 {showInviteModal &&
                     <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />
+                }
+                {showCreateGroupModal &&
+                    <CreateGroupModalComponent />
                 }
             </Fragment>
         )
