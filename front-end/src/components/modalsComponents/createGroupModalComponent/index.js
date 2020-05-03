@@ -1,6 +1,9 @@
 import React, {Component, Fragment} from "react";
 import { withCookies } from "react-cookie";
+import axios from "axios";
+import qs from "querystring";
 import './style.css';
+import {API_SERVER_URL} from "../../../globalConstants";
 
 class CreateGroupModalComponent extends Component {
 
@@ -9,7 +12,10 @@ class CreateGroupModalComponent extends Component {
 
         this.state = {
             groupName: "",
-            groupDesc: ""
+            groupDesc: "",
+            groupNameHasError: false,
+            groupDescHasError: false,
+            messageCreateGroupError: ""
         }
     }
 
@@ -21,19 +27,58 @@ class CreateGroupModalComponent extends Component {
         document.body.style.overflowY = 'auto';
     }
 
-    createGroup = () => {}; // POST
+    createGroup = (e) => {
+        e.preventDefault();
+
+        let { groupName, groupDesc } = this.state;
+
+        console.log({groupName, groupDesc})
+
+        axios.post(
+            `${API_SERVER_URL}/createGroup`,
+            qs.stringify(groupName, groupDesc),
+            { headers: { "Authorization": `Bearer ${this.props.cookies.cookies.token}` } }
+        ).then( (res) => { console.log(res); }
+        ).catch( (err) => { console.log(err); });
+    };
 
     render() {
+
+        let { groupNameHasError, groupDescHasError, messageCreateGroupError } = this.state;
+
         return(
             <Fragment>
                 <div className={"d-flex justify-content-center modalContainer"}>
                     <div className={"d-flex flex-column align-items-center mt-5 createGroupModal"}>
                         <h2 className={"mb-4"}>Crea un nuovo gruppo</h2>
-                        <form className={"createGroupForm"} onSubmit={() => this.createGroup()}>
-                            <input className={"form-control"} placeholder={"Nome del gruppo"} />
-                            <textarea className={"form-control"} placeholder={"Descrizione del gruppo"} maxLength={255}/>
+                        <form className={"createGroupForm"} onSubmit={(e) => this.createGroup(e)}>
+                            <div className={"form-group"}>
+                                <input
+                                    className={["form-control", groupNameHasError ? "is-invalid" : ""].join(" ")}
+                                    placeholder={"Nome del gruppo"}
+                                    onChange={e => {this.state.groupName = e.target.value}} />
+
+                                {groupNameHasError &&
+                                <div className={"invalid-feedback"}>
+                                    {messageCreateGroupError}
+                                </div>
+                                }
+
+                            </div>
+
+                            <div className={"form-group"}>
+                                <textarea className={["form-control", groupDescHasError ? "is-invalid" : ""].join(" ")} placeholder={"Descrizione del gruppo"} maxLength={255}/>
+
+                                {groupDescHasError &&
+                                <div className={"invalid-feedback"}>
+                                    {messageCreateGroupError}
+                                </div>
+                                }
+
+                            </div>
+
                             <div className={"d-flex justify-content-center"}>
-                                <button className={"btn btn-primary sapienzaButton"}>
+                                <button className={"btn btn-primary sapienzaButton"} type={"submit"}>
                                     Crea gruppo
                                 </button>
                             </div>
