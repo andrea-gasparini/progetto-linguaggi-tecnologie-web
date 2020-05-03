@@ -8,6 +8,7 @@ import {
     removeUserFromInvitations, resetDataInvitations,
     searchUserForInvitation, sendInvitations, setResultSearchQuery, setSearchQueryUserInvitation
 } from "../../../redux/actions/invitations";
+import './style.css';
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
 
