@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {setErrorLogin, setPassword, setUsername, tryAuthLogin, validateToken} from "../../redux/actions/login";
 import {Link} from "react-router-dom";
 import {withCookies} from "react-cookie";
+import LogoComponent from "../logoComponent";
 
 const mapStateToProps = (state) => ({...state.loginReducer});
 
@@ -44,12 +45,7 @@ class IndexComponent extends Component {
                     <section
                         className={"d-flex flex-column justify-content-center align-items-center align-self-center h-100"}>
                         <div className={"d-flex loginBox p-4 flex-column"}>
-                            <div className={"d-flex justify-content-center noselectText"}>
-                                <div className={"d-flex logo align-self-center"}/>
-                                <div className={"d-flex align-self-center text-muted titleLogin"}>
-                                    Classroom
-                                </div>
-                            </div>
+                            <LogoComponent />
                             <div className={"d-flex justify-content-center"}>
                                 <div className={"d-flex mt-4 signInText"}>
                                     Accedi
