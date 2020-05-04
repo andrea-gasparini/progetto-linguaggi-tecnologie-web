@@ -18,3 +18,18 @@
         opacity: 1;
     }
 }
+
+.modalBox {
+    width: 500px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #4a4a4a;
+    position: fixed;
+    height: auto;
+    padding-top: 30px;
+}
+
+.modalTitle {
+    font-size: 25px;
+    cursor: default;
+}

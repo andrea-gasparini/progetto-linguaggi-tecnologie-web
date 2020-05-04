@@ -32,8 +32,6 @@ class CreateGroupModalComponent extends Component {
 
         let { groupName, groupDesc } = this.state;
 
-        console.log({groupName, groupDesc})
-
         axios.post(
             `${API_SERVER_URL}/createGroup`,
             qs.stringify({groupName, groupDesc}),
@@ -52,8 +50,8 @@ class CreateGroupModalComponent extends Component {
         return(
             <Fragment>
                 <div className={"d-flex justify-content-center modalContainer"}>
-                    <div className={"d-flex flex-column align-items-center mt-5 createGroupModal"}>
-                        <h2 className={"mb-4"}>Crea un nuovo gruppo</h2>
+                    <div className={"d-flex flex-column align-items-center mt-5 modalBox"}>
+                        <span className={"mb-4 modalTitle"}>Crea un nuovo gruppo</span>
                         <form className={"createGroupForm"} onSubmit={(e) => this.createGroup(e)}>
                             <div className={"form-group"}>
                                 <input

@@ -8,10 +8,7 @@
 }
 
 .createGroupForm {
-    width: 100%;
-}
-
-.createGroupForm > *:not(:last-child) {
+    width: 90%;
     margin-bottom: 20px;
 }
 
