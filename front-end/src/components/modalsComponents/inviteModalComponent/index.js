@@ -59,7 +59,7 @@ class InviteModalComponent extends Component {
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex modalBox mt-5 align-items-center flex-column"}>
-                        <div className={"closeInviteModal"}>
+                        <div className={"closeModal"}>
                             <X onClick={() => {closeModal(); dispatch(resetDataInvitations(false));}} />
                         </div>
                         <div className={"text-muted modalTitle"}>

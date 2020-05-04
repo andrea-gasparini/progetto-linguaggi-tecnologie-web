@@ -33,3 +33,14 @@
     font-size: 25px;
     cursor: default;
 }
+
+.closeModal {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.closeModal:hover {
+    cursor: pointer;
+    opacitty: .8;
+}

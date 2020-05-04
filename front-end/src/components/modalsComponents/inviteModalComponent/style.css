@@ -1,14 +1,3 @@
-.closeInviteModal {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-}
-
-.closeInviteModal:hover {
-    cursor: pointer;
-    opacitty: .8;
-}
-
 .searchUserDropdown {
     width: 100%;
     position: absolute;
