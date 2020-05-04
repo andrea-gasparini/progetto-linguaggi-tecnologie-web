@@ -5,6 +5,8 @@ import {Bell} from "react-feather";
 import DropDownInvitationsComponent from "../dropdownInvitations";
 import {getMyInvitation} from "../../redux/actions/invitations";
 import {withCookies} from "react-cookie";
+import DropDownInvitations from "../dropdownInvitations";
+import LogoComponent from "../logoComponent";
 import {Link} from "react-router-dom";
 
 const mapStateToProps = (state) => ({...state.userReducer, ...state.invitationsReducer});
@@ -84,7 +86,7 @@ class HeaderComponent extends Component {
             <Fragment>
                 <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
                     <div className={"d-flex navbarContainer justify-content-around"}>
-                        <div className={"logo"} style={{width: 50, height: 50}} />
+                        <LogoComponent size={50}/>
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
                             {this.navigationElements.map((value, index) => (
                                 <li onClick={(e) => this.switchNavigationPage(value.pathName, value.path)} key={index} className={"navbarElement"}>
