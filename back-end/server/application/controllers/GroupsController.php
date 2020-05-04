@@ -149,9 +149,20 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
 
 			$groupId = $this->input->post('groupId');
-			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT)) // parametro groupId: è un intero?
 				return $this->response(buildServerResponse(false, "Id gruppo non valido."), 200);
 			$group = $this->GroupsModel->getGroupById($groupId);
+
+			if(count($group) <= 0) // controllo che il gruppo esista
+				return $this->response(buildServerResponse(false, "Id gruppo non valido."), 200);
+
+			if($group[0]->group_owner != $userId) // sono il proprietario del gruppo?
+				return $this->response(buildServerResponse(false, "Solo il proprietario può eliminare il gruppo"), 200);
+
+			if($this->GroupsModel->deleteGroup($groupId))
+				return $this->response(buildServerResponse(true, "ok"));
+
 		}
 
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);

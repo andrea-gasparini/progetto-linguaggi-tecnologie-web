@@ -4,6 +4,8 @@ import {X} from "react-feather";
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
+import {connect} from "react-redux";
+import {removeGroup} from "../../../redux/actions/user";
 
 class DeleteGroupModalComponent extends Component {
     constructor(props) {
@@ -32,13 +34,22 @@ class DeleteGroupModalComponent extends Component {
                 "Authorization": `Bearer ${cookies.cookies.token}`
             }
         }).then((res) => {
-            console.log(res);
+            let {status} = res.data;
+            if(status)
+                this.showSuccess();
         }).catch((err) => {
             console.log(err);
         })
     };
 
+    showSuccess = () => {
+        this.setState({showSuccess: true});
+        let {groupId, dispatch} = this.props;
+        dispatch(removeGroup(groupId));
+    };
+
     render() {
+        let {showSuccess} = this.state;
         return(
             <Fragment>
                 <div onMouseDown={e => this.checkCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
@@ -47,17 +58,27 @@ class DeleteGroupModalComponent extends Component {
                             <X onClick={() => this.props.closeModal() } />
                         </div>
 
-                        <span className={"mb-4 text-muted"}>Sei sicuro di voler eliminare questo gruppo?</span>
+                        {!showSuccess &&
+                            <Fragment>
+                                <span className={"mb-4 text-muted"}>Sei sicuro di voler eliminare questo gruppo?</span>
 
-                        <form className={"createGroupForm"} onSubmit={(e) => this.deleteGroup(e)}>
-                            <div className={"d-flex justify-content-center"}>
-                                <button
-                                    className={"btn btn-primary sapienzaButton"}
-                                    type={"submit"}>
-                                    Elimina gruppo
-                                </button>
+                                <form className={"createGroupForm"} onSubmit={(e) => this.deleteGroup(e)}>
+                                    <div className={"d-flex justify-content-center"}>
+                                        <button
+                                            className={"btn btn-primary sapienzaButton"}
+                                            type={"submit"}>
+                                            Elimina gruppo
+                                        </button>
+                                    </div>
+                                </form>
+                            </Fragment>
+                        }
+
+                        {showSuccess &&
+                            <div className="alert alert-success" role="alert">
+                                Gruppo eliminato con successo.
                             </div>
-                        </form>
+                        }
                     </div>
                 </div>
             </Fragment>
@@ -65,4 +86,4 @@ class DeleteGroupModalComponent extends Component {
     }
 }
 
-export default withCookies(DeleteGroupModalComponent);
+export default withCookies(connect()(DeleteGroupModalComponent));

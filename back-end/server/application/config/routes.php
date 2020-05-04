@@ -64,3 +64,4 @@ $route['createGroup'] = "GroupsController/createGroup";
 $route['changeEmail'] = "SettingsController/changeEmail";
 $route['changePassword'] = "SettingsController/changePassword";
 $route['changeProfilePicture'] = "SettingsController/changeProfilePicture";
+$route['deleteGroup'] = "GroupsController/deleteGroup";

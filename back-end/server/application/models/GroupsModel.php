@@ -25,6 +25,13 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function deleteGroup($groupId) {
+		$this->db->where("id", $groupId);
+		if($this->db->delete("groups"))
+			return true;
+		return false;
+	}
+
 	public function createGroup($groupName, $groupDesc, $groupOwner) {
 		$data = array(
 			"group_title" => $groupName,
