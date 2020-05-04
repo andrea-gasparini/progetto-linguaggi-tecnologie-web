@@ -8,6 +8,7 @@ import {
     removeUserFromInvitations, resetDataInvitations,
     searchUserForInvitation, sendInvitations, setResultSearchQuery, setSearchQueryUserInvitation
 } from "../../../redux/actions/invitations";
+import {API_SERVER_URL} from "../../../globalConstants";
 import './style.css';
 
 const mapStateToProps = (state) => ({...state.invitationsReducer});
@@ -106,7 +107,7 @@ class InviteModalComponent extends Component {
 
                                 {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.filter(x => usernameListInvitations.indexOf(x.username) < 0).map((value, index) => (
                                     <div onClick={() => {dispatch(addUserToInvitations([{username: value.username, id: value.id}])); this.setState({clickedToClose: true})}} key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
-                                        <div className={"userSearchResultModalInviteImage"}/>
+                                        <div className={"userSearchResultModalInviteImage"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${value.profile_picture}")`, backgroundSize: "cover !important", backgroundRepeat: "no-repeat"}} />
                                         <div className={"userSearchResultModalInviteUsername"}>
                                             {value.username}
                                         </div>

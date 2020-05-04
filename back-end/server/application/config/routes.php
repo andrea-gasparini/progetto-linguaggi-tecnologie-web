@@ -60,3 +60,6 @@ $route['sendInvitations'] = "GroupsController/sendInvitations";
 $route['getInvitations'] = "GroupsController/getUserInvitations";
 $route['resetInvitationsCount'] = "GroupsController/resetUserCountInvitations";
 $route['replyInvitation'] = "GroupsController/replyInvitation";
+$route['changeEmail'] = "SettingsController/changeEmail";
+$route['changePassword'] = "SettingsController/changePassword";
+$route['changeProfilePicture'] = "SettingsController/changeProfilePicture";

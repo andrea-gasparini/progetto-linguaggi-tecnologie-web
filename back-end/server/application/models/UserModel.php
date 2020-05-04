@@ -11,6 +11,18 @@ class UserModel extends CI_Model
 		return $query->num_rows() == 0;
 	}
 
+	public function checkEmailAvailable($email) {
+		$this->db->select("*");
+		$this->db->where(array("email" => $email));
+		$query = $this->db->get("users");
+		return $query->num_rows() > 0;
+	}
+
+	public function updateUserSettingsData($userInfo, $data) {
+		$this->db->where($userInfo);
+		$this->db->limit(1);
+		$this->db->update("users", $data);
+	}
 
 	public function createUser($realname, $username, $email, $password) {
 		$data = array(
@@ -44,7 +56,7 @@ class UserModel extends CI_Model
 
 
 	public function searchUser($username, $userId) {
-		$this->db->select("id, username"); // seleziona id, username
+		$this->db->select("id, username, profile_picture"); // seleziona id, username
 		$this->db->group_start(); // (
 		$this->db->like("username", $username);
 		$this->db->or_like("email", $username);
@@ -67,10 +79,15 @@ class UserModel extends CI_Model
 
 
 	public function getUserGroups($userId) {
-		$this->db->select("groups.id, groups.code, groups.created_at, groups.group_title");
+		/*$this->db->select("groups.id, groups.created_at, groups.group_title, groups.description");
 		$this->db->join("groups", "groups.id = groupsMemberships.group_id");
 		$this->db->where(array("groupsMemberships.user_id" => $userId));
-		$query = $this->db->get("groupsMemberships");
+		$query = $this->db->get("groupsMemberships");*/
+		$this->db->select("g.id, g.created_at, g.group_title, g.description, u.realname as owner");
+		$this->db->where("g.id", "gm.group_id", FALSE);
+		$this->db->where("u.id", "g.group_owner", FALSE);
+		$this->db->where("gm.user_id", $userId);
+		$query = $this->db->get("groupsMemberships gm, users u, groups g");
 		return $query->result();
 	}
 
