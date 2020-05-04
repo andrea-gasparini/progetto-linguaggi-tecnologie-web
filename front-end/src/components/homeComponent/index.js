@@ -17,7 +17,7 @@ class HomeComponent extends Component {
 
         this.state = {
             showInviteModal: false,
-            showCreateGroupModal: true,
+            showCreateGroupModal: false,
             currentGroupId: -1
         }
     }
@@ -30,6 +30,8 @@ class HomeComponent extends Component {
     showInviteModal = () =>  {
         this.setState({showInviteModal: !this.state.showInviteModal});
     };
+
+    toggleCreateGroupModal = () => { this.setState({ showCreateGroupModal: ! this.state.showCreateGroupModal } ) }
 
     setGroupId = (groupId) => {
         this.setState({currentGroupId: groupId});
@@ -47,7 +49,7 @@ class HomeComponent extends Component {
                             <div className={"groupsCount"}>
                                 I miei gruppi ({typeof userData !== "undefined" ? userData.userGroups.length : 0})
                             </div>
-                            <div className={"createGroupText"}>
+                            <div className={"createGroupText"} onClick={this.toggleCreateGroupModal}>
                                 Crea un gruppo
                                 <PlusCircle style={{marginLeft: 5}} />
                             </div>
@@ -70,7 +72,7 @@ class HomeComponent extends Component {
                     <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />
                 }
                 {showCreateGroupModal &&
-                    <CreateGroupModalComponent />
+                    <CreateGroupModalComponent closeModal={this.toggleCreateGroupModal}/>
                 }
             </Fragment>
         )

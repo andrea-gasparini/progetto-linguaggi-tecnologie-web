@@ -4,6 +4,8 @@ import axios from "axios";
 import qs from "querystring";
 import './style.css';
 import {API_SERVER_URL} from "../../../globalConstants";
+import {X} from "react-feather";
+import {resetDataInvitations} from "../../../redux/actions/invitations";
 
 class CreateGroupModalComponent extends Component {
 
@@ -25,6 +27,12 @@ class CreateGroupModalComponent extends Component {
 
     componentWillUnmount() {
         document.body.style.overflowY = 'auto';
+    }
+
+    checkCloseModal = (e) => {
+        if (e.target.classList.contains("modalContainer")) {
+            this.props.closeModal();
+        }
     }
 
     createGroup = (e) => {
@@ -49,9 +57,14 @@ class CreateGroupModalComponent extends Component {
 
         return(
             <Fragment>
-                <div className={"d-flex justify-content-center modalContainer"}>
+                <div onMouseDown={e => this.checkCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div className={"d-flex flex-column align-items-center mt-5 modalBox"}>
+                        <div className={"closeModal"}>
+                            <X onClick={() => this.props.closeModal() } />
+                        </div>
+
                         <span className={"mb-4 modalTitle"}>Crea un nuovo gruppo</span>
+
                         <form className={"createGroupForm"} onSubmit={(e) => this.createGroup(e)}>
                             <div className={"form-group"}>
                                 <input
