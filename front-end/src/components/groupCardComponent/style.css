@@ -100,7 +100,7 @@
     right: 15px;
 }
 
-@media only screen and (max-width: 977px) {
+@media only screen and (max-width: 976px) {
     .groupCard:nth-child(2n) {
         margin-right: 0px !important;
     }
