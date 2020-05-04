@@ -24,7 +24,7 @@ class DeleteGroupModalComponent extends Component {
     }
 
     checkCloseModal = (e) => {
-        if (e.target.classList.contains("modalContainer")) {
+        if (e.target.classList.contains("modalContainer") && !this.state.showSuccess) {
             this.props.closeModal();
         }
     };
@@ -51,7 +51,7 @@ class DeleteGroupModalComponent extends Component {
         dispatch(removeGroup(groupId));
         setTimeout(() => {
             closeModal();
-        }, 3000);
+        }, 2500);
     };
 
     render() {
