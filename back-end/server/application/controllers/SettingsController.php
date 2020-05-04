@@ -107,8 +107,10 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 			$uploadedData = $this->upload->data(); // prendo le info del file uploadato
 			$userInfo = array("id" => $userId);
 			$userData = array("profile_picture" => $uploadedData["file_name"]);
-			if($this->UserModel->updateUserSettingsData($userInfo, $userData))
+			if(!$this->UserModel->updateUserSettingsData($userInfo, $userData))
 				return $this->response(buildServerResponse(true, "Immagine caricata", array("imageName" => $uploadedData["file_name"])), 200);
+			else
+				return $this->response(buildServerResponse(false, "Errore durante l'aggiornamento dell'immagine di profilo."), 200);
 		}
 		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
