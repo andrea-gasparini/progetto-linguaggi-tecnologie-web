@@ -10,6 +10,9 @@ import {removeGroup} from "../../../redux/actions/user";
 class DeleteGroupModalComponent extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showSuccess: false
+        }
     }
 
     componentDidMount() {
@@ -44,8 +47,11 @@ class DeleteGroupModalComponent extends Component {
 
     showSuccess = () => {
         this.setState({showSuccess: true});
-        let {groupId, dispatch} = this.props;
+        let {groupId, dispatch, closeModal} = this.props;
         dispatch(removeGroup(groupId));
+        setTimeout(() => {
+            closeModal();
+        }, 3000);
     };
 
     render() {
@@ -54,9 +60,11 @@ class DeleteGroupModalComponent extends Component {
             <Fragment>
                 <div onMouseDown={e => this.checkCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
                     <div className={"d-flex flex-column align-items-center mt-5 modalBox"}>
+                        {!showSuccess &&
                         <div className={"closeModal"}>
-                            <X onClick={() => this.props.closeModal() } />
+                            <X onClick={() => this.props.closeModal()}/>
                         </div>
+                        }
 
                         {!showSuccess &&
                             <Fragment>
@@ -75,8 +83,8 @@ class DeleteGroupModalComponent extends Component {
                         }
 
                         {showSuccess &&
-                            <div className="alert alert-success" role="alert">
-                                Gruppo eliminato con successo.
+                            <div className="alert alert-success" role="alert" style={{maxWidth: "80%"}}>
+                                <b>Gruppo eliminato con successo, attendi due secondi e sarai riportato alla home.</b>
                             </div>
                         }
                     </div>
