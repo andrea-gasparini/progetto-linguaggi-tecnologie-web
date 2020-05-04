@@ -4,7 +4,7 @@ import {
     SET_PASSWORD_SIGNUP,
     SET_REALNAME_SIGNUP,
     SET_USERNAME_SIGNUP,
-    SET_ERROR_SIGNUP
+    SET_ERROR_SIGNUP, RESET_DATA_SIGNUP
 } from "./action";
 import axios from "axios";
 import qs from 'querystring';
@@ -59,6 +59,7 @@ export const tryAuthSignUp = (credentials, cookies, history) => {
             if(!res.data.status)
                 dispatch(setErrorSignUp({ ...data, message: message}));
             else {
+                dispatch(resetDataSignup());
                 cookies.set('token', data.token); // mettiamo nei cookie il nuovo token
                 history.push('/home'); // redirect alla home.
             }
@@ -67,3 +68,7 @@ export const tryAuthSignUp = (credentials, cookies, history) => {
         })
     }
 };
+
+export const resetDataSignup = () => ({
+    type: RESET_DATA_SIGNUP
+});

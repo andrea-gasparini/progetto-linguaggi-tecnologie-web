@@ -87,15 +87,13 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 
 	public function changeProfilePicture_post()
 	{
-		$config['upload_path'] = './uploads/';
+		$config['upload_path'] = './uploads/profilePictures/';
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		$config['encrypt_name'] = true; // codifica il nome del file caricato.
 		$this->load->library('upload', $config);
 
 		$token = validateAuthorizationToken($this->input->get_request_header('Authorization'));
 		if ($token["status"]) {
-			//$fileImage = $this->input->post('file');
-			//var_dump($fileImage);
 			$userId = $token["data"]["userId"];
 
 			$user = $this->UserModel->getUserById($userId);
@@ -103,11 +101,14 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 				return $this->response(buildServerResponse(false, "Utente inesistente."), 200);
 
 
-			if(!$this->upload->do_upload("file"))
+			if(!$this->upload->do_upload("file")) // fa l'upload del file
 				return $this->response(buildServerResponse(false, $this->upload->display_errors()), 200);
 
-			$uploadedData = $this->upload->data();
-			return $this->response(buildServerResponse(true, "Immagine caricata", array("imageName" => $uploadedData["file_name"])), 200);
+			$uploadedData = $this->upload->data(); // prendo le info del file uploadato
+			$userInfo = array("id" => $userId);
+			$userData = array("profile_picture" => $uploadedData["file_name"]);
+			if($this->UserModel->updateUserSettingsData($userInfo, $userData))
+				return $this->response(buildServerResponse(true, "Immagine caricata", array("imageName" => $uploadedData["file_name"])), 200);
 		}
 		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}

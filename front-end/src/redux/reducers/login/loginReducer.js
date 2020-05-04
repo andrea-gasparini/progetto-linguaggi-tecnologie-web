@@ -1,4 +1,4 @@
-import {SET_ERROR_LOGIN, SET_PASSWORD_LOGIN, SET_USERNAME_LOGIN} from "../../actions/login/actions";
+import {RESET_DATA_LOGIN, SET_ERROR_LOGIN, SET_PASSWORD_LOGIN, SET_USERNAME_LOGIN} from "../../actions/login/actions";
 import update from "immutability-helper";
 
 export const loginReducer = (state = {username: '', password: ''}, action) => {
@@ -23,6 +23,11 @@ export const loginReducer = (state = {username: '', password: ''}, action) => {
                 messageLoginError: {$set: action.payload.message}
             });
 
+        case RESET_DATA_LOGIN:
+            return update(state, {
+                username: {$set: ''},
+                password: {$set: ''}
+            });
 
     }
 };

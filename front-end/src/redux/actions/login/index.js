@@ -1,8 +1,9 @@
-import {SET_ERROR_LOGIN, SET_PASSWORD_LOGIN, SET_USERNAME_LOGIN} from "./actions";
+import {RESET_DATA_LOGIN, SET_ERROR_LOGIN, SET_PASSWORD_LOGIN, SET_USERNAME_LOGIN} from "./actions";
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "qs";
 import {setUserData} from "../user";
+import {RESET_DATA_SIGNUP} from "../signup/action";
 
 export const setUsername = (username) => ({
     type: SET_USERNAME_LOGIN,
@@ -34,6 +35,7 @@ export const tryAuthLogin = (username, password, cookies, history) => {
             if(!res.data.status)
                 dispatch(setErrorLogin({usernameHasError: data.usernameHasError, passwordHasError: data.passwordHasError, message: message}));
             else {
+                dispatch(resetDataLogin());
                 dispatch(setUserData(data.userData));
                 cookies.set('token', data.token); // mettiamo nei cookie il nuovo token
                 history.push('/home', {fromLogin: true}); // redirect alla home.
@@ -66,4 +68,8 @@ export const validateToken = (cookies, history, fromLogin=false) => {
             console.log(err);
         });
     }
-}
+};
+
+export const resetDataLogin = () => ({
+    type: RESET_DATA_LOGIN
+});
