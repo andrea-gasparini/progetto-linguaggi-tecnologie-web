@@ -56,7 +56,7 @@ class UserModel extends CI_Model
 
 
 	public function searchUser($username, $userId) {
-		$this->db->select("id, username"); // seleziona id, username
+		$this->db->select("id, username, profile_picture"); // seleziona id, username
 		$this->db->group_start(); // (
 		$this->db->like("username", $username);
 		$this->db->or_like("email", $username);
