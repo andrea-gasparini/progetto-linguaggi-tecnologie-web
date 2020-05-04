@@ -106,7 +106,7 @@ class InviteModalComponent extends Component {
 
                                 {searchQuery.length > 0 && searchQueryResult.length > 0 && searchQueryResult.filter(x => usernameListInvitations.indexOf(x.username) < 0).map((value, index) => (
                                     <div onClick={() => {dispatch(addUserToInvitations([{username: value.username, id: value.id}])); this.setState({clickedToClose: true})}} key={index} className={"d-flex userSearchResultModalInvite"} style={{width: "100%"}}>
-                                        <div className={"userSearchResultModalInviteImage"} style={{background: `url("${API_SERVER_URL}/uploads/profilePictures/${value.profile_picture}") no-repeat`, backgroundSize: "cover"}} />
+                                        <div className={"userSearchResultModalInviteImage"} style={{background: `url("${API_SERVER_URL}/uploads/profilePictures/${value.profile_picture}") no-repeat`, backgroundSize: "cover !important"}} />
                                         <div className={"userSearchResultModalInviteUsername"}>
                                             {value.username}
                                         </div>
