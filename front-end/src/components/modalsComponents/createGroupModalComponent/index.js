@@ -45,7 +45,7 @@ class CreateGroupModalComponent extends Component {
 
     render() {
 
-        let { groupNameHasError, groupDescHasError, messageCreateGroupError } = this.state;
+        let { groupNameHasError, groupDescHasError, groupName, messageCreateGroupError } = this.state;
 
         return(
             <Fragment>
@@ -79,7 +79,10 @@ class CreateGroupModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex justify-content-center"}>
-                                <button className={"btn btn-primary sapienzaButton"} type={"submit"}>
+                                <button
+                                    disabled={groupName.length < 1}
+                                    className={"btn btn-primary sapienzaButton"}
+                                    type={"submit"}>
                                     Crea gruppo
                                 </button>
                             </div>
