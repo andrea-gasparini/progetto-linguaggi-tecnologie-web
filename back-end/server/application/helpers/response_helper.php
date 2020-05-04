@@ -37,5 +37,5 @@ function loadDataUser($userId, $username) {
 	$ci = & get_instance();
 	$userGroups = $ci->UserModel->getUserGroups($userId);
 	$userNotificationsCount = $ci->UserModel->getInvitationsCountToRead($userId);
-	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username));
+	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username, "id" => $userId));
 }

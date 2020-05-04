@@ -25,7 +25,6 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
-
 	public function createGroup($groupName, $groupDesc, $groupOwner) {
 		$data = array(
 			"group_title" => $groupName,

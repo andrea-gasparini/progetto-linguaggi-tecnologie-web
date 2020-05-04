@@ -9,7 +9,7 @@ class GroupCardComponent extends Component {
     }
 
     render() {
-        let {groupOwner, groupTitle, groupDescription, openInviteModal, setGroupId, groupId, ownerPicture} = this.props;
+        let {groupOwner, groupTitle, groupDescription, openInviteModal, setGroupId, groupId, ownerPicture, ownerId, viewerId, deleteGroupId, openDeleteModal} = this.props;
         return(
             <Fragment>
                 <div className={"d-flex groupCard flex-column"}>
@@ -20,7 +20,9 @@ class GroupCardComponent extends Component {
                                 {groupTitle}
                             </div>
                             <div className={"cardGroupOptionsIcon"}>
-                                <MoreVertical color={"white"} />
+                                {ownerId === viewerId &&
+                                    <MoreVertical onClick={() => {deleteGroupId(groupId); openDeleteModal()}} color={"white"}/>
+                                }
                             </div>
                         </div>
                         <div className={"cardGroupOwner"}>

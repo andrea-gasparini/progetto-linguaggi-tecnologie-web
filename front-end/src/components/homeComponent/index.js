@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {validateToken} from "../../redux/actions/login";
 import CreateGroupModalComponent from "../modalsComponents/createGroupModalComponent";
+import DeleteGroupModalComponent from "../modalsComponents/deleteGroupModalComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -18,7 +19,9 @@ class HomeComponent extends Component {
         this.state = {
             showInviteModal: false,
             showCreateGroupModal: false,
-            currentGroupId: -1
+            showDeleteGroupModal: false,
+            currentGroupId: -1,
+            deleteGroupId: -1
         }
     }
 
@@ -33,12 +36,20 @@ class HomeComponent extends Component {
 
     toggleCreateGroupModal = () => { this.setState({ showCreateGroupModal: ! this.state.showCreateGroupModal } ) }
 
+    showDeleteGroupModal = () => {
+        this.setState({showDeleteGroupModal: !this.state.showDeleteGroupModal});
+    };
+
     setGroupId = (groupId) => {
         this.setState({currentGroupId: groupId});
-    }
+    };
+
+    setDeleteGroupId = (groupId) => {
+        this.setState({deleteGroupId: groupId});
+    };
 
     render() {
-        let {showCreateGroupModal, showInviteModal, currentGroupId} = this.state;
+        let {showCreateGroupModal, showInviteModal, currentGroupId, showDeleteGroupModal, deleteGroupId} = this.state;
         let {userData, history} = this.props;
         return(
             <Fragment>
@@ -57,7 +68,7 @@ class HomeComponent extends Component {
 
                         <div className={"d-flex flex-row flex-wrap groupsList mb-5"}>
                             {typeof userData !== "undefined" && userData.userGroups.map((value, index) => (
-                                <GroupCardComponent ownerPicture={value.ownerPicture} groupDescription={value.description} groupOwner={value.owner} setGroupId={this.setGroupId} groupId={value.id} openInviteModal={this.showInviteModal} groupTitle={value.group_title} key={index} />
+                                <GroupCardComponent deleteGroupId={this.setDeleteGroupId} openDeleteModal={this.showDeleteGroupModal} viewerId={userData.viewer.id} ownerId={value.ownerId} ownerPicture={value.ownerPicture} groupDescription={value.description} groupOwner={value.owner} setGroupId={this.setGroupId} groupId={value.id} openInviteModal={this.showInviteModal} groupTitle={value.group_title} key={index} />
                             ))}
 
                             {(typeof userData === "undefined" || userData.userGroups.length <= 0) &&
@@ -73,6 +84,9 @@ class HomeComponent extends Component {
                 }
                 {showCreateGroupModal &&
                     <CreateGroupModalComponent closeModal={this.toggleCreateGroupModal}/>
+                }
+                {showDeleteGroupModal &&
+                    <DeleteGroupModalComponent closeModal={this.showDeleteGroupModal} groupId={deleteGroupId} />
                 }
             </Fragment>
         )
