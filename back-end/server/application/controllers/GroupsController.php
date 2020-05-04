@@ -174,9 +174,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 				// l'utente ha accettato e quindi dobbiamo aggiungerlo al gruppo.
 				$membership = array("user_id" => $userId, "group_id" => $groupId, "is_admin" => "0");
+				$groupData = $this->GroupsModel->getAllDataGroup($group[0]->id);
 				if($this->UserModel->addMembership($membership)) {
 					if($this->UserModel->deleteNotificationGroupForUser($userId, $groupId))
-						return $this->response(buildServerResponse(true, "ok", array("group" => $group[0])),  200);
+						return $this->response(buildServerResponse(true, "ok", array("group" => $groupData[0])),  200);
 				}
 			}
 		}

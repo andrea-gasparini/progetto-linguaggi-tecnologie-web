@@ -57,7 +57,7 @@ class HomeComponent extends Component {
 
                         <div className={"d-flex flex-row flex-wrap groupsList mb-5"}>
                             {typeof userData !== "undefined" && userData.userGroups.map((value, index) => (
-                                <GroupCardComponent groupDescription={value.description} groupOwner={value.owner} setGroupId={this.setGroupId} groupId={value.id} openInviteModal={this.showInviteModal} groupTitle={value.group_title} key={index} />
+                                <GroupCardComponent ownerPicture={value.ownerPicture} groupDescription={value.description} groupOwner={value.owner} setGroupId={this.setGroupId} groupId={value.id} openInviteModal={this.showInviteModal} groupTitle={value.group_title} key={index} />
                             ))}
 
                             {(typeof userData === "undefined" || userData.userGroups.length <= 0) &&

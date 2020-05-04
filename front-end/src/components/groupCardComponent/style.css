@@ -3,7 +3,7 @@
     border: 1px solid #afafaf;
     max-width: 300px;
     max-height: 300px;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-right: 30px;
     width: 300px;
     height: 250px;
@@ -88,7 +88,19 @@
     color: white;
 }
 
-@media only screen and (max-width: 977px) {
+.groupOwnerImage {
+    background-image: url("http://localhost:8888/uploads/profilePictures/default_user_profile_image.png");
+    background-size: cover !important;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: absolute;
+    top: 60px;
+    z-index: 1;
+    right: 15px;
+}
+
+@media only screen and (max-width: 976px) {
     .groupCard:nth-child(2n) {
         margin-right: 0px !important;
     }

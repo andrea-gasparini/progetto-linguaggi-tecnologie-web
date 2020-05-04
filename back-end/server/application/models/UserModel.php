@@ -83,7 +83,7 @@ class UserModel extends CI_Model
 		$this->db->join("groups", "groups.id = groupsMemberships.group_id");
 		$this->db->where(array("groupsMemberships.user_id" => $userId));
 		$query = $this->db->get("groupsMemberships");*/
-		$this->db->select("g.id, g.created_at, g.group_title, g.description, u.realname as owner");
+		$this->db->select("g.id, g.created_at, g.group_title, g.description, u.realname as owner, u.profile_picture as ownerPicture");
 		$this->db->where("g.id", "gm.group_id", FALSE);
 		$this->db->where("u.id", "g.group_owner", FALSE);
 		$this->db->where("gm.user_id", $userId);
