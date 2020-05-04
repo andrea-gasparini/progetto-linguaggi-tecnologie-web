@@ -87,11 +87,9 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 
 	public function changeProfilePicture_post()
 	{
-		$config['upload_path'] = 'C:\inetpub\wwwroot\upload\\';
+		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
-		$config['max_size'] = 100;
-		$config['max_width'] = 3440;
-		$config['max_height'] = 1080;
+		$config['encrypt_name'] = true; // codifica il nome del file caricato.
 		$this->load->library('upload', $config);
 
 		$token = validateAuthorizationToken($this->input->get_request_header('Authorization'));
@@ -104,10 +102,12 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 			if (count($user) <= 0)
 				return $this->response(buildServerResponse(false, "Utente inesistente."), 200);
 
+
 			if(!$this->upload->do_upload("file"))
 				return $this->response(buildServerResponse(false, $this->upload->display_errors()), 200);
 
-			return $this->response(buildServerResponse(true, "Immagine caricata"), 200);
+			$uploadedData = $this->upload->data();
+			return $this->response(buildServerResponse(true, "Immagine caricata", array("imageName" => $uploadedData["file_name"])), 200);
 		}
 		return $this->response(buildServerResponse(false, "Errore autenticazione."), 200);
 	}
