@@ -12,9 +12,20 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 01/05/2020 20:11:35
+ Date: 04/05/2020 08:06:22
 */
 
+
+-- ----------------------------
+-- Sequence structure for chats_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."chats_id_seq";
+CREATE SEQUENCE "public"."chats_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for chats_messages_id_seq
@@ -98,7 +109,7 @@ CACHE 1;
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."chats";
 CREATE TABLE "public"."chats" (
-  "id" int4 NOT NULL,
+  "id" int4 NOT NULL DEFAULT nextval('chats_id_seq'::regclass),
   "group_id" int4 NOT NULL
 )
 ;
@@ -106,6 +117,9 @@ CREATE TABLE "public"."chats" (
 -- ----------------------------
 -- Records of chats
 -- ----------------------------
+INSERT INTO "public"."chats" VALUES (1, 7);
+INSERT INTO "public"."chats" VALUES (2, 8);
+INSERT INTO "public"."chats" VALUES (3, 9);
 
 -- ----------------------------
 -- Table structure for chats_messages
@@ -147,16 +161,20 @@ CREATE TABLE "public"."comments" (
 DROP TABLE IF EXISTS "public"."groups";
 CREATE TABLE "public"."groups" (
   "id" int4 NOT NULL DEFAULT nextval('groups_id_seq'::regclass),
-  "code" varchar(8) COLLATE "pg_catalog"."default" NOT NULL,
+  "description" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "created_at" timestamp(6) NOT NULL,
-  "group_title" varchar(255) COLLATE "pg_catalog"."default" NOT NULL
+  "group_title" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "group_owner" int4 NOT NULL
 )
 ;
 
 -- ----------------------------
 -- Records of groups
 -- ----------------------------
-INSERT INTO "public"."groups" VALUES (1, '1', '2020-04-22 09:15:14', 'test');
+INSERT INTO "public"."groups" VALUES (6, '', '2020-05-03 20:49:46.425237', 'test', 1);
+INSERT INTO "public"."groups" VALUES (7, '', '2020-05-03 20:50:56.603809', 'test', 1);
+INSERT INTO "public"."groups" VALUES (8, '', '2020-05-04 07:57:13.532721', 'ab', 1);
+INSERT INTO "public"."groups" VALUES (9, 'bb', '2020-05-04 07:58:29.647732', 'a', 1);
 
 -- ----------------------------
 -- Table structure for groupsMemberships
@@ -173,7 +191,10 @@ CREATE TABLE "public"."groupsMemberships" (
 -- ----------------------------
 -- Records of groupsMemberships
 -- ----------------------------
-INSERT INTO "public"."groupsMemberships" VALUES (1, 1, 1, 't');
+INSERT INTO "public"."groupsMemberships" VALUES (16, 1, 6, 't');
+INSERT INTO "public"."groupsMemberships" VALUES (17, 1, 7, 't');
+INSERT INTO "public"."groupsMemberships" VALUES (18, 1, 8, 't');
+INSERT INTO "public"."groupsMemberships" VALUES (19, 1, 9, 't');
 
 -- ----------------------------
 -- Table structure for invitations
@@ -192,12 +213,6 @@ CREATE TABLE "public"."invitations" (
 -- ----------------------------
 -- Records of invitations
 -- ----------------------------
-INSERT INTO "public"."invitations" VALUES (5, 1, 13, 1, '2020-04-30 10:04:13.93307', 'f');
-INSERT INTO "public"."invitations" VALUES (2, 1, 10, 1, '2020-05-01 16:01:59.374301', 'f');
-INSERT INTO "public"."invitations" VALUES (6, 1, 11, 1, '2020-05-01 16:01:59.377059', 'f');
-INSERT INTO "public"."invitations" VALUES (3, 1, 8, 1, '2020-05-01 20:05:36.333475', 'f');
-INSERT INTO "public"."invitations" VALUES (4, 1, 12, 1, '2020-05-01 20:05:36.33727', 'f');
-INSERT INTO "public"."invitations" VALUES (1, 1, 7, 1, '2020-05-01 20:05:36.338391', 'f');
 
 -- ----------------------------
 -- Table structure for posts
@@ -246,6 +261,13 @@ INSERT INTO "public"."users" VALUES (14, 'edoardo', 'edoardo23', 'test@test.vgg'
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."chats_id_seq"
+OWNED BY "public"."chats"."id";
+SELECT setval('"public"."chats_id_seq"', 4, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."chats_messages_id_seq"
 OWNED BY "public"."chats_messages"."id";
 SELECT setval('"public"."chats_messages_id_seq"', 2, false);
@@ -262,21 +284,21 @@ SELECT setval('"public"."comments_id_seq"', 2, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."groupsMemberships_id_seq"
 OWNED BY "public"."groupsMemberships"."id";
-SELECT setval('"public"."groupsMemberships_id_seq"', 2, false);
+SELECT setval('"public"."groupsMemberships_id_seq"', 20, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."groups_id_seq"
 OWNED BY "public"."groups"."id";
-SELECT setval('"public"."groups_id_seq"', 2, false);
+SELECT setval('"public"."groups_id_seq"', 10, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."invitations_id_seq"
 OWNED BY "public"."invitations"."id";
-SELECT setval('"public"."invitations_id_seq"', 7, true);
+SELECT setval('"public"."invitations_id_seq"', 17, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -308,14 +330,14 @@ ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "chats_messages_pkey" PRIMA
 ALTER TABLE "public"."comments" ADD CONSTRAINT "comments_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Uniques structure for table groups
--- ----------------------------
-ALTER TABLE "public"."groups" ADD CONSTRAINT "codeGroups" UNIQUE ("code");
-
--- ----------------------------
 -- Primary Key structure for table groups
 -- ----------------------------
 ALTER TABLE "public"."groups" ADD CONSTRAINT "groups_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Uniques structure for table groupsMemberships
+-- ----------------------------
+ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "uniqueuserandgroupmember" UNIQUE ("user_id", "group_id");
 
 -- ----------------------------
 -- Primary Key structure for table groupsMemberships
@@ -358,12 +380,11 @@ ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("id");
 -- ----------------------------
 -- Foreign Keys structure for table chats
 -- ----------------------------
-ALTER TABLE "public"."chats" ADD CONSTRAINT "chatIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."chats" ADD CONSTRAINT "groupIdchats" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table chats_messages
 -- ----------------------------
-ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "chatId" FOREIGN KEY ("chat_id") REFERENCES "public"."chats" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "userIdMessage" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
@@ -371,6 +392,11 @@ ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "userIdMessage" FOREIGN KEY
 -- ----------------------------
 ALTER TABLE "public"."comments" ADD CONSTRAINT "postIdComment" FOREIGN KEY ("post_id") REFERENCES "public"."posts" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."comments" ADD CONSTRAINT "userIdComment" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table groups
+-- ----------------------------
+ALTER TABLE "public"."groups" ADD CONSTRAINT "group_owner_id" FOREIGN KEY ("group_owner") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table groupsMemberships

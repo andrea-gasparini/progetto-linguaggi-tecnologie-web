@@ -59,7 +59,7 @@ class CreateGroupModalComponent extends Component {
                                 <input
                                     className={["form-control", groupNameHasError ? "is-invalid" : ""].join(" ")}
                                     placeholder={"Nome del gruppo"}
-                                    onChange={e => {this.state.groupName = e.target.value}} />
+                                    onChange={e => this.setState({groupName: e.target.value})} />
 
                                 {groupNameHasError &&
                                 <div className={"invalid-feedback"}>
@@ -70,7 +70,7 @@ class CreateGroupModalComponent extends Component {
                             </div>
 
                             <div className={"form-group"}>
-                                <textarea className={["form-control", groupDescHasError ? "is-invalid" : ""].join(" ")} placeholder={"Descrizione del gruppo"} maxLength={255}/>
+                                <textarea onChange={(e) => this.setState({groupDesc: e.target.value})} className={["form-control", groupDescHasError ? "is-invalid" : ""].join(" ")} placeholder={"Descrizione del gruppo"} maxLength={255}/>
 
                                 {groupDescHasError &&
                                 <div className={"invalid-feedback"}>
