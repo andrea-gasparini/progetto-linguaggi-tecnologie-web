@@ -17,6 +17,14 @@ class GroupsModel extends CI_Model {
 		return $query->num_rows() > 0;
 	}
 
+	public function getAllDataGroup($groupId) {
+		$this->db->select("g.id, g.description, g.group_title, u.profile_picture as ownerPicture, u.realname as owner");
+		$this->db->where("g.id", $groupId);
+		$this->db->where("u.id", "g.group_owner", FALSE);
+		$query = $this->db->get("groups g, users u");
+		return $query->result();
+	}
+
 
 	public function invitationAlreadyExists($fromId, $toId, $groupId) {
 		$this->db->select("*");

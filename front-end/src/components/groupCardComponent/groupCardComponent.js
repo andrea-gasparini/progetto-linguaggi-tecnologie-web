@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import "./style.css";
 import {MoreVertical} from "react-feather";
+import {API_SERVER_URL} from "../../globalConstants";
 
 class GroupCardComponent extends Component {
     constructor(props) {
@@ -8,7 +9,7 @@ class GroupCardComponent extends Component {
     }
 
     render() {
-        let {groupOwner, groupTitle, groupDescription, openInviteModal, setGroupId, groupId} = this.props;
+        let {groupOwner, groupTitle, groupDescription, openInviteModal, setGroupId, groupId, ownerPicture} = this.props;
         return(
             <Fragment>
                 <div className={"d-flex groupCard flex-column"}>
@@ -31,6 +32,7 @@ class GroupCardComponent extends Component {
                             {groupDescription}
                         </div>
                     </div>
+                    <div className={"groupOwnerImage"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${ownerPicture}")`}} />
                     <div className={"d-flex cardGroupFooter align-bottom align-items-center justify-content-center"}>
                         <div onClick={() => {openInviteModal(); setGroupId(groupId)}} className={"d-flex inviteFriends align-bottom align-items-center p-2"}>
                             Invita amici nel gruppo
