@@ -20,7 +20,7 @@
 -- Sequence structure for chats_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_id_seq";
-CREATE SEQUENCE "public"."chats_id_seq" 
+CREATE SEQUENCE "public"."chats_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for chats_messages_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_messages_id_seq";
-CREATE SEQUENCE "public"."chats_messages_id_seq" 
+CREATE SEQUENCE "public"."chats_messages_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for comments_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."comments_id_seq";
-CREATE SEQUENCE "public"."comments_id_seq" 
+CREATE SEQUENCE "public"."comments_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for groupsMemberships_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groupsMemberships_id_seq";
-CREATE SEQUENCE "public"."groupsMemberships_id_seq" 
+CREATE SEQUENCE "public"."groupsMemberships_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for groups_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groups_id_seq";
-CREATE SEQUENCE "public"."groups_id_seq" 
+CREATE SEQUENCE "public"."groups_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for invitations_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."invitations_id_seq";
-CREATE SEQUENCE "public"."invitations_id_seq" 
+CREATE SEQUENCE "public"."invitations_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for posts_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."posts_id_seq";
-CREATE SEQUENCE "public"."posts_id_seq" 
+CREATE SEQUENCE "public"."posts_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for users_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."users_id_seq";
-CREATE SEQUENCE "public"."users_id_seq" 
+CREATE SEQUENCE "public"."users_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -207,6 +207,7 @@ CREATE TABLE "public"."users" (
   "profile_picture" varchar(255) COLLATE "pg_catalog"."default" NOT NULL DEFAULT 'default_user_profile_image.png'::character varying
 )
 ;
+
 
 -- ----------------------------
 -- Primary Key structure for table chats

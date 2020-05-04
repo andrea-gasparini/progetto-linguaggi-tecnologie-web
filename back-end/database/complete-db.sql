@@ -20,7 +20,7 @@
 -- Sequence structure for chats_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_id_seq";
-CREATE SEQUENCE "public"."chats_id_seq" 
+CREATE SEQUENCE "public"."chats_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for chats_messages_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_messages_id_seq";
-CREATE SEQUENCE "public"."chats_messages_id_seq" 
+CREATE SEQUENCE "public"."chats_messages_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for comments_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."comments_id_seq";
-CREATE SEQUENCE "public"."comments_id_seq" 
+CREATE SEQUENCE "public"."comments_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for groupsMemberships_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groupsMemberships_id_seq";
-CREATE SEQUENCE "public"."groupsMemberships_id_seq" 
+CREATE SEQUENCE "public"."groupsMemberships_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for groups_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groups_id_seq";
-CREATE SEQUENCE "public"."groups_id_seq" 
+CREATE SEQUENCE "public"."groups_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for invitations_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."invitations_id_seq";
-CREATE SEQUENCE "public"."invitations_id_seq" 
+CREATE SEQUENCE "public"."invitations_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for posts_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."posts_id_seq";
-CREATE SEQUENCE "public"."posts_id_seq" 
+CREATE SEQUENCE "public"."posts_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for users_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."users_id_seq";
-CREATE SEQUENCE "public"."users_id_seq" 
+CREATE SEQUENCE "public"."users_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -262,6 +262,13 @@ INSERT INTO "public"."users" VALUES (10, 'edoardo4', 'edoardo2', 'e@a.vg', 'asdp
 INSERT INTO "public"."users" VALUES (8, 'edoardo3', 'testutente2', 'edoardo@òaa.vg', 'asdpos', '2020-04-23 12:23:34', 'default_user_profile_image.png');
 INSERT INTO "public"."users" VALUES (16, 'test account', 'testaccount2', 'asd@aspdoasdpov.gdd', '$2y$10$5MAC505C9GPxAhgdcA567O5GcWkvcLke4QbQuNltwIaVHYJq3.3jq', '2020-05-04 08:30:11.759295', 'default_user_profile_image.png');
 INSERT INTO "public"."users" VALUES (1, 'edoardo di paolo', 'edoardo', 'test@test.vg', '$2y$10$1jxprpOOgwlZTNgr.gCvu.eYvoKg1HW3Lup/LVQLQV5nJoiqphC6K', '2020-04-23 17:17:16', '9fb5e97b44b268df7f5cc1b53e3a9fba.jpg');
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."chats_id_seq"
+OWNED BY "public"."chats"."id";
+SELECT setval('"public"."chats_id_seq"', 4, true);
 
 -- ----------------------------
 -- Alter sequences owned by

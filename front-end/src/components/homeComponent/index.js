@@ -3,10 +3,11 @@ import HeaderComponent from "../headerComponent";
 import './style.css';
 import GroupCardComponent from "../groupCardComponent/groupCardComponent";
 import {PlusCircle} from "react-feather";
-import InviteModalComponent from "../modalsComponents/inviteModalComponent/inviteModalComponent";
+import InviteModalComponent from "../modalsComponents/inviteModalComponent";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {validateToken} from "../../redux/actions/login";
+import CreateGroupModalComponent from "../modalsComponents/createGroupModalComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -16,6 +17,7 @@ class HomeComponent extends Component {
 
         this.state = {
             showInviteModal: false,
+            showCreateGroupModal: false,
             currentGroupId: -1
         }
     }
@@ -29,12 +31,14 @@ class HomeComponent extends Component {
         this.setState({showInviteModal: !this.state.showInviteModal});
     };
 
+    toggleCreateGroupModal = () => { this.setState({ showCreateGroupModal: ! this.state.showCreateGroupModal } ) }
+
     setGroupId = (groupId) => {
         this.setState({currentGroupId: groupId});
     }
 
     render() {
-        let {showInviteModal, currentGroupId} = this.state;
+        let {showCreateGroupModal, showInviteModal, currentGroupId} = this.state;
         let {userData, history} = this.props;
         return(
             <Fragment>
@@ -45,7 +49,7 @@ class HomeComponent extends Component {
                             <div className={"groupsCount"}>
                                 I miei gruppi ({typeof userData !== "undefined" ? userData.userGroups.length : 0})
                             </div>
-                            <div className={"createGroupText"}>
+                            <div className={"createGroupText"} onClick={this.toggleCreateGroupModal}>
                                 Crea un gruppo
                                 <PlusCircle style={{marginLeft: 5}} />
                             </div>
@@ -66,6 +70,9 @@ class HomeComponent extends Component {
                 </section>
                 {showInviteModal &&
                     <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />
+                }
+                {showCreateGroupModal &&
+                    <CreateGroupModalComponent closeModal={this.toggleCreateGroupModal}/>
                 }
             </Fragment>
         )

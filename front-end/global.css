@@ -12,6 +12,10 @@ html, body, #react-root {
     box-shadow: none;
 }
 
+.sapienzaButton:hover:not(:disabled) {
+    opacity: .8;
+}
+
 .noselectText {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

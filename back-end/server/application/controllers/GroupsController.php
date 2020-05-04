@@ -10,6 +10,56 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 	}
 
 
+	public function createGroup_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header("Authorization"));
+
+		if ($tokenData["status"]) {
+			$groupName = $this->input->post("groupName");
+			$groupDesc = $this->input->post("groupDesc");
+			$ownerId = $tokenData["data"]["userId"];
+
+			$errors = array(
+				"groupNameHasError" => false,
+				"groupDescHasError" => false
+			);
+
+			// Check minlength titolo
+			if (strlen($groupName) < 1) {
+				$errors["groupNameHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "Il nome del gruppo non può essere vuoto.", $errors), 200);
+			}
+
+			// Check maxlength titolo
+			if (strlen($groupName) > 255) {
+				$errors["groupNameHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "Il nome del gruppo non può contenere più di 255 caratteri.", $errors), 200);
+			}
+
+			// Check maxlength descrizione
+			if (strlen($groupDesc) > 255) {
+				$errors["groupDescHasError"] = true;
+				return $this->response(buildServerResponse(
+					false, "La descrizione del gruppo non può contenere più di 255 caratteri.", $errors), 200);
+			}
+
+			// Insert group in db
+			$groupId = $this->GroupsModel->createGroup($groupName, $groupDesc, $ownerId);
+
+			// Add creator as admin
+			$this->UserModel->addMembership(array("user_id" => $ownerId, "group_id" => $groupId, "is_admin" => "1"));
+
+			// Create group chat
+			$this->ChatModel->createGroupChat($groupId);
+
+			return $this->response(buildServerResponse(true, "ok"), 200);
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+
 	public function sendInvitations_post() {
 		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
 		if($tokenData["status"]) {

@@ -59,11 +59,11 @@ class InviteModalComponent extends Component {
         return(
             <Fragment>
                 <section onMouseDown={(e) => this.checkIfCloseModal(e)} className={"d-flex justify-content-center modalContainer"}>
-                    <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex inviteModal mt-5 align-items-center flex-column"}>
-                        <div className={"closeInviteModal"}>
+                    <div onClick={(e) => this.checkCloseSearchUserResult(e)} className={"d-flex modalBox mt-5 align-items-center flex-column"}>
+                        <div className={"closeModal"}>
                             <X onClick={() => {closeModal(); dispatch(resetDataInvitations(false));}} />
                         </div>
-                        <div className={"text-muted inviteModalTitle"}>
+                        <div className={"text-muted modalTitle"}>
                             Invita amici nel gruppo
                         </div>
 
@@ -116,7 +116,7 @@ class InviteModalComponent extends Component {
                             </div>
 
                             <div className={"d-flex form-group justify-content-center"} style={{width: "100%"}}>
-                                <button disabled={readyToSendInvite.length <= 0} type={"submit"} className={"btn btn-primary sapienzaButton inviteModalButton"} style={{width: "100%"}}>
+                                <button disabled={readyToSendInvite.length <= 0} type={"submit"} className={"btn btn-primary sapienzaButton"} style={{width: "100%"}}>
                                     {readyToSendInvite.length <= 0 &&
                                         "Aggiungi utenti da invitare"
                                     }

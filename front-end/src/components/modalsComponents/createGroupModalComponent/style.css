@@ -1,0 +1,18 @@
+.createGroupModal {
+    border: 1px solid #4a4a4a;
+    background-color: white;
+    border-radius: 5px;
+    position: fixed;
+    padding: 20px;
+    width: 500px;
+}
+
+.createGroupForm {
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.createGroupForm textarea {
+    resize: none;
+    height: 140px;
+}

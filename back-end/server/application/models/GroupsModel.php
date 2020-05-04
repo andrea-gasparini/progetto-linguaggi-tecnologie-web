@@ -18,6 +18,19 @@ class GroupsModel extends CI_Model {
 	}
 
 
+	public function createGroup($groupName, $groupDesc, $groupOwner) {
+		$data = array(
+			"group_title" => $groupName,
+			"description" => $groupDesc,
+			"group_owner" => $groupOwner,
+			"created_at" => "now()",
+		);
+
+		$this->db->insert("groups", $data);
+		return $this->db->insert_id("groups_id_seq");
+	}
+
+
 	public function invitationAlreadyExists($fromId, $toId, $groupId) {
 		$this->db->select("*");
 		$this->db->where(array("from_id" => $fromId, "to_id" => $toId, "group_id" => $groupId));
