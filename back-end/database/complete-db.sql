@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 04/05/2020 09:19:34
+ Date: 06/05/2020 20:53:31
 */
 
 
@@ -20,7 +20,7 @@
 -- Sequence structure for chats_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_id_seq";
-CREATE SEQUENCE "public"."chats_id_seq"
+CREATE SEQUENCE "public"."chats_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for chats_messages_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_messages_id_seq";
-CREATE SEQUENCE "public"."chats_messages_id_seq"
+CREATE SEQUENCE "public"."chats_messages_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for comments_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."comments_id_seq";
-CREATE SEQUENCE "public"."comments_id_seq"
+CREATE SEQUENCE "public"."comments_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for groupsMemberships_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groupsMemberships_id_seq";
-CREATE SEQUENCE "public"."groupsMemberships_id_seq"
+CREATE SEQUENCE "public"."groupsMemberships_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for groups_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groups_id_seq";
-CREATE SEQUENCE "public"."groups_id_seq"
+CREATE SEQUENCE "public"."groups_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for invitations_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."invitations_id_seq";
-CREATE SEQUENCE "public"."invitations_id_seq"
+CREATE SEQUENCE "public"."invitations_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for posts_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."posts_id_seq";
-CREATE SEQUENCE "public"."posts_id_seq"
+CREATE SEQUENCE "public"."posts_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for users_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."users_id_seq";
-CREATE SEQUENCE "public"."users_id_seq"
+CREATE SEQUENCE "public"."users_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -117,9 +117,6 @@ CREATE TABLE "public"."chats" (
 -- ----------------------------
 -- Records of chats
 -- ----------------------------
-INSERT INTO "public"."chats" VALUES (1, 7);
-INSERT INTO "public"."chats" VALUES (2, 8);
-INSERT INTO "public"."chats" VALUES (3, 9);
 
 -- ----------------------------
 -- Table structure for chats_messages
@@ -171,10 +168,6 @@ CREATE TABLE "public"."groups" (
 -- ----------------------------
 -- Records of groups
 -- ----------------------------
-INSERT INTO "public"."groups" VALUES (6, '', '2020-05-03 20:49:46.425237', 'test', 1);
-INSERT INTO "public"."groups" VALUES (7, '', '2020-05-03 20:50:56.603809', 'test', 1);
-INSERT INTO "public"."groups" VALUES (8, '', '2020-05-04 07:57:13.532721', 'ab', 1);
-INSERT INTO "public"."groups" VALUES (9, 'bb', '2020-05-04 07:58:29.647732', 'a', 1);
 INSERT INTO "public"."groups" VALUES (11, 'aa', '2020-05-22 09:17:24', 'a', 16);
 
 -- ----------------------------
@@ -192,11 +185,8 @@ CREATE TABLE "public"."groupsMemberships" (
 -- ----------------------------
 -- Records of groupsMemberships
 -- ----------------------------
-INSERT INTO "public"."groupsMemberships" VALUES (16, 1, 6, 't');
-INSERT INTO "public"."groupsMemberships" VALUES (17, 1, 7, 't');
-INSERT INTO "public"."groupsMemberships" VALUES (18, 1, 8, 't');
-INSERT INTO "public"."groupsMemberships" VALUES (19, 1, 9, 't');
 INSERT INTO "public"."groupsMemberships" VALUES (22, 16, 11, 't');
+INSERT INTO "public"."groupsMemberships" VALUES (23, 1, 11, 'f');
 
 -- ----------------------------
 -- Table structure for invitations
@@ -215,6 +205,15 @@ CREATE TABLE "public"."invitations" (
 -- ----------------------------
 -- Records of invitations
 -- ----------------------------
+INSERT INTO "public"."invitations" VALUES (17, 16, 13, 11, '2020-05-04 09:59:13.327273', 'f');
+INSERT INTO "public"."invitations" VALUES (18, 16, 14, 11, '2020-05-04 09:59:13.332127', 'f');
+INSERT INTO "public"."invitations" VALUES (20, 1, 14, 11, '2020-05-04 17:25:47.376727', 'f');
+INSERT INTO "public"."invitations" VALUES (21, 1, 7, 11, '2020-05-04 17:25:47.380865', 'f');
+INSERT INTO "public"."invitations" VALUES (22, 1, 12, 11, '2020-05-04 17:25:47.382078', 'f');
+INSERT INTO "public"."invitations" VALUES (23, 1, 11, 11, '2020-05-04 17:25:47.383351', 'f');
+INSERT INTO "public"."invitations" VALUES (24, 1, 10, 11, '2020-05-04 17:25:47.384599', 'f');
+INSERT INTO "public"."invitations" VALUES (25, 1, 8, 11, '2020-05-04 17:25:47.385929', 'f');
+INSERT INTO "public"."invitations" VALUES (26, 1, 13, 11, '2020-05-04 17:25:47.387665', 'f');
 
 -- ----------------------------
 -- Table structure for posts
@@ -261,21 +260,14 @@ INSERT INTO "public"."users" VALUES (11, 'edoardo5', 'edoardo3', 'e@b.vg', 'apsd
 INSERT INTO "public"."users" VALUES (10, 'edoardo4', 'edoardo2', 'e@a.vg', 'asdpo', '2020-04-22 12:46:08', 'default_user_profile_image.png');
 INSERT INTO "public"."users" VALUES (8, 'edoardo3', 'testutente2', 'edoardo@òaa.vg', 'asdpos', '2020-04-23 12:23:34', 'default_user_profile_image.png');
 INSERT INTO "public"."users" VALUES (16, 'test account', 'testaccount2', 'asd@aspdoasdpov.gdd', '$2y$10$5MAC505C9GPxAhgdcA567O5GcWkvcLke4QbQuNltwIaVHYJq3.3jq', '2020-05-04 08:30:11.759295', 'default_user_profile_image.png');
-INSERT INTO "public"."users" VALUES (1, 'edoardo di paolo', 'edoardo', 'test@test.vg', '$2y$10$1jxprpOOgwlZTNgr.gCvu.eYvoKg1HW3Lup/LVQLQV5nJoiqphC6K', '2020-04-23 17:17:16', '9fb5e97b44b268df7f5cc1b53e3a9fba.jpg');
+INSERT INTO "public"."users" VALUES (1, 'edoardo di paolo', 'edoardo', 'test@test.vg', '$2y$10$1jxprpOOgwlZTNgr.gCvu.eYvoKg1HW3Lup/LVQLQV5nJoiqphC6K', '2020-04-23 17:17:16', 'a370db5e08fc49efaedc5c3f31e6eeb5.jpg');
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."chats_id_seq"
 OWNED BY "public"."chats"."id";
-SELECT setval('"public"."chats_id_seq"', 4, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."chats_id_seq"
-OWNED BY "public"."chats"."id";
-SELECT setval('"public"."chats_id_seq"', 4, true);
+SELECT setval('"public"."chats_id_seq"', 11, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -296,21 +288,21 @@ SELECT setval('"public"."comments_id_seq"', 2, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."groupsMemberships_id_seq"
 OWNED BY "public"."groupsMemberships"."id";
-SELECT setval('"public"."groupsMemberships_id_seq"', 23, true);
+SELECT setval('"public"."groupsMemberships_id_seq"', 31, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."groups_id_seq"
 OWNED BY "public"."groups"."id";
-SELECT setval('"public"."groups_id_seq"', 12, true);
+SELECT setval('"public"."groups_id_seq"', 19, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."invitations_id_seq"
 OWNED BY "public"."invitations"."id";
-SELECT setval('"public"."invitations_id_seq"', 17, true);
+SELECT setval('"public"."invitations_id_seq"', 27, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -392,7 +384,7 @@ ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("id");
 -- ----------------------------
 -- Foreign Keys structure for table chats
 -- ----------------------------
-ALTER TABLE "public"."chats" ADD CONSTRAINT "groupIdchats" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."chats" ADD CONSTRAINT "groupIdchats" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table chats_messages
@@ -402,7 +394,7 @@ ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "userIdMessage" FOREIGN KEY
 -- ----------------------------
 -- Foreign Keys structure for table comments
 -- ----------------------------
-ALTER TABLE "public"."comments" ADD CONSTRAINT "postIdComment" FOREIGN KEY ("post_id") REFERENCES "public"."posts" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."comments" ADD CONSTRAINT "postIdComment" FOREIGN KEY ("post_id") REFERENCES "public"."posts" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."comments" ADD CONSTRAINT "userIdComment" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
@@ -413,18 +405,18 @@ ALTER TABLE "public"."groups" ADD CONSTRAINT "group_owner_id" FOREIGN KEY ("grou
 -- ----------------------------
 -- Foreign Keys structure for table groupsMemberships
 -- ----------------------------
-ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "userIdGroup" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table invitations
 -- ----------------------------
-ALTER TABLE "public"."invitations" ADD CONSTRAINT "groupId" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "groupId" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."invitations" ADD CONSTRAINT "userOneId" FOREIGN KEY ("from_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."invitations" ADD CONSTRAINT "userTwoId" FOREIGN KEY ("to_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table posts
 -- ----------------------------
-ALTER TABLE "public"."posts" ADD CONSTRAINT "groupIdPost" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."posts" ADD CONSTRAINT "groupIdPost" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."posts" ADD CONSTRAINT "userIdPost" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
