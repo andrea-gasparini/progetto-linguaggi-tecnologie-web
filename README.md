@@ -1,8 +1,8 @@
 # Progetto Linguaggi e Tecnologie per il Web
 
-L'idea del progetto, ispirata al periodo di distanza che si è vissuto a causa del Covid-19, è stata quella di sviluppare una **piattaforma di condivisione** per studenti e gruppi di studio. 
+L'idea del progetto, ispirata al periodo di distanza che si è vissuto a causa del Covid-19, è stata quella di sviluppare una **piattaforma web di condivisione** per studenti e gruppi di studio. 
 
-Le funzionalità del progetto sviluppato sono le seguenti:
+Le funzionalità implementate sono le seguenti:
 1. Autenticazione utente
 	- **Login utente**
 	- **Registrazione utente**
