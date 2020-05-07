@@ -1,7 +1,5 @@
 # Progetto Linguaggi e Tecnologie per il Web
 
-## Descrizione ##
-
 L'idea del progetto, ispirata al periodo di distanza che si è vissuto a causa del Covid-19, è stata quella di sviluppare una **piattaforma di condivisione** per studenti e gruppi di studio. 
 
 Le funzionalità del progetto sviluppato sono le seguenti:
@@ -29,7 +27,7 @@ Per quanto riguarda il lato **front-end** è stata utilizzata la libreria [React
 Per il **back-end** abbiamo, invece, due linguaggi differenti: **PHP** per gestire le richieste _API_ degli utenti, e **NodeJS** per gestire il real time della chat. 
 Nello specifico le richieste API son state sviluppate attraverso l'utilizzo del framework [Codeigniter 3.1.11](https://codeigniter.com/), mentre la gestione real time è stata sviluppata attraverso la libreria [Socket.io](https://socket.io).
 
-## Come avviare il progetto? ##
+## Installazione ed esecuzione ##
 Innanzitutto c'è bisogno di un [Web Server](https://it.wikipedia.org/wiki/Server_web), locale o non, e di [npm](https://www.npmjs.com/).
 Per il front-end basterà digitare il comando `npm install` per installare tutte le dipendenze che sono nel file `package.json`. Una volta installate, basterà digitare `npm run start` e si avrà la versione di development attiva sulla porta **8080**, altrimenti `npm run build` per avere una versione di production.
 
