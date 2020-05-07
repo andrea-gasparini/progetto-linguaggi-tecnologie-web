@@ -40,4 +40,4 @@ Per poter configuare il framework bisognerà andare nel file `application/config
 Come ultimo passo andrà importato il database.  La struttura di quest'ultimo si trova nel file `back-end/database/structure.sql`. Basterà semplicemente importare questo file all'interno di un database postgresql.
 		
 ## Autori ##
-&copy; **[Andrea Gasparini](https://github.com/GaspRulez) & [Edoardo Di Paolo](https://github.com/aedoardo)**.
+&copy; **[Andrea Gasparini](https://github.com/andrea-gasparini) & [Edoardo Di Paolo](https://github.com/aedoardo)**.
