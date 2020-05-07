@@ -23,7 +23,7 @@ Le funzionalità del progetto sviluppato sono le seguenti:
 	- **Possibilità di chattare in tempo reale con gli altri membri del gruppo attivi nello stesso momento**
 
 ## Tecnologie utilizzate ##
-Per quanto riguarda il lato **front-end** è stata utilizzata la libreria [ReactJS](https://it.reactjs.org/).
+Per quanto riguarda il lato **front-end** è stata utilizzata la libreria [ReactJS](https://it.reactjs.org/) e le classi css di [Bootstrap](https://getbootstrap.com/) per [Grid System](https://getbootstrap.com/docs/4.0/layout/grid/) e [Flex](https://getbootstrap.com/docs/4.4/utilities/flex/).
 Per il **back-end** abbiamo, invece, due linguaggi differenti: **PHP** per gestire le richieste _API_ degli utenti, e **NodeJS** per gestire il real time della chat. 
 Nello specifico le richieste API son state sviluppate attraverso l'utilizzo del framework [Codeigniter 3.1.11](https://codeigniter.com/), mentre la gestione real time è stata sviluppata attraverso la libreria [Socket.io](https://socket.io).
 
