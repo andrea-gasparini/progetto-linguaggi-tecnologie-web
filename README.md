@@ -5,24 +5,24 @@
 L'idea del progetto, ispirata al periodo di distanza che si è vissuto a causa del Covid-19, è stata quella di sviluppare una **piattaforma di condivisione** per studenti e gruppi di studio. 
 
 Le funzionalità del progetto sviluppato sono le seguenti:
- 1. Autenticazione utente
-	 * **Login utente**
-	 * **Registrazione utente**
+1. Autenticazione utente
+	- **Login utente**
+	- **Registrazione utente**
 2. Gestione gruppo
-	* **Creazione del gruppo**
-	* **Eliminazione del gruppo**
-	* **Sistema di invito al gruppo**
-	* **Visualizzazione membri del gruppo**
+	- **Creazione del gruppo**
+	- **Eliminazione del gruppo**
+	- **Sistema di invito al gruppo**
+	- **Visualizzazione membri del gruppo**
 3. Gestione profilo utente
-	* **Modifica indirizzo email**
-	* **Modifica della password**
-	* **Modifica dell'immagine di profilo utente**
+	- **Modifica indirizzo email**
+	- **Modifica della password**
+	- **Modifica dell'immagine di profilo utente**
 4. Post e commenti
-	* **Creazione di post con upload file all'interno dei gruppi**
-	* **Possibilità di commentare i post**
-	* **Eliminazione del post creato**
+	- **Creazione di post con upload file all'interno dei gruppi**
+	- **Possibilità di commentare i post**
+	- **Eliminazione del post creato**
 5. Chat real time del gruppo
-	* **Possibilità di chattare in tempo reale con gli altri membri del gruppo attivi nello stesso momento**
+	- **Possibilità di chattare in tempo reale con gli altri membri del gruppo attivi nello stesso momento**
 
 ## Tecnologie utilizzate ##
 Per quanto riguarda il lato **front-end** è stata utilizzata la libreria [ReactJS](https://it.reactjs.org/).
@@ -35,8 +35,8 @@ Per il front-end basterà digitare il comando `npm install` per installare tutte
 
 Il back-end si divide in tre parti: il server **PHP**, il server **NodeJS** e il database. Iniziamo dal secondo che è più facile.
 Come per il frontend bisogna digitare il comando `npm install` e successivamente `npm run start`, in questa maniera il server verrà avviato su una determinata porta.
-Per il PHP, invece, bisogna inserire tutto il contenuto della cartella `backend/server/` all'interno della folder del web server che si sta usando (xampp, iis, nginx etc). 
-Per poter configuare il framework bisognerà andare nel file `application/config/config.php` per modificare l'URL del proprio sito per le richieste API e in `application/config/database.php` per modificare utente, password e database di postgresql.
+Per il PHP, invece, bisogna importare tutto il contenuto della directory `backend/server/` all'interno del web server che si sta usando (xampp, IIS, nginx, etc). 
+Per poter configuare il framework Codeigniter bisognerà andare nel file `application/config/config.php` per modificare l'URL del proprio sito per le richieste API e in `application/config/database.php` per modificare utente, password e database di postgresql.
 Come ultimo passo andrà importato il database.  La struttura di quest'ultimo si trova nel file `back-end/database/structure.sql`. Basterà semplicemente importare questo file all'interno di un database postgresql.
 		
 ## Autori ##
