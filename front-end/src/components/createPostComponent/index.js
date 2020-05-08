@@ -35,6 +35,20 @@ class CreatePostComponent extends Component {
         this.setState({postText: e.target.value});
     };
 
+    clickInputFile = () => {
+        this.inputFile.click();
+    };
+
+    changeInputFile = (e) => {
+        let files = e.target.files;
+        let output = this.state.postFiles;
+        for(let i = 0; i <= files.length - 1; i++) {
+            output.push(files[i]);
+        }
+        this.setState({postFiles: output});
+        console.log(this.state.postFiles);
+    };
+
     render() {
         let {userData} = this.props;
         let {isWriting, postText, postFiles} = this.state;
@@ -62,11 +76,11 @@ class CreatePostComponent extends Component {
 
                                     <div className={"d-flex createPostActions justify-content-between align-items-center"}>
                                         <div>
-                                            <button className={"btn d-flex align-items-center uploadFileButton colored"}>
+                                            <button onClick={() => this.clickInputFile()} className={"btn d-flex align-items-center uploadFileButton colored"}>
                                                 <FilePlus color={"#822433"} size={20} style={{marginRight: "5px"}} />
                                                 Allega file
                                             </button>
-                                            <input type={"file"} style={{display: "none"}} /> {/* bottone hidden che viene triggherato al click del button. */}
+                                            <input onChange={(e) => this.changeInputFile(e)} multiple={true} ref={(ref) => {this.inputFile = ref}} type={"file"} style={{display: "none"}} /> {/* bottone hidden che viene triggherato al click del button. */}
                                         </div>
                                         <div className={"d-flex"}>
                                             <button className={"btn btn-light mr-2"}>Annulla</button>
