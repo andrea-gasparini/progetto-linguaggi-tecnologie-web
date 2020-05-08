@@ -46,7 +46,7 @@ export const tryAuthLogin = (username, password, cookies, history) => {
     }
 };
 
-export const validateToken = (cookies, history, fromLogin=false) => {
+export const validateToken = (cookies, history, fromLogin=false, fromPage='/home') => {
     return async dispatch => {
         return axios.post(`${API_SERVER_URL}/validate`, null, {
            headers: {
@@ -57,7 +57,7 @@ export const validateToken = (cookies, history, fromLogin=false) => {
             if(status) {
                 dispatch(setUserData(data.userData));
                 cookies.set('token', data.token);
-                history.push({pathname: '/home', search: '', state: {fromLogin}});
+                history.push({pathname: fromPage, search: '', state: {fromLogin}});
             } else {
                 cookies.remove('token');
                 if(history.location !== '/')
