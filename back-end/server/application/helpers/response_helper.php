@@ -29,13 +29,14 @@ function validateAuthorizationToken($token) {
 		return buildServerResponse(true, "ok", array("userId" => $tokenData->userId));
 	}
 
-	return buildServerResponse(false, "Token di accesso non valido. #3");;
+	return buildServerResponse(false, "Token di accesso non valido. #3");
 }
 
 
 function loadDataUser($userId, $username) {
 	$ci = & get_instance();
 	$userGroups = $ci->UserModel->getUserGroups($userId);
+	$userPicture = $ci->UserModel->getUserPicture($userId)[0]->profile_picture;
 	$userNotificationsCount = $ci->UserModel->getInvitationsCountToRead($userId);
-	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username, "id" => $userId));
+	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username, "id" => $userId, "picture" => $userPicture));
 }

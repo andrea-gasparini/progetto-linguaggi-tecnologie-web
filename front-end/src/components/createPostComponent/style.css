@@ -1,0 +1,51 @@
+.createPostContainer {
+    max-width: 760px;
+    width: auto;
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+    box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+}
+
+.cursoredPostContainer:hover {
+    cursor: pointer;
+}
+
+.cursoredPostContainer:hover .textPost {
+    color: #822433;
+}
+
+.textPost {
+    color: #afafaf;
+    transition: all .3s ease-in-out;
+}
+
+.userProfilePictureImageCreatePost {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-size: cover !important;
+}
+
+.textareaPostContainer {
+    resize: none;
+    border-radius: 5px;
+    min-height: 86px !important;
+    overflow: hidden;
+}
+
+.uploadFileButton {
+    color: #822433;
+    font-weight: bold;
+    border: 1px solid rgba(130, 36, 51, 0.28);
+    transition: all .2s ease-in-out;
+}
+
+.uploadFileButton:hover {
+    background-color: rgba(130, 36, 51, 0.08);
+    color: #822433;
+}
+
+.uploadFileButton:focus {
+    box-shadow: none;
+}

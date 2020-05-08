@@ -91,6 +91,13 @@ class UserModel extends CI_Model
 		return $query->result();
 	}
 
+	public function getUserPicture($userId) {
+		$this->db->select("profile_picture");
+		$this->db->where("id", $userId);
+		$query = $this->db->get("users");
+		return $query->result();
+	}
+
 
 	public function resetCountNotification($userId) {
 		$this->db->set("is_read", "1");
