@@ -9,7 +9,7 @@ class CreatePostComponent extends Component {
         return (
             <Fragment>
                 <div>
-                    
+
                 </div>
             </Fragment>
         );
