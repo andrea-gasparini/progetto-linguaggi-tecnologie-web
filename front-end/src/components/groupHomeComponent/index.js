@@ -35,12 +35,12 @@ class GroupHomeComponent extends Component {
                                 <h1>Post</h1>
                                 {/* Switch tra componenti da mostrare */}
                             </div>
-                            <div className={"navigation-menu noselectText d-flex flex-column"}>
+                            <div className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
                                 <div className={"menu-item"}>
                                     <Send />
                                     <span>Chat</span>
                                 </div>
-                                <div className={"menu-item"}>
+                                <div className={"menu-item active"}>
                                     <Clipboard />
                                     <span>Bacheca</span>
                                 </div>
