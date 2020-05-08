@@ -31,7 +31,7 @@ class GroupHomeComponent extends Component {
             }
         ];
     }
-    
+
     componentDidMount() {
         let {dispatch, cookies, history} = this.props;
         dispatch(validateToken(cookies, history, false, '/group'));
@@ -59,11 +59,8 @@ class GroupHomeComponent extends Component {
                             <CreatePostComponent />
                         </div>
                         <div className={"d-flex flex-row"}>
-                            <div className={"main-content mr-3 d-flex flex-column align-items-center"}>
-                                <h1>Post</h1>
-                                {/* Switch tra componenti da mostrare */}
-                            </div>
-                            <div className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
+
+                            <div className={"navigation-menu mr-3 noselectText d-flex flex-column align-items-start"}>
                                 {this.navigationItems.map((value, index) =>
                                     <div
                                         onClick={() => this.changeActiveMenuItem(index)}
@@ -77,6 +74,12 @@ class GroupHomeComponent extends Component {
                                     </div>
                                 )}
                             </div>
+
+                            <div className={"main-content d-flex flex-column align-items-center"}>
+                                <h1>Post</h1>
+                                {/* Switch tra componenti da mostrare */}
+                            </div>
+
                         </div>
                     </div>
                 </section>
