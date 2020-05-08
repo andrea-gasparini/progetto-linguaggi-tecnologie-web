@@ -33,3 +33,19 @@
     min-height: 86px !important;
     overflow: hidden;
 }
+
+.uploadFileButton {
+    color: #822433;
+    font-weight: bold;
+    border: 1px solid rgba(130, 36, 51, 0.28);
+    transition: all .2s ease-in-out;
+}
+
+.uploadFileButton:hover {
+    background-color: rgba(130, 36, 51, 0.08);
+    color: #822433;
+}
+
+.uploadFileButton:focus {
+    box-shadow: none;
+}
