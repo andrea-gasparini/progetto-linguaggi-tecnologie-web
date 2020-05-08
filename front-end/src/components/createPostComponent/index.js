@@ -86,7 +86,8 @@ class CreatePostComponent extends Component {
 
     hideWriting = (e) => {
         e.preventDefault();
-        this.setState({isWriting: false});
+        this.inputFile.value = '';
+        this.setState({isWriting: false, postText: '', postFiles: [], showError: false});
     };
 
     render() {
