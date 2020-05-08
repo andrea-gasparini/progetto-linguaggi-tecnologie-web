@@ -12,11 +12,39 @@ class GroupHomeComponent extends Component {
 
     constructor(props) {
         super(props);
-    }
 
+        this.state = {showActiveMenuItem: true}
+
+        this.navigationItems = [
+            {
+                label: "Chat",
+                icon: <Send/>
+            },
+            {
+                label: "Bacheca",
+                icon: <Clipboard/>,
+                active: true
+            },
+            {
+                label: "Membri",
+                icon: <Users/>
+            }
+        ];
+    }
+    
     componentDidMount() {
         let {dispatch, cookies, history} = this.props;
         dispatch(validateToken(cookies, history, false, '/group'));
+    }
+
+    toggleActiveMenuItem(e) {
+        if (! e.target.classList.contains("active"))
+            this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
+    }
+
+    changeActiveMenuItem(index) {
+        this.navigationItems.forEach((val, i) => val.active = i === index);
+        // switch page
     }
 
     render() {
@@ -36,18 +64,18 @@ class GroupHomeComponent extends Component {
                                 {/* Switch tra componenti da mostrare */}
                             </div>
                             <div className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
-                                <div className={"menu-item"}>
-                                    <Send />
-                                    <span>Chat</span>
-                                </div>
-                                <div className={"menu-item active"}>
-                                    <Clipboard />
-                                    <span>Bacheca</span>
-                                </div>
-                                <div className={"menu-item"}>
-                                    <Users />
-                                    <span>Membri</span>
-                                </div>
+                                {this.navigationItems.map((value, index) =>
+                                    <div
+                                        onClick={() => this.changeActiveMenuItem(index)}
+                                        onMouseEnter={(e) => {this.toggleActiveMenuItem(e)}}
+                                        onMouseLeave={(e) => {this.toggleActiveMenuItem(e)}}
+                                        className={["menu-item", this.state.showActiveMenuItem && value.active ? "active" : ""].join(" ")}
+                                        key={index}>
+
+                                        {value.icon}
+                                        <span>{value.label}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
