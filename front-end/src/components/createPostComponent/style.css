@@ -1,6 +1,5 @@
 .createPostContainer {
-    max-width: 760px;
-    width: auto;
+    width: 100%;
     border-radius: 15px;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
     -moz-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);

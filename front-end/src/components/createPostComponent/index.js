@@ -94,7 +94,7 @@ class CreatePostComponent extends Component {
         let {isWriting, postText, postFiles, showError, errorText} = this.state;
         return (
             <Fragment>
-                <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer mt-5 ml-5 p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
+                <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
                     {typeof userData !== "undefined" &&
                     <div className={["d-flex w-100", !isWriting ? "align-items-center" : ""].join(" ")}>
                         {!isWriting &&
