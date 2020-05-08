@@ -162,7 +162,6 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 			if($this->GroupsModel->deleteGroup($groupId))
 				return $this->response(buildServerResponse(true, "ok"));
-
 		}
 
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
@@ -208,6 +207,29 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 						return $this->response(buildServerResponse(true, "ok", array("group" => $groupData[0])),  200);
 				}
 			}
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+
+	public function createPost_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if(count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+			$postText = $this->input->post('postText');
+			if(!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			if(stlren($postText) <= 0 || strlen(trim($postText)) <= 0)
+				return $this->response(buildServerResponse(false, "Inserisci almeno un carattere al tuo post."), 200);
+
+
+
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}

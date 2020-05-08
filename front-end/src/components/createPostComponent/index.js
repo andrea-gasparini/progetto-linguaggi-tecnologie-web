@@ -6,6 +6,7 @@ import {withCookies} from "react-cookie";
 import {API_SERVER_URL} from "../../globalConstants";
 import {FilePlus} from "react-feather";
 import FilePreviewComponent from "../filePreviewComponent";
+import axios from "axios";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -28,6 +29,15 @@ class CreatePostComponent extends Component {
 
     trySendPost = (e) => {
         e.preventDefault();
+        let {postFiles, postText} = this.state;
+        let postFilesData = new FormData();
+        postFiles.map((value) => {
+            postFilesData.append("files[]", value);
+        });
+
+        postFilesData.append("postText", postText);
+        postFilesData.append("groupId", 11);
+        axios.post(`${API_SERVER_URL}/createPost`, postFilesData).then((res) => {}); // test payload data
     };
 
     handleChangeTextareaPost = (e) => {
@@ -48,7 +58,6 @@ class CreatePostComponent extends Component {
                 output.push(files[i]);
         }
         this.setState({postFiles: output});
-        console.log(this.state.postFiles);
     };
 
     removeFile = (file) => {
@@ -59,12 +68,17 @@ class CreatePostComponent extends Component {
             this.inputFile.value = '';
     };
 
+    hideWriting = (e) => {
+        e.preventDefault();
+        this.setState({isWriting: false});
+    };
+
     render() {
         let {userData} = this.props;
         let {isWriting, postText, postFiles} = this.state;
         return (
             <Fragment>
-                <div onClick={() => this.setState({isWriting: true})} className={["d-flex createPostContainer mt-5 ml-5 p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
+                <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer mt-5 ml-5 p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
                     {typeof userData !== "undefined" &&
                     <div className={["d-flex w-100", !isWriting ? "align-items-center" : ""].join(" ")}>
                         {!isWriting &&
@@ -92,15 +106,15 @@ class CreatePostComponent extends Component {
 
                                     <div className={"d-flex createPostActions justify-content-between align-items-center"}>
                                         <div>
-                                            <button onClick={() => this.clickInputFile()} className={"btn d-flex align-items-center uploadFileButton colored"}>
+                                            <button type={"button"} onClick={() => this.clickInputFile()} className={"btn d-flex align-items-center uploadFileButton colored"}>
                                                 <FilePlus color={"#822433"} size={20} style={{marginRight: "5px"}} />
                                                 Allega file
                                             </button>
                                             <input onChange={(e) => this.changeInputFile(e)} multiple={true} ref={(ref) => {this.inputFile = ref}} type={"file"} style={{display: "none"}} /> {/* bottone hidden che viene triggherato al click del button. */}
                                         </div>
                                         <div className={"d-flex"}>
-                                            <button className={"btn btn-light mr-2"}>Annulla</button>
-                                            <button disabled={postText.length <= 0} className={"btn btn-primary sapienzaButton"}>Pubblica</button>
+                                            <button type={"button"} onClick={(e) => this.hideWriting(e)} className={"btn btn-light mr-2"}>Annulla</button>
+                                            <button type={"submit"} disabled={postText.length <= 0} className={"btn btn-primary sapienzaButton"}>Pubblica</button>
                                         </div>
                                     </div>
                                 </form>

@@ -29,7 +29,7 @@ function validateAuthorizationToken($token) {
 		return buildServerResponse(true, "ok", array("userId" => $tokenData->userId));
 	}
 
-	return buildServerResponse(false, "Token di accesso non valido. #3");;
+	return buildServerResponse(false, "Token di accesso non valido. #3");
 }
 
 
