@@ -18,7 +18,9 @@ class CreatePostComponent extends Component {
         this.state = {
             isWriting: false,
             postText: '',
-            postFiles: []
+            postFiles: [],
+            showError: false,
+            errorText: ''
         }
     }
 
@@ -28,7 +30,9 @@ class CreatePostComponent extends Component {
     }
 
     trySendPost = (e) => {
+        this.setState({showError: false});
         e.preventDefault();
+        let {cookies} = this.props;
         let {postFiles, postText} = this.state;
         let postFilesData = new FormData();
         postFiles.map((value) => {
@@ -36,8 +40,20 @@ class CreatePostComponent extends Component {
         });
 
         postFilesData.append("postText", postText);
-        postFilesData.append("groupId", 11);
-        axios.post(`${API_SERVER_URL}/createPost`, postFilesData).then((res) => {}); // test payload data
+        postFilesData.append("groupId", 11); // da cambiare il gruppo id dinamicamente.
+        axios.post(`${API_SERVER_URL}/createPost`, postFilesData, {
+            headers: {
+                "Authorization": `Bearer ${cookies.cookies.token}`
+            }
+        }).then((res) => {
+            let {status, data, message} = res.data;
+            if(status) {
+                this.inputFile.value = '';
+                this.setState({postFiles: [], postText: ''});
+            } else {
+                this.setState({showError: true, errorText: message})
+            }
+        }); // test payload data
     };
 
     handleChangeTextareaPost = (e) => {
@@ -75,7 +91,7 @@ class CreatePostComponent extends Component {
 
     render() {
         let {userData} = this.props;
-        let {isWriting, postText, postFiles} = this.state;
+        let {isWriting, postText, postFiles, showError, errorText} = this.state;
         return (
             <Fragment>
                 <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer mt-5 ml-5 p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
@@ -94,8 +110,13 @@ class CreatePostComponent extends Component {
                         {isWriting &&
                             <Fragment>
                                 <form method={"post"} className={"d-flex flex-column"} onSubmit={(e) => this.trySendPost(e)} style={{width: "100%"}}>
+                                    {showError &&
+                                        <div className={"alert alert-danger"}>
+                                            <b>{errorText}</b>
+                                        </div>
+                                    }
                                     <div className={"form-group"}>
-                                        <textarea onChange={(e) => this.handleChangeTextareaPost(e)} className={"form-control w-100 textareaPostContainer"} rows={3} placeholder={"Condividi qualcosa con il corso..."}></textarea>
+                                        <textarea value={postText} onChange={(e) => this.handleChangeTextareaPost(e)} className={"form-control w-100 textareaPostContainer"} rows={3} placeholder={"Condividi qualcosa con il corso..."}>{postText}</textarea>
                                     </div>
 
                                     <div>
