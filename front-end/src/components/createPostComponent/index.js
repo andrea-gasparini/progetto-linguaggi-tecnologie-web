@@ -5,6 +5,7 @@ import {validateToken} from "../../redux/actions/login";
 import {withCookies} from "react-cookie";
 import {API_SERVER_URL} from "../../globalConstants";
 import {FilePlus} from "react-feather";
+import FilePreviewComponent from "../filePreviewComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -72,6 +73,12 @@ class CreatePostComponent extends Component {
                                 <form method={"post"} className={"d-flex flex-column"} onSubmit={(e) => this.trySendPost(e)} style={{width: "100%"}}>
                                     <div className={"form-group"}>
                                         <textarea onChange={(e) => this.handleChangeTextareaPost(e)} className={"form-control w-100 textareaPostContainer"} rows={3} placeholder={"Condividi qualcosa con il corso..."}></textarea>
+                                    </div>
+
+                                    <div>
+                                        {postFiles.map((value, index) => (
+                                            <FilePreviewComponent key={index} file={value} />
+                                        ))}
                                     </div>
 
                                     <div className={"d-flex createPostActions justify-content-between align-items-center"}>

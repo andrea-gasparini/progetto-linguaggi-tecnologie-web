@@ -1,0 +1,36 @@
+.filePreviewContainer {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #afafaf;
+    border-left: none;
+    height: 70px;
+}
+
+.removeFileFromListIcon {
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.removeFileFromListIcon:hover {
+    opacity: .7;
+}
+
+.previewFileImage {
+    width: 68px;
+    height: 68px;
+    background: url("https://sfondo.info/i/original/9/4/6/64603.jpg");
+    background-size: cover;
+    border-radius: 5px 0 0 5px;
+    margin-right: 5px;
+    opacity: .5;
+}
+
+.previewFileName {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.previewFileName:hover {
+    cursor: pointer;
+    color: #822433;
+}
