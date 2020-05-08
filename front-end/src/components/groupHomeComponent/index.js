@@ -5,6 +5,7 @@ import {withCookies} from "react-cookie";
 import {connect} from "react-redux";
 import './style.css';
 import {Send, Users, Clipboard} from "react-feather";
+import CreatePostComponent from "../createPostComponent";
 
 
 class GroupHomeComponent extends Component {
@@ -26,14 +27,15 @@ class GroupHomeComponent extends Component {
                 <HeaderComponent history={history} />
                 <section className={"d-flex justify-content-center"}>
                     <div className={"home d-flex flex-column"}>
-                        <div className={"mb-3"}>
-                            <h1>Componente per la creazione di postaaaaaaaaaaa</h1>
+                        <div className={"d-flex mb-3 w-100"}>
+                            <CreatePostComponent />
                         </div>
                         <div className={"d-flex flex-row"}>
-                            <div className={"main-content mr-2 d-flex flex-column align-items-center"}>
+                            <div className={"main-content mr-3 d-flex flex-column align-items-center"}>
                                 <h1>Post</h1>
+                                {/* Switch tra componenti da mostrare */}
                             </div>
-                            <div className={"navigation-menu noselectText ml-2 d-flex flex-column"}>
+                            <div className={"navigation-menu noselectText d-flex flex-column"}>
                                 <div className={"menu-item"}>
                                     <Send />
                                     <span>Chat</span>
