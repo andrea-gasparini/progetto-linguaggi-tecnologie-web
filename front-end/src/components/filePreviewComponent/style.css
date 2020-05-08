@@ -34,3 +34,7 @@
     cursor: pointer;
     color: #822433;
 }
+
+.showBorder {
+    border-left: 1px solid #afafaf;
+}

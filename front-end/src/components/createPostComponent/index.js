@@ -44,7 +44,8 @@ class CreatePostComponent extends Component {
         let files = e.target.files;
         let output = this.state.postFiles;
         for(let i = 0; i <= files.length - 1; i++) {
-            output.push(files[i]);
+            if(output.filter(x => x.lastModified === files[i].lastModified && files[i].name === x.name).length <= 0) // check file duplicati
+                output.push(files[i]);
         }
         this.setState({postFiles: output});
         console.log(this.state.postFiles);
