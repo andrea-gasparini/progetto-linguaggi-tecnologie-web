@@ -28,6 +28,12 @@
 .previewFileName {
     font-weight: bold;
     font-size: 18px;
+    max-width: 540px;
+    display: block;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .previewFileName:hover {

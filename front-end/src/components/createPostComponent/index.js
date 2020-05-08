@@ -51,6 +51,14 @@ class CreatePostComponent extends Component {
         console.log(this.state.postFiles);
     };
 
+    removeFile = (file) => {
+        let postFiles = this.state.postFiles;
+        postFiles = postFiles.filter(x => x.lastModified !== file.lastModified && file.name !== x.name); // rimuovo file
+        this.setState({postFiles});
+        if(postFiles.length <= 0)
+            this.inputFile.value = '';
+    };
+
     render() {
         let {userData} = this.props;
         let {isWriting, postText, postFiles} = this.state;
@@ -78,7 +86,7 @@ class CreatePostComponent extends Component {
 
                                     <div>
                                         {postFiles.map((value, index) => (
-                                            <FilePreviewComponent key={index} file={value} />
+                                            <FilePreviewComponent key={index} file={value} removeFile={this.removeFile} />
                                         ))}
                                     </div>
 

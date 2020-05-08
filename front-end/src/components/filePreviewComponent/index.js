@@ -16,6 +16,11 @@ class FilePreviewComponent extends Component {
         this.buildPreviewImage(this.props.file);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps !== this.props)
+            this.buildPreviewImage(this.props.file);
+    }
+
     mimeTypeToText = (mimeType) => {
         if(["image/bmp", "image/png", "image/gif", "image/jpeg", "image/svg+xm"].indexOf(mimeType) > -1)
             return "Immagine";
@@ -81,7 +86,7 @@ class FilePreviewComponent extends Component {
     };
 
     render() {
-        let {file} = this.props;
+        let {file, removeFile} = this.props;
         let {backgroundImageUrl, showBorder} = this.state;
         return(
             <div className={"d-flex filePreviewContainer justify-content-between mb-3"}>
@@ -97,7 +102,7 @@ class FilePreviewComponent extends Component {
                     </div>
                 </div>
                 <div className={"d-flex align-items-center mr-2"}>
-                    <XCircle size={30} color={"#5f1518"} className={"removeFileFromListIcon"} />
+                    <XCircle onClick={() => removeFile(file)} size={30} color={"#5f1518"} className={"removeFileFromListIcon"} />
                 </div>
             </div>
         )
