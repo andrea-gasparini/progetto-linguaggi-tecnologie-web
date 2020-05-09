@@ -9,9 +9,22 @@ class GroupPostComponent extends Component {
 
     render() {
         return (
-          <Fragment>
-            <h1>I'm a post</h1>
-          </Fragment>
+            <Fragment>
+                <div className={"post"}>
+                    <div className={"post-header"}>
+                        <h1>Post title</h1>
+                    </div>
+                    <div className={"post-body"}>
+                        <p>
+                            Care Studentesse, cari Studenti,
+                            Per accedere ai webinar delle esercitazioni, potete farlo via Classroom o direttamente tramite questo link:
+                            Google Meet: https://meet.google.com/fffffffffff
+                            Saluti,
+                            -- Andrea Gasparini
+                        </p>
+                    </div>
+                </div>
+            </Fragment>
         );
     }
 

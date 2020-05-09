@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import './style.css';
 import {Send, Users, Clipboard} from "react-feather";
 import CreatePostComponent from "../createPostComponent";
+import GroupPostComponent from "../groupPostComponent";
 
 
 class GroupHomeComponent extends Component {
@@ -78,8 +79,12 @@ class GroupHomeComponent extends Component {
                             </div>
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
-                                <h1>Post</h1>
-                                {/* Switch tra componenti da mostrare */}
+                                <GroupPostComponent />
+                                <GroupPostComponent />
+                                <GroupPostComponent />
+                                {/* Switch tra componenti da mostrare */
+
+                                }
                             </div>
 
                         </div>
