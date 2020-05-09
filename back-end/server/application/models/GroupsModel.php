@@ -25,6 +25,12 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function deleteGroup($groupId) {
+		$this->db->where("id", $groupId);
+		if($this->db->delete("groups"))
+			return true;
+		return false;
+	}
 
 	public function createGroup($groupName, $groupDesc, $groupOwner) {
 		$data = array(
@@ -71,5 +77,22 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function addPostToGroup($dataPost) {
+		if($this->db->insert("posts", $dataPost))
+			return true;
+		return false;
+	}
+
+	public function getPostFromGroup($postId, $groupId) {
+		$this->db->select("*");
+		$this->db->where(array("id" => $postId, "group_id" => $groupId));
+		$query = $this->db->get("posts");
+		return $query->result();
+	}
+
+	public function addComment($data) {
+		$this->db->insert("comments", $data);
+		return $this->db->insert_id("comments_id_seq");
+	}
 
 }

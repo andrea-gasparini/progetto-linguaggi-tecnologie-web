@@ -1,0 +1,56 @@
+.home {
+    max-width: 960px;
+    width: 100%;
+    height: 100%;
+    margin-top: 105px;
+}
+
+.main-content {
+    padding: 10px;
+    width: 80%;
+    background-color: red;
+}
+
+.navigation-menu {
+    position: sticky;
+    max-width: 20%;
+    width: 100%;
+    top: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #afafaf;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    transform: scale(0.90);
+    transform-origin: left center;
+    transition: all .2s ease-in-out;
+}
+
+.menu-item:hover {
+    font-weight: bold;
+    transform: scale(1);
+    transform-origin: left center;
+    transition: all .2s ease-in-out;
+}
+
+.menu-item.active {
+    font-weight: bold;
+    transform: scale(1);
+    transform-origin: left center;
+    transition: all .2s ease-in-out;
+}
+
+.menu-item:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.menu-item span {
+    font-size: 20px;
+    margin-left: 10px;
+}

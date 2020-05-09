@@ -12,7 +12,7 @@
  Target Server Version : 120002
  File Encoding         : 65001
 
- Date: 04/05/2020 09:19:44
+ Date: 06/05/2020 20:53:41
 */
 
 
@@ -20,7 +20,7 @@
 -- Sequence structure for chats_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_id_seq";
-CREATE SEQUENCE "public"."chats_id_seq"
+CREATE SEQUENCE "public"."chats_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for chats_messages_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."chats_messages_id_seq";
-CREATE SEQUENCE "public"."chats_messages_id_seq"
+CREATE SEQUENCE "public"."chats_messages_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for comments_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."comments_id_seq";
-CREATE SEQUENCE "public"."comments_id_seq"
+CREATE SEQUENCE "public"."comments_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for groupsMemberships_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groupsMemberships_id_seq";
-CREATE SEQUENCE "public"."groupsMemberships_id_seq"
+CREATE SEQUENCE "public"."groupsMemberships_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for groups_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."groups_id_seq";
-CREATE SEQUENCE "public"."groups_id_seq"
+CREATE SEQUENCE "public"."groups_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for invitations_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."invitations_id_seq";
-CREATE SEQUENCE "public"."invitations_id_seq"
+CREATE SEQUENCE "public"."invitations_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for posts_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."posts_id_seq";
-CREATE SEQUENCE "public"."posts_id_seq"
+CREATE SEQUENCE "public"."posts_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for users_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."users_id_seq";
-CREATE SEQUENCE "public"."users_id_seq"
+CREATE SEQUENCE "public"."users_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -208,7 +208,6 @@ CREATE TABLE "public"."users" (
 )
 ;
 
-
 -- ----------------------------
 -- Primary Key structure for table chats
 -- ----------------------------
@@ -275,7 +274,7 @@ ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("id");
 -- ----------------------------
 -- Foreign Keys structure for table chats
 -- ----------------------------
-ALTER TABLE "public"."chats" ADD CONSTRAINT "groupIdchats" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."chats" ADD CONSTRAINT "groupIdchats" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table chats_messages
@@ -285,7 +284,7 @@ ALTER TABLE "public"."chats_messages" ADD CONSTRAINT "userIdMessage" FOREIGN KEY
 -- ----------------------------
 -- Foreign Keys structure for table comments
 -- ----------------------------
-ALTER TABLE "public"."comments" ADD CONSTRAINT "postIdComment" FOREIGN KEY ("post_id") REFERENCES "public"."posts" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."comments" ADD CONSTRAINT "postIdComment" FOREIGN KEY ("post_id") REFERENCES "public"."posts" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."comments" ADD CONSTRAINT "userIdComment" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
@@ -296,18 +295,18 @@ ALTER TABLE "public"."groups" ADD CONSTRAINT "group_owner_id" FOREIGN KEY ("grou
 -- ----------------------------
 -- Foreign Keys structure for table groupsMemberships
 -- ----------------------------
-ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "groupIdGroup" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."groupsMemberships" ADD CONSTRAINT "userIdGroup" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table invitations
 -- ----------------------------
-ALTER TABLE "public"."invitations" ADD CONSTRAINT "groupId" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."invitations" ADD CONSTRAINT "groupId" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."invitations" ADD CONSTRAINT "userOneId" FOREIGN KEY ("from_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."invitations" ADD CONSTRAINT "userTwoId" FOREIGN KEY ("to_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table posts
 -- ----------------------------
-ALTER TABLE "public"."posts" ADD CONSTRAINT "groupIdPost" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."posts" ADD CONSTRAINT "groupIdPost" FOREIGN KEY ("group_id") REFERENCES "public"."groups" ("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE "public"."posts" ADD CONSTRAINT "userIdPost" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;

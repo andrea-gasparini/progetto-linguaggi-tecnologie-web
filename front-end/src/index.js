@@ -10,6 +10,8 @@ import '../global.css';
 import SignUpComponent from "./components/signUpComponent";
 import HomeComponent from "./components/homeComponent";
 import TestComponent from "./components/TestComponent";
+import GroupHomeComponent from "./components/groupHomeComponent";
+import CreatePostComponent from "./components/createPostComponent";
 
 const routing = (
     <Provider store={store}>
@@ -20,6 +22,8 @@ const routing = (
                     <Route path={"/signup"} component={SignUpComponent} />
                     <Route path={"/home"} component={HomeComponent} />
                     <Route path={"/test"} component={TestComponent} />
+                    <Route path={"/group"} component={GroupHomeComponent} />
+                    <Route path={"/testpost"} component={CreatePostComponent} />
                 </Switch>
             </Router>
         </CookiesProvider>
