@@ -15,7 +15,8 @@ class GroupHomeComponent extends Component {
 
         this.state = {
             showActiveMenuItem: true,
-            indexActive: 0
+            indexActive: 0,
+            transition: false
         };
 
         this.navigationItems = [
@@ -43,8 +44,13 @@ class GroupHomeComponent extends Component {
     }
 
     toggleActiveMenuItem(e) {
-        if (!e.target.classList.contains("active"))
-            this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
+        if(!this.state.transition) {
+            this.setState({transition: true});
+            if (!e.target.classList.contains("active"))
+                this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
+        }
+
+        this.setState({transition: false});
     }
 
     changeActiveMenuItem(index) {
