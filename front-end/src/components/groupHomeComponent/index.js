@@ -61,18 +61,20 @@ class GroupHomeComponent extends Component {
                         </div>
                         <div className={"d-flex flex-row"}>
 
-                            <div className={"navigation-menu mr-3 noselectText d-flex flex-column align-items-start"}>
-                                {this.navigationItems.map((value, index) =>
-                                    <div
-                                        onClick={() => this.changeActiveMenuItem(index)}
-                                        onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
-                                        onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
-                                        className={["menu-item", this.state.showActiveMenuItem && value.active ? "active" : ""].join(" ")}
-                                        key={index}>
-                                        {value.icon}
-                                        <span>{value.label}</span>
-                                    </div>
-                                )}
+                            <div className={"left-content mr-3"}>
+                                <div className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
+                                    {this.navigationItems.map((value, index) =>
+                                        <div
+                                            onClick={() => this.changeActiveMenuItem(index)}
+                                            onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
+                                            onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
+                                            className={["menu-item", this.state.showActiveMenuItem && value.active ? "active" : ""].join(" ")}
+                                            key={index}>
+                                            {value.icon}
+                                            <span>{value.label}</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div className={"main-content d-flex flex-column align-items-center"}>

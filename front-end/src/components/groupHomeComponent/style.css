@@ -6,16 +6,18 @@
 }
 
 .main-content {
-    padding: 10px;
     width: 80%;
-    background-color: red;
+}
+
+.left-content {
+    max-width: 20%;
+    width: 100%;
 }
 
 .navigation-menu {
     position: sticky;
-    max-width: 20%;
     width: 100%;
-    top: 200px;
+    top: 85px;
     padding: 15px;
     border-radius: 5px;
     border: 1px solid #afafaf;
