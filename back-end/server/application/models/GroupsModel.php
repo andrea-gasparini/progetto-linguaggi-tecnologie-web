@@ -83,5 +83,16 @@ class GroupsModel extends CI_Model {
 		return false;
 	}
 
+	public function getPostFromGroup($postId, $groupId) {
+		$this->db->select("*");
+		$this->db->where(array("id" => $postId, "group_id" => $groupId));
+		$query = $this->db->get("posts");
+		return $query->result();
+	}
+
+	public function addComment($data) {
+		$this->db->insert("comments", $data);
+		return $this->db->insert_id("comments_id_seq");
+	}
 
 }

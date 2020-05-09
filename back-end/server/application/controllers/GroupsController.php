@@ -281,4 +281,47 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
 
+	public function addComment_post() {
+		// parametri da passare: header Authorization con token utente, per quanto riguarda i dati post sono: groupId, postId e commentText.
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+			$commentText = $this->input->post('commentText');
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			if (strlen($commentText) <= 0 || strlen(trim($commentText)) <= 0)
+				return $this->response(buildServerResponse(false, "Inserisci almeno un carattere al tuo post."), 200);
+
+			$postId = $this->input->post('postId');
+			if(!FILTER_VAR($postId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Post id non valido."), 200);
+
+			// controlliamo che il post appartenga a quel gruppo.
+			$postData = $this->GroupsModel->getPostFromGroup($postId, $groupId);
+			if(count($postData) <= 0)
+				return $this->response(buildServerResponse(false, "Il post non appartiene al gruppo."), 200);
+
+			$data = array(
+				"user_id" => $userId,
+				"post_id" => $postId,
+				"comment_text" => $commentText,
+				"created_at" => "now()"
+			);
+
+			$commentId = $this->GroupsModel->addComment($data);
+			// se va a buon fine possiamo anche restituire il commento da aggiungere poi al redux (da fare in fase di frontend).
+			if(FILTER_VAR($commentId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(true, "Commento aggiunto con successo.", array("comment" => array())), 200);
+
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
 }
