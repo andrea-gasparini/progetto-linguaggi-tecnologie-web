@@ -29,21 +29,21 @@
 
     transform: scale(0.90);
     transform-origin: left center;
-    transition: all .2s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .menu-item:hover {
     font-weight: bold;
     transform: scale(1);
     transform-origin: left center;
-    transition: all .2s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .menu-item.active {
     font-weight: bold;
     transform: scale(1);
     transform-origin: left center;
-    transition: all .2s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .menu-item:not(:last-child) {

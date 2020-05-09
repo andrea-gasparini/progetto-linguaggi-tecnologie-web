@@ -48,9 +48,9 @@ class GroupHomeComponent extends Component {
             this.setState({transition: true});
             if (!e.target.classList.contains("active"))
                 this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
+            this.setState({transition: false});
+            /*this.setState({transition: false});*/
         }
-
-        this.setState({transition: false});
     }
 
     changeActiveMenuItem(index) {
@@ -77,8 +77,8 @@ class GroupHomeComponent extends Component {
                                 {this.navigationItems.map((value, index) =>
                                     <div
                                         onClick={() => this.changeActiveMenuItem(value.index)}
-                                        onMouseEnter={(e) => {this.toggleActiveMenuItem(e)}}
-                                        onMouseLeave={(e) => {this.toggleActiveMenuItem(e)}}
+                                        onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
+                                        onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
                                         className={["menu-item", this.state.showActiveMenuItem && value.index === this.state.indexActive ? "active" : ""].join(" ")}
                                         key={index}>
                                         {value.icon}
