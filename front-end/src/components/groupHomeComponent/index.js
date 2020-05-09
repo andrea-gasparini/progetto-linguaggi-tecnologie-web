@@ -13,27 +13,21 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            showActiveMenuItem: true,
-            indexActive: 0,
-            transition: false
-        };
+        this.state = { showActiveMenuItem: true };
 
         this.navigationItems = [
             {
                 label: "Chat",
-                icon: <Send/>,
-                index: 0
+                icon: <Send/>
             },
             {
                 label: "Bacheca",
                 icon: <Clipboard/>,
-                index: 1
+                active: true
             },
             {
                 label: "Membri",
-                icon: <Users/>,
-                index: 2
+                icon: <Users/>
             }
         ];
     }
@@ -44,19 +38,13 @@ class GroupHomeComponent extends Component {
     }
 
     toggleActiveMenuItem(e) {
-        if(!this.state.transition) {
-            this.setState({transition: true});
-            if (!e.target.classList.contains("active"))
-                this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
-            this.setState({transition: false});
-            /*this.setState({transition: false});*/
-        }
+        if (! e.target.classList.contains("active"))
+            this.setState({showActiveMenuItem: !this.state.showActiveMenuItem})
     }
 
     changeActiveMenuItem(index) {
-        this.setState({
-            indexActive: index
-        });
+        // setta active a false su tutti gli item con index diverso
+        this.navigationItems.forEach((val, i) => val.active = i === index);
         // switch page
     }
 
@@ -76,10 +64,10 @@ class GroupHomeComponent extends Component {
                             <div className={"navigation-menu mr-3 noselectText d-flex flex-column align-items-start"}>
                                 {this.navigationItems.map((value, index) =>
                                     <div
-                                        onClick={() => this.changeActiveMenuItem(value.index)}
+                                        onClick={() => this.changeActiveMenuItem(index)}
                                         onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
                                         onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
-                                        className={["menu-item", this.state.showActiveMenuItem && value.index === this.state.indexActive ? "active" : ""].join(" ")}
+                                        className={["menu-item", this.state.showActiveMenuItem && value.active ? "active" : ""].join(" ")}
                                         key={index}>
                                         {value.icon}
                                         <span>{value.label}</span>
