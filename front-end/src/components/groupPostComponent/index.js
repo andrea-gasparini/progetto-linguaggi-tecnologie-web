@@ -36,28 +36,38 @@ class GroupPostComponent extends Component {
         return (
             <Fragment>
                 <div className={"post"}>
-                    <div className={"post-header"}>
-                        <div className={"profile-pic noselectText"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${picture}")`, backgroundSize: "cover", borderRadius: "50%"}}/>
-                        <div className={"d-flex flex-column"}>
-                            <div className={"d-flex align-items-center"}>
-                                <span className={"realname"}>
-                                    {realname}
-                                </span>
-                                <span className={"text-muted"}>
-                                    {"(@" + username + ")"}
+                    <div>
+
+                        <div className={"post-header"}>
+                            <div className={"profile-pic noselectText"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${picture}")`, backgroundSize: "cover", borderRadius: "50%"}}/>
+                            <div className={"d-flex flex-column"}>
+                                <div className={"d-flex align-items-center"}>
+                                    <span className={"realname"}>
+                                        {realname}
+                                    </span>
+                                    <span className={"text-muted"}>
+                                        {"(@" + username + ")"}
+                                    </span>
+                                </div>
+                                <span className={"publish-date"}>
+                                    {publishDate}
                                 </span>
                             </div>
-                            <span className={"publish-date"}>
-                                {publishDate}
-                            </span>
                         </div>
-                    </div>
-                    <div className={"post-body"}>
-                        <p>{text}</p>
-                        <div className={"attachments"}>
-                            {/* */}
+
+                        <div className={"post-body"}>
+                            <p>{text}</p>
+                            <div className={"attachments"}>
+                                {/* */}
+                            </div>
                         </div>
+
                     </div>
+
+                    <div className={"post-comments"}>
+
+                    </div>
+
                     <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
                         <textarea
                             rows={1}
@@ -67,6 +77,7 @@ class GroupPostComponent extends Component {
                             onBlur={() => this.toggleActiveState()} />
                         <PlusCircle className={"new-comment-icon"} />
                     </div>
+
                 </div>
             </Fragment>
         );
