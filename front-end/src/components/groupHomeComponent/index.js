@@ -53,6 +53,8 @@ class GroupHomeComponent extends Component {
         // switch page
     }
 
+    getActivePage() { return this.navigationItems.filter(x => x.active)[0].label; }
+
     render() {
         let {history, groupPosts} = this.props;
         return (
@@ -60,9 +62,11 @@ class GroupHomeComponent extends Component {
                 <HeaderComponent history={history} />
                 <section className={"d-flex justify-content-center"}>
                     <div className={"home d-flex flex-column"}>
-                        <div className={"d-flex mb-3 w-100"}>
-                            <CreatePostComponent />
-                        </div>
+                        {this.getActivePage() === "Bacheca" &&
+                            <div className={"d-flex mb-3 w-100"}>
+                                <CreatePostComponent/>
+                            </div>
+                        }
                         <div className={"d-flex flex-row"}>
 
                             <div className={"left-content mr-3"}>
@@ -89,7 +93,7 @@ class GroupHomeComponent extends Component {
                                 "                            -- Andrea Gasparini"} />
                                 <GroupPostComponent realname={"Edoardo Di Paolo"} username={"admin"} publishDate={"7 Maggio"} />
                                 <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />*/}
-                                {this.navigationItems.filter(x => x.active)[0].label === "Bacheca" &&
+                                {this.getActivePage() === "Bacheca" &&
                                     <WallPostsGroupComponent posts={groupPosts} />
                                 }
 
