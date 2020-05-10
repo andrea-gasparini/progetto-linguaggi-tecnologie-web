@@ -255,7 +255,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 						if ($this->upload->do_upload("file")) {
 							$uploadedData = $this->upload->data(); // prendo le info del file uploadato
-							$filesArray[] = array("originalName" => $name, "serverName" => $uploadedData["file_name"]);
+							$filesArray[] = array("originalName" => $name, "serverName" => $uploadedData["file_name"], "type" => $type);
 						} else {
 							return $this->response(buildServerResponse(false, $this->upload->display_errors()), 200);
 						}

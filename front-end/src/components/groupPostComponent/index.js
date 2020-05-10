@@ -3,6 +3,7 @@ import {PlusCircle} from "react-feather";
 import './style.css';
 import {API_SERVER_URL} from "../../globalConstants";
 import CommentComponent from "../groupPostCommentComponent";
+import FilePreviewComponent from "../filePreviewComponent";
 
 class GroupPostComponent extends Component {
 
@@ -32,9 +33,7 @@ class GroupPostComponent extends Component {
     toggleActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
     render() {
-
-        let {username, realname, publishDate, text, picture, hasComments} = this.props;
-
+        let {username, realname, publishDate, text, picture, hasComments, filesList} = this.props;
         return (
             <Fragment>
                 <div className={"post"}>
@@ -66,13 +65,14 @@ class GroupPostComponent extends Component {
 
                     </div>
 
+                    {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
+                        <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
+                    ))}
+
+
                     {hasComments &&
                         <div className={"post-comments"}>
                             <CommentComponent realname={realname} username={username} text={"Test primo commento"} />
-
-                            <CommentComponent realname={"Andrea Gasparini"} username={"admin"} text={"Fighissimo sto sito!"} />
-
-                            <CommentComponent realname={realname} username={username} text={"TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"} />
                         </div>
                     }
 

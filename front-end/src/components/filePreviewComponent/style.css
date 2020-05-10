@@ -41,11 +41,24 @@
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
+    color: #822433;
 }
 
 .previewFileName:hover {
     cursor: pointer;
     color: #822433;
+}
+
+.linkToFile {
+    color: #822433;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.linkToFile:hover {
+    color: #822433;
+    opacity: .7;
+    text-decoration: none;
 }
 
 .showBorder {

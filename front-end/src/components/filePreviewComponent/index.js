@@ -73,8 +73,13 @@ class FilePreviewComponent extends Component {
         return "File generico"
     };
 
-    buildPreviewImage = (file) => {
-        if(["image/bmp", "image/png", "image/gif", "image/jpeg", "image/svg+xm"].indexOf(file.type) > -1) {
+    buildPreviewImage = (fileFunction) => {
+        let {toUploadState, file} = this.props;
+
+        if(!toUploadState && ["image/bmp", "image/png", "image/gif", "image/jpeg", "image/svg+xm"].indexOf(file.type) > -1)
+            return this.setState({backgroundImageUrl: file.fileUrl});
+
+        if(["image/bmp", "image/png", "image/gif", "image/jpeg", "image/svg+xm"].indexOf(fileFunction.type) > -1) {
             let fileReader = new FileReader();
             fileReader.onload = (e) => {
                 this.setState({backgroundImageUrl: e.target.result});
@@ -93,8 +98,11 @@ class FilePreviewComponent extends Component {
                 <div className={"d-flex"}>
                     <div className={["previewFileImage", showBorder ? "showBorder": ""].join(" ")} style={{backgroundImage: `url(${backgroundImageUrl})`}}  />
                     <div className={"previewFileInformation d-flex flex-column justify-content-center ml-2"}>
-                        <div className={"previewFileName"} style={{fontSize: file.name.length < 50 ? 18 : 15}}>
-                            {file.name}
+                        <div className={"previewFileName"} style={{fontSize: file.name.length < 50 ? 18 : 15, maxWidth: !toUploadState ? "200px" : "540px"}}>
+                            {toUploadState && file.name}
+                            {!toUploadState &&
+                                <a href={file.fileUrl} className={"linkToFile"} target={"_blank"}>{file.name}</a>
+                            }
                         </div>
                         <div className={"text-muted"} style={{fontSize: 15}}>
                             {this.mimeTypeToText(file.type)}
