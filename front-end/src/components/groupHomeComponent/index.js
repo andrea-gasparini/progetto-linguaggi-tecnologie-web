@@ -8,6 +8,7 @@ import {Send, Users, Clipboard} from "react-feather";
 import CreatePostComponent from "../createPostComponent";
 import GroupPostComponent from "../groupPostComponent";
 
+const mapStateToProps = (state) => ({...state.groupReducer});
 
 class GroupHomeComponent extends Component {
 
@@ -96,4 +97,4 @@ class GroupHomeComponent extends Component {
 
 }
 
-export default withCookies(connect()(GroupHomeComponent));
+export default withCookies(connect(mapStateToProps)(GroupHomeComponent));

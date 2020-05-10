@@ -95,7 +95,7 @@ class GroupsModel extends CI_Model {
 		return $this->db->insert_id("comments_id_seq");
 	}
 
-	public function loadPost($groupId, $offset) {
+	public function loadPosts($groupId, $offset) {
 		$this->db->select("p.*");
 		$this->db->where("group_id", $groupId);
 		$this->db->order_by("created_at", "desc");

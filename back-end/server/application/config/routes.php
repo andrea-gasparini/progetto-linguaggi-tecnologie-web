@@ -66,3 +66,4 @@ $route['changePassword'] = "SettingsController/changePassword";
 $route['changeProfilePicture'] = "SettingsController/changeProfilePicture";
 $route['deleteGroup'] = "GroupsController/deleteGroup";
 $route['createPost'] = "GroupsController/createPost";
+$route['getGroupPosts'] = "GroupsController/getGroupPosts";

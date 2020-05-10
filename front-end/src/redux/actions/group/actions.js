@@ -1,0 +1,1 @@
+export const GET_GROUP_POSTS = "GET_GROUP_POSTS";

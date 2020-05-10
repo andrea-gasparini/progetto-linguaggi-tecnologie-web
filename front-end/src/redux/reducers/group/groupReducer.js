@@ -1,5 +1,5 @@
-const groupReducer = (state, action) => {
-    switch(action.case) {
+const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true}, action) => {
+    switch(action.type) {
         default:
             return state;
     }
