@@ -38,9 +38,9 @@ class GroupHomeComponent extends Component {
 
     componentDidMount() {
         document.addEventListener('scroll', this.checkScroll);
-        let {dispatch, cookies, history, userData} = this.props;
-        dispatch(validateToken(cookies, history, false, '/group'));
-        dispatch(loadPosts(cookies.cookies.token, 0, 11)); // terzo parametro è il groupId da prendere dinamicamente.
+        let {dispatch, cookies, history, userData, match} = this.props;
+        dispatch(validateToken(cookies, history, false, `/group/${match.params.id}`));
+        dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
     }
 
     toggleActiveMenuItem(e) {
@@ -62,11 +62,11 @@ class GroupHomeComponent extends Component {
 
     checkScroll = async () => {
         let {isLoadingPost} = this.state;
-        let {dispatch, cookies, currentOffset, hasOtherPostsToLoad} = this.props;
+        let {dispatch, cookies, currentOffset, hasOtherPostsToLoad, match} = this.props;
         let distanceBottom = document.body.scrollHeight - window.innerHeight - window.scrollY;
         if(distanceBottom < 100 && this.getActivePage() === "Bacheca" && !isLoadingPost && hasOtherPostsToLoad) {
             this.setState({isLoadingPost: true});
-            await dispatch(loadPosts(cookies.cookies.token, currentOffset, 11));
+            await dispatch(loadPosts(cookies.cookies.token, currentOffset, match.params.id));
         }
         setTimeout(() => {
             this.setState({isLoadingPost: false});
@@ -74,7 +74,7 @@ class GroupHomeComponent extends Component {
     };
 
     render() {
-        let {history, groupPosts} = this.props;
+        let {history, groupPosts, match} = this.props;
         return (
             <Fragment>
                 <HeaderComponent history={history} />
@@ -82,7 +82,7 @@ class GroupHomeComponent extends Component {
                     <div className={"home d-flex flex-column"}>
                         {this.getActivePage() === "Bacheca" &&
                             <div className={"d-flex mb-3 w-100"}>
-                                <CreatePostComponent/>
+                                <CreatePostComponent groupId={match.params.id}/>
                             </div>
                         }
                         <div className={"d-flex flex-row"}>

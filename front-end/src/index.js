@@ -22,7 +22,7 @@ const routing = (
                     <Route path={"/signup"} component={SignUpComponent} />
                     <Route path={"/home"} component={HomeComponent} />
                     <Route path={"/test"} component={TestComponent} />
-                    <Route path={"/group"} component={GroupHomeComponent} />
+                    <Route path={"/group/:id"} component={GroupHomeComponent} />
                     <Route path={"/testpost"} component={CreatePostComponent} />
                 </Switch>
             </Router>
