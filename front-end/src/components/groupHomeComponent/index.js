@@ -8,6 +8,7 @@ import {Send, Users, Clipboard} from "react-feather";
 import CreatePostComponent from "../createPostComponent";
 import GroupPostComponent from "../groupPostComponent";
 import {loadPosts} from "../../redux/actions/group";
+import WallPostsGroupComponent from "../wallPostsGroupComponent";
 
 const mapStateToProps = (state) => ({...state.groupReducer});
 
@@ -53,8 +54,7 @@ class GroupHomeComponent extends Component {
     }
 
     render() {
-        let {history} = this.props;
-
+        let {history, groupPosts} = this.props;
         return (
             <Fragment>
                 <HeaderComponent history={history} />
@@ -82,13 +82,17 @@ class GroupHomeComponent extends Component {
                             </div>
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
-                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"10 Maggio"} text={"Care Studentesse, cari Studenti,\n" +
+                                {/*<GroupPostComponent realname={"Andrea Gasparini"} publishDate={"10 Maggio"} text={"Care Studentesse, cari Studenti,\n" +
                                 "                            Per accedere ai webinar delle esercitazioni, potete farlo via Classroom o direttamente tramite questo link:\n" +
                                 "                            Google Meet: https://meet.google.com/fffffffffff\n" +
                                 "                            Saluti,\n" +
                                 "                            -- Andrea Gasparini"} />
                                 <GroupPostComponent realname={"Edoardo Di Paolo"} username={"admin"} publishDate={"7 Maggio"} />
-                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />
+                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />*/}
+                                {this.navigationItems.filter(x => x.active)[0].label === "Bacheca" &&
+                                    <WallPostsGroupComponent posts={groupPosts} />
+                                }
+
                                 {/* Switch tra componenti da mostrare */
 
                                 }

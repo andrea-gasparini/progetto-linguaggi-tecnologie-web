@@ -38,6 +38,7 @@
     padding: 5px 10px;
     border-radius: 15px;
     border: 1px solid #afafaf;
+    transition: all .3s ease-in-out;
 }
 
 .post-new-comment textarea {
@@ -62,5 +63,4 @@
     -moz-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
     box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
     border-color: transparent;
-    transition: all .3s ease-in-out;
 }
