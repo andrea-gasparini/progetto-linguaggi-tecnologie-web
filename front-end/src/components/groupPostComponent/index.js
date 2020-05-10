@@ -13,7 +13,7 @@ class GroupPostComponent extends Component {
         }
     }
 
-    handleTextAreaValue = (e) => {
+    handleTextAreaValue(e) {
         // setto sempre ad una riga l'altezza della textarea
         if (! this.state.textareaMinHeight)
             this.state.textareaMinHeight = e.target.scrollHeight;
@@ -25,6 +25,10 @@ class GroupPostComponent extends Component {
 
         //this.setState({postText: e.target.value});
     };
+
+    toggleActiveState() {
+        this.setState({isActive: ! this.state.isActive})
+    }
 
     render() {
 
@@ -52,8 +56,8 @@ class GroupPostComponent extends Component {
                             rows={1}
                             placeholder={"Aggiungi un commento al post.."}
                             onChange={e => this.handleTextAreaValue(e)}
-                            onFocus={() => this.setState({isActive: true})}
-                            onBlur={() => this.setState({isActive: false})} />
+                            onFocus={() => this.toggleActiveState()}
+                            onBlur={() => this.toggleActiveState()} />
                         <PlusCircle className={"new-comment-icon"} />
                     </div>
                 </div>
