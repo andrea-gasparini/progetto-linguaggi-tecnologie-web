@@ -96,11 +96,12 @@ class GroupsModel extends CI_Model {
 	}
 
 	public function loadPosts($groupId, $offset) {
-		$this->db->select("p.*");
+		$this->db->select("p.*, u.username, u.realname, u.profile_picture");
 		$this->db->where("group_id", $groupId);
+		$this->db->where("p.user_id", "u.id", FALSE);
 		$this->db->order_by("created_at", "desc");
 		$this->db->limit(3, $offset);
-		$query = $this->db->get("posts");
+		$query = $this->db->get("posts p, users u");
 		return $query->result();
 	}
 

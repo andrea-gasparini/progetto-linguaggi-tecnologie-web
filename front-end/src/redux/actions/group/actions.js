@@ -1,1 +1,1 @@
-export const GET_GROUP_POSTS = "GET_GROUP_POSTS";
+export const ADD_GROUP_POSTS = "ADD_GROUP_POSTS";

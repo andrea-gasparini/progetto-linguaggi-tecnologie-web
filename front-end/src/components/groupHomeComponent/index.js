@@ -7,6 +7,7 @@ import './style.css';
 import {Send, Users, Clipboard} from "react-feather";
 import CreatePostComponent from "../createPostComponent";
 import GroupPostComponent from "../groupPostComponent";
+import {loadPosts} from "../../redux/actions/group";
 
 const mapStateToProps = (state) => ({...state.groupReducer});
 
@@ -35,8 +36,9 @@ class GroupHomeComponent extends Component {
     }
 
     componentDidMount() {
-        let {dispatch, cookies, history} = this.props;
+        let {dispatch, cookies, history, userData} = this.props;
         dispatch(validateToken(cookies, history, false, '/group'));
+        dispatch(loadPosts(cookies.cookies.token, 0, 11)); // terzo parametro è il groupId da prendere dinamicamente.
     }
 
     toggleActiveMenuItem(e) {

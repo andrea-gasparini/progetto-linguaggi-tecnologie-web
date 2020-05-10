@@ -339,9 +339,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 			$offset = $this->input->post('offset');
 			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
-				return $this->response(buildServerResponse(false, "Al momento non è possibile caricare i post di questo gruppo."));
+				$offset = 0;
 
 			$postsData = $this->GroupsModel->loadPosts($groupId, $offset);
+			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) < 3)));
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
