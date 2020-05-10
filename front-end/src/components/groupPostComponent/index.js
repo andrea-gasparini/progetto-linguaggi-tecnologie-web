@@ -12,7 +12,7 @@ class GroupPostComponent extends Component {
         this.state = {
             textareaMinHeight: undefined,
             newCommentValue: "",
-            isActive: false
+            newCommentIsActive: false
         }
     }
 
@@ -29,7 +29,7 @@ class GroupPostComponent extends Component {
         this.setState({newCommentValue: e.target.value});
     };
 
-    toggleActiveState() { this.setState({isActive: ! this.state.isActive}) }
+    toggleActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
     render() {
 
@@ -76,7 +76,7 @@ class GroupPostComponent extends Component {
                         </div>
                     }
 
-                    <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
+                    <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
                             rows={1}
                             placeholder={"Aggiungi un commento al post.."}
