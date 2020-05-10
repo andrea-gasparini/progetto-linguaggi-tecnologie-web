@@ -8,7 +8,8 @@ class GroupPostComponent extends Component {
         super(props);
 
         this.state = {
-            textareaMinHeight: undefined
+            textareaMinHeight: undefined,
+            isActive: false
         }
     }
 
@@ -46,8 +47,13 @@ class GroupPostComponent extends Component {
                     <div className={"post-body"}>
                         <p>{text}</p>
                     </div>
-                    <div className={"post-new-comment"}>
-                        <textarea rows={1} placeholder={"Aggiungi un commento al post.."} onChange={e => this.handleTextAreaValue(e)}/>
+                    <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
+                        <textarea
+                            rows={1}
+                            placeholder={"Aggiungi un commento al post.."}
+                            onChange={e => this.handleTextAreaValue(e)}
+                            onFocus={() => this.setState({isActive: true})}
+                            onBlur={() => this.setState({isActive: false})} />
                         <PlusCircle className={"new-comment-icon"} />
                     </div>
                 </div>

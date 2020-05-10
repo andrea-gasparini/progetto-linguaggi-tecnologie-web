@@ -47,11 +47,18 @@
     resize: none;
 }
 
-textarea::placeholder {
-    color: #B3afafaf;
-}
-
 .post-new-comment {
     cursor: pointer;
     color: #822433;
+}
+
+.post-new-comment textarea::placeholder {
+    color: #B3afafaf;
+}
+
+.post-new-comment.active, .post-new-comment:hover {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+    box-shadow: 0px 0px 5px 0px rgba(102,44,44,1);
+    transition: all .3s ease-in-out;
 }
