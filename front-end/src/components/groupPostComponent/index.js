@@ -40,9 +40,14 @@ class GroupPostComponent extends Component {
                     <div className={"post-header"}>
                         <img className={"profile-pic noselectText"} src={"https://pluspng.com/img-png/user-png-icon-male-user-icon-512.png"}/>
                         <div className={"d-flex flex-column"}>
-                            <span className={"user-name"}>
-                                {username} {"(@" + realname + ")"}
-                            </span>
+                            <div className={"d-flex align-items-center"}>
+                                <span className={"realname"}>
+                                    {realname}
+                                </span>
+                                <span className={"text-muted"}>
+                                    {"(@" + username + ")"}
+                                </span>
+                            </div>
                             <span className={"publish-date"}>
                                 {publishDate}
                             </span>

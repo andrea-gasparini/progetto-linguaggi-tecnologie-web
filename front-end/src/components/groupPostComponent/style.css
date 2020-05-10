@@ -17,9 +17,10 @@
     margin-right: 15px;
 }
 
-.post-header .user-name {
+.post-header .realname {
     font-size: 1.2em;
     font-weight: 500;
+    margin-right: 5px;
 }
 
 .post-header .publish-date {

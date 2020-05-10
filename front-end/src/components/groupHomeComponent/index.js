@@ -82,13 +82,13 @@ class GroupHomeComponent extends Component {
                             </div>
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
-                                <GroupPostComponent username={"Andrea Gasparini"} publishDate={"10 Maggio"} text={"Care Studentesse, cari Studenti,\n" +
+                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"10 Maggio"} text={"Care Studentesse, cari Studenti,\n" +
                                 "                            Per accedere ai webinar delle esercitazioni, potete farlo via Classroom o direttamente tramite questo link:\n" +
                                 "                            Google Meet: https://meet.google.com/fffffffffff\n" +
                                 "                            Saluti,\n" +
                                 "                            -- Andrea Gasparini"} />
-                                <GroupPostComponent username={"Edoardo Di Paolo"} realname={"admin"} publishDate={"7 Maggio"} />
-                                <GroupPostComponent username={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />
+                                <GroupPostComponent realname={"Edoardo Di Paolo"} username={"admin"} publishDate={"7 Maggio"} />
+                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />
                                 {/* Switch tra componenti da mostrare */
 
                                 }
