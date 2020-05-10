@@ -1,4 +1,4 @@
-import {ADD_GROUP_POSTS} from "../../actions/group/actions";
+import {ADD_GROUP_POSTS, ADD_NEW_POST} from "../../actions/group/actions";
 import update from "immutability-helper";
 
 const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, currentOffset: 0}, action) => {
@@ -11,6 +11,12 @@ const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, curren
                 groupPosts: {$push: action.payload.posts},
                 hasOtherPostsToLoad: {$set: action.payload.hasOtherPostsToLoad},
                 currentOffset: {$set: state.currentOffset + 15}
+            });
+
+        case ADD_NEW_POST:
+            console.log(action);
+            return update(state, {
+                groupPosts: {$unshift: [action.payload.post]}
             });
     }
 };

@@ -79,7 +79,7 @@ class GroupsModel extends CI_Model {
 
 	public function addPostToGroup($dataPost) {
 		if($this->db->insert("posts", $dataPost))
-			return true;
+			return $this->db->insert_id("posts_id_seq");
 		return false;
 	}
 

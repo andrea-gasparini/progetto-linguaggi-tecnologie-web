@@ -272,8 +272,24 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				"created_at" => "now()"
 			);
 
-			if($this->GroupsModel->addPostToGroup($data))
-				return $this->response(buildServerResponse(true, "Post creato con successo.", array("filesUploaded" => $filesArray)), 200);
+
+			$postId = $this->GroupsModel->addPostToGroup($data);
+			if($postId) {
+				// devo farmi tornare il post da aggiungere al redux
+				$post = array(
+					"user_id" => $userId,
+					"profile_picture" => $user[0]->profile_picture,
+					"group_id" => $groupId,
+					"post_text" => $postText,
+					"username" => $user[0]->username,
+					"realname" => $user[0]->realname,
+					"created_at" => date("Y-m-d H:i:s"),
+					"file_uploaded" => json_encode($filesArray),
+					"id" => $postId
+				);
+				return $this->response(buildServerResponse(true, "Post creato con successo.", array("filesUploaded" => $filesArray, "newPost" => $post)), 200);
+			}
+
 
 			return $this->response(buildServerResponse(false, "Errore nell'inserimento del post.", ), 200);
 
