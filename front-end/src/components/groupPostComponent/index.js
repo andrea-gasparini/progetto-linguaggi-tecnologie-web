@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {PlusCircle} from "react-feather";
 import './style.css';
+import {API_SERVER_URL} from "../../globalConstants";
 
 class GroupPostComponent extends Component {
 
@@ -31,13 +32,12 @@ class GroupPostComponent extends Component {
 
     render() {
 
-        let {username, realname, publishDate, text} = this.props;
-
+        let {username, realname, publishDate, text, picture} = this.props;
         return (
             <Fragment>
                 <div className={"post"}>
                     <div className={"post-header"}>
-                        <img className={"profile-pic noselectText"} src={"https://pluspng.com/img-png/user-png-icon-male-user-icon-512.png"}/>
+                        <div className={"profile-pic noselectText"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${picture}")`, backgroundSize: "cover", borderRadius: "50%"}}/>
                         <div className={"d-flex flex-column"}>
                             <div className={"d-flex align-items-center"}>
                                 <span className={"realname"}>
