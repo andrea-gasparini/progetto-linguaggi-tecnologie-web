@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import {PlusCircle} from "react-feather";
 import './style.css';
 import {API_SERVER_URL} from "../../globalConstants";
+import CommentComponent from "../groupPostCommentComponent";
 
 class GroupPostComponent extends Component {
 
@@ -65,7 +66,11 @@ class GroupPostComponent extends Component {
                     </div>
 
                     <div className={"post-comments"}>
+                        <CommentComponent realname={realname} username={username} text={"Test primo commento"} />
 
+                        <CommentComponent realname={"Andrea Gasparini"} username={"admin"} text={"Fighissimo sto sito!"} />
+
+                        <CommentComponent realname={realname} username={username} text={"TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"} />
                     </div>
 
                     <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
