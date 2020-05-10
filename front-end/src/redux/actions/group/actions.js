@@ -1,0 +1,1 @@
+export const ADD_GROUP_POSTS = "ADD_GROUP_POSTS";

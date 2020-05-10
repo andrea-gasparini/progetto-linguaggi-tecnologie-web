@@ -324,4 +324,27 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
 
+
+	public function getGroupPosts_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			$offset = $this->input->post('offset');
+			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
+				$offset = 0;
+
+			$postsData = $this->GroupsModel->loadPosts($groupId, $offset);
+			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
 }
