@@ -17,7 +17,7 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { showActiveMenuItem: true };
+        this.state = { showActiveMenuItem: true, isLoadingPost: false };
 
         this.navigationItems = [
             {
@@ -37,6 +37,7 @@ class GroupHomeComponent extends Component {
     }
 
     componentDidMount() {
+        document.addEventListener('scroll', this.checkScroll);
         let {dispatch, cookies, history, userData} = this.props;
         dispatch(validateToken(cookies, history, false, '/group'));
         dispatch(loadPosts(cookies.cookies.token, 0, 11)); // terzo parametro è il groupId da prendere dinamicamente.
@@ -54,6 +55,23 @@ class GroupHomeComponent extends Component {
     }
 
     getActivePage() { return this.navigationItems.filter(x => x.active)[0].label; }
+
+    componentWillUnmount() {
+        document.addEventListener('scroll', this.checkScroll);
+    }
+
+    checkScroll = async () => {
+        let {isLoadingPost} = this.state;
+        let {dispatch, cookies, currentOffset, hasOtherPostsToLoad} = this.props;
+        let distanceBottom = document.body.scrollHeight - window.innerHeight - window.scrollY;
+        if(distanceBottom < 100 && this.getActivePage() === "Bacheca" && !isLoadingPost && hasOtherPostsToLoad) {
+            this.setState({isLoadingPost: true});
+            await dispatch(loadPosts(cookies.cookies.token, currentOffset, 11));
+        }
+        setTimeout(() => {
+            this.setState({isLoadingPost: false});
+        }, 1500); // cooldown request: dopo 1500 ms si resetta e si potàr rifare un'altra richiesta.
+    };
 
     render() {
         let {history, groupPosts} = this.props;
@@ -86,19 +104,8 @@ class GroupHomeComponent extends Component {
                             </div>
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
-                                {/*<GroupPostComponent realname={"Andrea Gasparini"} publishDate={"10 Maggio"} text={"Care Studentesse, cari Studenti,\n" +
-                                "                            Per accedere ai webinar delle esercitazioni, potete farlo via Classroom o direttamente tramite questo link:\n" +
-                                "                            Google Meet: https://meet.google.com/fffffffffff\n" +
-                                "                            Saluti,\n" +
-                                "                            -- Andrea Gasparini"} />
-                                <GroupPostComponent realname={"Edoardo Di Paolo"} username={"admin"} publishDate={"7 Maggio"} />
-                                <GroupPostComponent realname={"Andrea Gasparini"} publishDate={"5 Maggio"} text={"Bella bro"} />*/}
                                 {this.getActivePage() === "Bacheca" &&
                                     <WallPostsGroupComponent posts={groupPosts} />
-                                }
-
-                                {/* Switch tra componenti da mostrare */
-
                                 }
                             </div>
 
