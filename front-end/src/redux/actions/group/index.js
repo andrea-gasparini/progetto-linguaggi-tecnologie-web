@@ -1,6 +1,7 @@
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
+import {ADD_GROUP_POSTS} from "./actions";
 
 export const loadPosts = (token, offset, groupId) => {
     return async dispatch => {
@@ -9,9 +10,20 @@ export const loadPosts = (token, offset, groupId) => {
                 "Authorization": `Bearer ${token}`
             }
         }).then((res) => {
-
+            let {status, data} = res.data;
+            if(status) {
+                dispatch(addPostsToGroup(data.posts, data.hasOtherPostsToLoad))
+            }
         }).catch((err) => {
             console.log(err);
         });
     }
-}
+};
+
+export const addPostsToGroup = (posts, hasOtherPostsToLoad) => ({
+    type: ADD_GROUP_POSTS,
+    payload: {
+        posts,
+        hasOtherPostsToLoad
+    }
+});

@@ -100,7 +100,7 @@ class GroupsModel extends CI_Model {
 		$this->db->where("group_id", $groupId);
 		$this->db->where("p.user_id", "u.id", FALSE);
 		$this->db->order_by("created_at", "desc");
-		$this->db->limit(3, $offset);
+		$this->db->limit(15, $offset);
 		$query = $this->db->get("posts p, users u");
 		return $query->result();
 	}
