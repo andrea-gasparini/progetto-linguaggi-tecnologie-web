@@ -9,6 +9,7 @@ class GroupPostComponent extends Component {
 
         this.state = {
             textareaMinHeight: undefined,
+            newCommentValue: "",
             isActive: false
         }
     }
@@ -23,7 +24,7 @@ class GroupPostComponent extends Component {
         // in base a quanto scroll ci sarebbe con una sola riga, reimposto l'altezza
         e.target.style.height = e.target.scrollHeight + "px";
 
-        //this.setState({postText: e.target.value});
+        this.setState({newCommentValue: e.target.value});
     };
 
     toggleActiveState() { this.setState({isActive: ! this.state.isActive}) }
