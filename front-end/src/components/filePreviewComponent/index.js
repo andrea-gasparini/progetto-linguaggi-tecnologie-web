@@ -86,10 +86,10 @@ class FilePreviewComponent extends Component {
     };
 
     render() {
-        let {file, removeFile} = this.props;
+        let {file, removeFile, toUploadState} = this.props;
         let {backgroundImageUrl, showBorder} = this.state;
         return(
-            <div className={"d-flex filePreviewContainer justify-content-between mb-3"}>
+            <div className={["d-flex filePreviewContainer justify-content-between mb-3", toUploadState ? "largeContainer" : "smallContainer"].join(" ")}>
                 <div className={"d-flex"}>
                     <div className={["previewFileImage", showBorder ? "showBorder": ""].join(" ")} style={{backgroundImage: `url(${backgroundImageUrl})`}}  />
                     <div className={"previewFileInformation d-flex flex-column justify-content-center ml-2"}>
@@ -101,9 +101,12 @@ class FilePreviewComponent extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={"d-flex align-items-center mr-2"}>
-                    <XCircle onClick={() => removeFile(file)} size={30} color={"#5f1518"} className={"removeFileFromListIcon"} />
-                </div>
+                {toUploadState &&
+                    <div className={"d-flex align-items-center mr-2"}>
+                        <XCircle onClick={() => removeFile(file)} size={30} color={"#5f1518"}
+                                 className={"removeFileFromListIcon"}/>
+                    </div>
+                }
             </div>
         )
     }

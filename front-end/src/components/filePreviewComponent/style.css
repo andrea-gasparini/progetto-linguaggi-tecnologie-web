@@ -1,9 +1,16 @@
 .filePreviewContainer {
-    width: 100%;
     border-radius: 5px;
     border: 1px solid #afafaf;
     border-left: none;
     height: 70px;
+}
+
+.filePreviewContainer.largeContainer {
+    width: 100%;
+}
+
+.filePreviewContainer.smallContainer {
+    width: 40%;
 }
 
 .removeFileFromListIcon {

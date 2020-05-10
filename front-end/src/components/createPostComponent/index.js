@@ -121,7 +121,7 @@ class CreatePostComponent extends Component {
 
                                     <div>
                                         {postFiles.map((value, index) => (
-                                            <FilePreviewComponent key={index} file={value} removeFile={this.removeFile} />
+                                            <FilePreviewComponent toUploadState={true} key={index} file={value} removeFile={this.removeFile} />
                                         ))}
                                     </div>
 
