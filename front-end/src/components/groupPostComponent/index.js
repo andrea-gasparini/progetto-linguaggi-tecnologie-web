@@ -26,9 +26,7 @@ class GroupPostComponent extends Component {
         //this.setState({postText: e.target.value});
     };
 
-    toggleActiveState() {
-        this.setState({isActive: ! this.state.isActive})
-    }
+    toggleActiveState() { this.setState({isActive: ! this.state.isActive}) }
 
     render() {
 
@@ -55,6 +53,9 @@ class GroupPostComponent extends Component {
                     </div>
                     <div className={"post-body"}>
                         <p>{text}</p>
+                        <div className={"attachments"}>
+                            {/* */}
+                        </div>
                     </div>
                     <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
                         <textarea
