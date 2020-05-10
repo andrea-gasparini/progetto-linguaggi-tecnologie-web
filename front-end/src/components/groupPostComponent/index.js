@@ -33,7 +33,8 @@ class GroupPostComponent extends Component {
 
     render() {
 
-        let {username, realname, publishDate, text, picture} = this.props;
+        let {username, realname, publishDate, text, picture, hasComments} = this.props;
+
         return (
             <Fragment>
                 <div className={"post"}>
@@ -65,13 +66,15 @@ class GroupPostComponent extends Component {
 
                     </div>
 
-                    <div className={"post-comments"}>
-                        <CommentComponent realname={realname} username={username} text={"Test primo commento"} />
+                    {hasComments &&
+                        <div className={"post-comments"}>
+                            <CommentComponent realname={realname} username={username} text={"Test primo commento"} />
 
-                        <CommentComponent realname={"Andrea Gasparini"} username={"admin"} text={"Fighissimo sto sito!"} />
+                            <CommentComponent realname={"Andrea Gasparini"} username={"admin"} text={"Fighissimo sto sito!"} />
 
-                        <CommentComponent realname={realname} username={username} text={"TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"} />
-                    </div>
+                            <CommentComponent realname={realname} username={username} text={"TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest"} />
+                        </div>
+                    }
 
                     <div className={["post-new-comment", this.state.isActive ? "active" : ""].join(" ")}>
                         <textarea
