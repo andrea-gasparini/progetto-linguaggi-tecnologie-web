@@ -255,7 +255,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 						if ($this->upload->do_upload("file")) {
 							$uploadedData = $this->upload->data(); // prendo le info del file uploadato
-							$filesArray[] = array("originalName" => $name, "serverName" => $uploadedData["file_name"]);
+							$filesArray[] = array("originalName" => $name, "serverName" => $uploadedData["file_name"], "type" => $type);
 						} else {
 							return $this->response(buildServerResponse(false, $this->upload->display_errors()), 200);
 						}
@@ -272,11 +272,93 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				"created_at" => "now()"
 			);
 
-			if($this->GroupsModel->addPostToGroup($data))
-				return $this->response(buildServerResponse(true, "Post creato con successo.", array("filesUploaded" => $filesArray)), 200);
+
+			$postId = $this->GroupsModel->addPostToGroup($data);
+			if($postId) {
+				// devo farmi tornare il post da aggiungere al redux
+				$post = array(
+					"user_id" => $userId,
+					"profile_picture" => $user[0]->profile_picture,
+					"group_id" => $groupId,
+					"post_text" => $postText,
+					"username" => $user[0]->username,
+					"realname" => $user[0]->realname,
+					"created_at" => date("Y-m-d H:i:s"),
+					"file_uploaded" => json_encode($filesArray),
+					"id" => $postId
+				);
+				return $this->response(buildServerResponse(true, "Post creato con successo.", array("filesUploaded" => $filesArray, "newPost" => $post)), 200);
+			}
+
 
 			return $this->response(buildServerResponse(false, "Errore nell'inserimento del post.", ), 200);
 
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+	public function addComment_post() {
+		// parametri da passare: header Authorization con token utente, per quanto riguarda i dati post sono: groupId, postId e commentText.
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+			$commentText = $this->input->post('commentText');
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			if (strlen($commentText) <= 0 || strlen(trim($commentText)) <= 0)
+				return $this->response(buildServerResponse(false, "Inserisci almeno un carattere al tuo post."), 200);
+
+			$postId = $this->input->post('postId');
+			if(!FILTER_VAR($postId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Post id non valido."), 200);
+
+			// controlliamo che il post appartenga a quel gruppo.
+			$postData = $this->GroupsModel->getPostFromGroup($postId, $groupId);
+			if(count($postData) <= 0)
+				return $this->response(buildServerResponse(false, "Il post non appartiene al gruppo."), 200);
+
+			$data = array(
+				"user_id" => $userId,
+				"post_id" => $postId,
+				"comment_text" => $commentText,
+				"created_at" => "now()"
+			);
+
+			$commentId = $this->GroupsModel->addComment($data);
+			// se va a buon fine possiamo anche restituire il commento da aggiungere poi al redux (da fare in fase di frontend).
+			if(FILTER_VAR($commentId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(true, "Commento aggiunto con successo.", array("comment" => array())), 200);
+
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+
+	public function getGroupPosts_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			$offset = $this->input->post('offset');
+			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
+				$offset = 0;
+
+			$postsData = $this->GroupsModel->loadPosts($groupId, $offset);
+			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}

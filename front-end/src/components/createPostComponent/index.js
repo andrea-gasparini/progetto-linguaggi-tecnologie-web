@@ -7,6 +7,7 @@ import {API_SERVER_URL} from "../../globalConstants";
 import {FilePlus} from "react-feather";
 import FilePreviewComponent from "../filePreviewComponent";
 import axios from "axios";
+import {addNewPost} from "../../redux/actions/group";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -32,7 +33,7 @@ class CreatePostComponent extends Component {
     trySendPost = (e) => {
         this.setState({showError: false});
         e.preventDefault();
-        let {cookies} = this.props;
+        let {cookies, dispatch} = this.props;
         let {postFiles, postText} = this.state;
         let postFilesData = new FormData();
         postFiles.map((value) => {
@@ -50,6 +51,7 @@ class CreatePostComponent extends Component {
             if(status) {
                 this.inputFile.value = '';
                 this.setState({postFiles: [], postText: ''});
+                dispatch(addNewPost(data.newPost));
             } else {
                 this.setState({showError: true, errorText: message})
             }
@@ -95,7 +97,7 @@ class CreatePostComponent extends Component {
         let {isWriting, postText, postFiles, showError, errorText} = this.state;
         return (
             <Fragment>
-                <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer mt-5 ml-5 p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
+                <div onClick={() => {!isWriting && this.setState({isWriting: true})}} className={["d-flex createPostContainer p-4", !isWriting ? "cursoredPostContainer" : ""].join(" ")}>
                     {typeof userData !== "undefined" &&
                     <div className={["d-flex w-100", !isWriting ? "align-items-center" : ""].join(" ")}>
                         {!isWriting &&
@@ -122,7 +124,7 @@ class CreatePostComponent extends Component {
 
                                     <div>
                                         {postFiles.map((value, index) => (
-                                            <FilePreviewComponent key={index} file={value} removeFile={this.removeFile} />
+                                            <FilePreviewComponent toUploadState={true} key={index} file={value} removeFile={this.removeFile} />
                                         ))}
                                     </div>
 

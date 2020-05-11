@@ -21,7 +21,9 @@ class UserModel extends CI_Model
 	public function updateUserSettingsData($userInfo, $data) {
 		$this->db->where($userInfo);
 		$this->db->limit(1);
-		$this->db->update("users", $data);
+		if($this->db->update("users", $data))
+			return true;
+		return false;
 	}
 
 	public function createUser($realname, $username, $email, $password) {
