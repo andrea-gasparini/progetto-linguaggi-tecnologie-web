@@ -70,7 +70,7 @@ class GroupPostComponent extends Component {
                     ))}
 
                     <div className={"post-comments"}>
-                    {comments.length > 0 &&  comments.map((comment, index) => (
+                    {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
                             <CommentComponent realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
                     ))}
                     </div>
