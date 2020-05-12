@@ -9,6 +9,7 @@ import CreatePostComponent from "../createPostComponent";
 import GroupPostComponent from "../groupPostComponent";
 import {loadPosts} from "../../redux/actions/group";
 import WallPostsGroupComponent from "../wallPostsGroupComponent";
+import GroupChatComponent from "../groupChatComponent";
 
 const mapStateToProps = (state) => ({...state.groupReducer});
 
@@ -17,7 +18,7 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { showActiveMenuItem: true, isLoadingPost: false };
+        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 1 };
 
         this.navigationItems = [
             {
@@ -50,11 +51,12 @@ class GroupHomeComponent extends Component {
 
     changeActiveMenuItem(index) {
         // setta active a false su tutti gli item con index diverso
-        this.navigationItems.forEach((val, i) => val.active = i === index);
+        //this.navigationItems.forEach((val, i) => val.active = i === index);
+        this.setState({activeIndex: index});
         // switch page
     }
 
-    getActivePage() { return this.navigationItems.filter(x => x.active)[0].label; }
+    getActivePage() { return this.navigationItems[this.state.activeIndex].label; }
 
     componentWillUnmount() {
         document.addEventListener('scroll', this.checkScroll);
@@ -94,7 +96,7 @@ class GroupHomeComponent extends Component {
                                             onClick={() => this.changeActiveMenuItem(index)}
                                             onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
                                             onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
-                                            className={["menu-item", this.state.showActiveMenuItem && value.active ? "active" : ""].join(" ")}
+                                            className={["menu-item", this.state.showActiveMenuItem && index === this.state.activeIndex ? "active" : ""].join(" ")}
                                             key={index}>
                                             {value.icon}
                                             <span>{value.label}</span>
@@ -107,6 +109,11 @@ class GroupHomeComponent extends Component {
                                 {this.getActivePage() === "Bacheca" &&
                                     <WallPostsGroupComponent posts={groupPosts} />
                                 }
+
+                                {this.getActivePage() === "Chat" &&
+                                    <GroupChatComponent />
+                                }
+
                             </div>
 
                         </div>
