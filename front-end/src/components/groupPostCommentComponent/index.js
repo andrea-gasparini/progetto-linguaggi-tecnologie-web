@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from "react";
 import './style.css';
+import {API_SERVER_URL} from "../../globalConstants";
 
 class CommentComponent extends Component {
 
@@ -8,12 +9,13 @@ class CommentComponent extends Component {
     }
 
     render() {
-        let {realname, username, text} = this.props;
+        let {realname, username, text, picture, createdAt} = this.props;
 
         return (
             <Fragment>
                 <div className={"post-comment"}>
                     <div className={"d-flex align-items-center"}>
+                        <div className={"commentUserPicture"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${picture}")`}}/>
                         <span className={"realname"}>
                             {realname}
                         </span>

@@ -33,7 +33,7 @@ class GroupPostComponent extends Component {
     toggleActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
     render() {
-        let {username, realname, publishDate, text, picture, hasComments, filesList} = this.props;
+        let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
         return (
             <Fragment>
                 <div className={"post"}>
@@ -69,12 +69,11 @@ class GroupPostComponent extends Component {
                         <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
                     ))}
 
-
-                    {hasComments &&
-                        <div className={"post-comments"}>
-                            <CommentComponent realname={realname} username={username} text={"Test primo commento"} />
-                        </div>
-                    }
+                    <div className={"post-comments"}>
+                    {comments.length > 0 &&  comments.map((comment, index) => (
+                            <CommentComponent realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
+                    ))}
+                    </div>
 
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea

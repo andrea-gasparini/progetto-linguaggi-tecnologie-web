@@ -33,7 +33,7 @@ class CreatePostComponent extends Component {
     trySendPost = (e) => {
         this.setState({showError: false});
         e.preventDefault();
-        let {cookies, dispatch} = this.props;
+        let {cookies, dispatch, groupId} = this.props;
         let {postFiles, postText} = this.state;
         let postFilesData = new FormData();
         postFiles.map((value) => {
@@ -41,7 +41,7 @@ class CreatePostComponent extends Component {
         });
 
         postFilesData.append("postText", postText);
-        postFilesData.append("groupId", 11); // da cambiare il gruppo id dinamicamente.
+        postFilesData.append("groupId", groupId); // da cambiare il gruppo id dinamicamente.
         axios.post(`${API_SERVER_URL}/createPost`, postFilesData, {
             headers: {
                 "Authorization": `Bearer ${cookies.cookies.token}`

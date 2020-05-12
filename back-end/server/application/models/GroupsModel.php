@@ -105,4 +105,14 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function getFirstComments($postId) {
+		$this->db->select("c.id as commentId, c.comment_text as commentText, c.created_at as createdAt, u.realname, u.username, u.profile_picture as picture");
+		$this->db->where("c.post_id", $postId);
+		$this->db->where("c.user_id", "u.id", FALSE);
+		$this->db->limit(3);
+		$this->db->order_by("c.created_at", "DESC");
+		$query = $this->db->get("comments c, users u");
+		return $query->result();
+	}
+
 }

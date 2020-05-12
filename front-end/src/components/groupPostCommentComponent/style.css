@@ -26,3 +26,13 @@
     margin-bottom: 0;
     overflow-wrap: break-word;
 }
+
+.commentUserPicture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: url("http://via.placeholder.com/30.png");
+    background-size: cover;
+    background-repeat: no-repeat !important;
+    margin-right: 5px;
+}

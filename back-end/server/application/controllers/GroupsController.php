@@ -358,6 +358,11 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				$offset = 0;
 
 			$postsData = $this->GroupsModel->loadPosts($groupId, $offset);
+
+			foreach($postsData as $key => $value) {
+				$postsData[$key]->comments = $this->GroupsModel->getFirstComments($value->id);
+			}
+
 			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
