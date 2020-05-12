@@ -89,6 +89,7 @@ class UserModel extends CI_Model
 		$this->db->where("g.id", "gm.group_id", FALSE);
 		$this->db->where("u.id", "g.group_owner", FALSE);
 		$this->db->where("gm.user_id", $userId);
+		$this->db->order_by("g.id", "DESC");
 		$query = $this->db->get("groupsMemberships gm, users u, groups g");
 		return $query->result();
 	}
