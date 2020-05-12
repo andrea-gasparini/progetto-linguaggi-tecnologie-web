@@ -83,7 +83,7 @@ class HomeComponent extends Component {
                     <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />
                 }
                 {showCreateGroupModal &&
-                    <CreateGroupModalComponent closeModal={this.toggleCreateGroupModal}/>
+                    <CreateGroupModalComponent history={history} closeModal={this.toggleCreateGroupModal}/>
                 }
                 {showDeleteGroupModal &&
                     <DeleteGroupModalComponent closeModal={this.showDeleteGroupModal} groupId={deleteGroupId} />

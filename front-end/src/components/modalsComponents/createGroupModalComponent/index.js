@@ -33,11 +33,11 @@ class CreateGroupModalComponent extends Component {
         if (e.target.classList.contains("modalContainer")) {
             this.props.closeModal();
         }
-    }
+    };
 
     createGroup = (e) => {
         e.preventDefault();
-
+        let {history} = this.props;
         let { groupName, groupDesc } = this.state;
 
         axios.post(
@@ -48,6 +48,8 @@ class CreateGroupModalComponent extends Component {
             let {status, message, data} = res.data;
             if(!status)
                 this.setState({messageCreateGroupError: message, ...data});
+            else
+                history.push(`/group/${data.group_id}`)
         }).catch( (err) => { console.log(err); });
     };
 

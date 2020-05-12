@@ -53,7 +53,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			// Create group chat
 			$this->ChatModel->createGroupChat($groupId);
 
-			return $this->response(buildServerResponse(true, "ok"), 200);
+			return $this->response(buildServerResponse(true, "ok", array("group_id" => $groupId)), 200);
 		}
 
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
