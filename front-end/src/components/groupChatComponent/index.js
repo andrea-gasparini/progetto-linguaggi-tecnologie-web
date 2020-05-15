@@ -63,12 +63,16 @@ class GroupChatComponent extends Component {
                         </div>
                     <div className={"d-flex chatBox flex-column justify-content-between"}>
                         <div className={"d-flex chatMessages flex-column"}>
-                            <div className={"d-flex message"}>
-                                <div className={"userIconMessage"}/>
-                                <div className={"messageText"}>
-                                    Ciao io sono edoaardo
+                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((value, index) => (
+                                <div key={index} className={"d-flex message"}>
+                                    <div className={"userIconMessage"}/>
+                                    <div className={"messageText p-2"}>
+                                        <div className={"username"}>Username</div>
+                                        <div>Ciao io sono edoaardo e questo è un messaggio moltoo lungo {index}</div>
+                                        <div className={"hourSentMessage"}>18:10</div>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
                         </div>
                         <div className={"d-flex sendMessageInput align-items-center justify-content-between"}>
                             <input type={"text"} className={"form-control messageInputArea"} placeholder={"Inserisci un messaggio..."} />

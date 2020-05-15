@@ -66,17 +66,19 @@
     max-height: 450px;
     width: 100%;
     height: 450px;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .chatMessages {
-    overflow: hidden;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-bottom: 20px;
 }
 
 .sendMessageInput {
     width: 100%;
     height: 35px;
-    border-radius: 5px;
+    border-radius: 5px 0 5px 5px;
     border: 1px solid #afafaf;
 }
 
@@ -98,7 +100,47 @@
 }
 
 .message {
+    position: relative;
+}
 
+.messageText {
+    position: relative;
+    background: #822433;
+    border-radius: 5px 5px 5px 0;
+    color: white;
+    max-width: 400px;
+    margin-left: 60px;
+}
+
+.messageText > .username {
+    font-weight: bold;
+}
+
+.message:not(:first-child) {
+    margin-top: 20px;
+}
+
+.messageText:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #822433;
+    border-left: 0;
+    border-bottom: 0;
+    bottom: 0px;
+    margin-left: -10px;
+    border-radius: 0 0 0 3px;
+}
+
+.hourSentMessage {
+    bottom: 0;
+    right: 5px;
+    color: white;
+    position: absolute;
+    font-size: 15px;
 }
 
 .userIconMessage {
@@ -106,4 +148,19 @@
     height: 50px;
     background-image: url("http://via.placeholder.com/50.png");
     border-radius: 50%;
+    position: absolute;
+    bottom: 0;
 }
+
+.chatMessages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chatMessages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chatMessages::-webkit-scrollbar-thumb {
+    background: #822433;
+}
+
