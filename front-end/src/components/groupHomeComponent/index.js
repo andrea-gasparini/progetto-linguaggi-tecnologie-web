@@ -18,7 +18,7 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 1 };
+        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 0 };
 
         this.navigationItems = [
             {
