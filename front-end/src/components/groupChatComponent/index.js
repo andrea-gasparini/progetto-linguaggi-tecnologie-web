@@ -1,6 +1,9 @@
 import React, {Component, Fragment} from "react";
 import './style.css';
 import {ChevronLeft, ChevronRight, Send} from "react-feather";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state) => ({...state.chatReducer});
 
 class GroupChatComponent extends Component {
 
@@ -8,13 +11,16 @@ class GroupChatComponent extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+    }
 
     render() {
         return(
             <Fragment>
                 <div className={"d-flex flex-row"} style={{width: "100%", position: "relative"}}>
                     <div className={"d-flex chatBox flex-column justify-content-between"}>
-                        <div className={"d-flex chatMessages flex-column"}>
+                        <div ref={(ref) => this.chatMessagesRef = ref } className={"d-flex chatMessages flex-column"}>
                             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((value, index) => (
                                 <div key={index} className={"d-flex message"}>
                                     <div className={"userIconMessage"}/>
@@ -25,6 +31,15 @@ class GroupChatComponent extends Component {
                                     </div>
                                 </div>
                             ))}
+
+                            <div className={"d-flex message"}>
+                                <div className={"userIconMessage"}/>
+                                <div className={"messageText p-2 otherMessage"}>
+                                    <div className={"username"}>Username</div>
+                                    <div>Ciao io sono edoaardo e questo è un messaggio moltoo lungo</div>
+                                    <div className={"hourSentMessage"}>18:10</div>
+                                </div>
+                            </div>
                         </div>
                         <div className={"d-flex sendMessageInput align-items-center justify-content-between"}>
                             <input type={"text"} className={"form-control messageInputArea"} placeholder={"Inserisci un messaggio..."} />
@@ -47,4 +62,4 @@ class GroupChatComponent extends Component {
     }
 }
 
-export default GroupChatComponent;
+export default connect(mapStateToProps)(GroupChatComponent);
