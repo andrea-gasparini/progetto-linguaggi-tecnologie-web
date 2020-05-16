@@ -107,11 +107,11 @@ class GroupHomeComponent extends Component {
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
                                 {this.getActivePage() === "Bacheca" &&
-                                    <WallPostsGroupComponent posts={groupPosts} />
+                                    <WallPostsGroupComponent groupId={match.params.id} />
                                 }
 
                                 {this.getActivePage() === "Chat" &&
-                                    <GroupChatComponent />
+                                    <GroupChatComponent groupId={match.params.id} />
                                 }
 
                             </div>
