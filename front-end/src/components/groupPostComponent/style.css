@@ -36,6 +36,10 @@
     padding: 0.7em 0 1.1em;
 }
 
+.post .post-comments.no-more-comments {
+    padding: 1.1em 0;
+}
+
 .post-comments .load-comments {
     display: flex;
     align-items: center;

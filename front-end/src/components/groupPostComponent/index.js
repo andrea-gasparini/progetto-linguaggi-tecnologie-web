@@ -105,7 +105,7 @@ class GroupPostComponent extends Component {
                     </div>
 
                     {typeof comments !== "undefined" && comments.length > 0 &&
-                    <div className={"post-comments"}>
+                    <div className={["post-comments", commentsCount > 0 ? "" : "no-more-comments"].join(" ")}>
                         {commentsCount > 0 &&
                             <div className={"load-comments"}>
                                 <span className={"noselectText"}>Carica altri commenti..</span>
