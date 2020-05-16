@@ -379,7 +379,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			$postsData = $this->GroupsModel->loadPosts($groupId, $offset);
 
 			foreach($postsData as $key => $value) {
-				$postsData[$key]->comments = $this->GroupsModel->getFirstComments($value->id);
+				$postsData[$key]->comments = array_reverse($this->GroupsModel->getFirstComments($value->id));
 				$postsData[$key]->commentsCount = $this->GroupsModel->getNumberOfLeftComments($value->id) - 3;
 			}
 
@@ -419,7 +419,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
 				$offset = 0;
 
-			$comments = $this->GroupsModel->getCommentsByOffset($postId, $offset);
+			$comments = array_reverse($this->GroupsModel->getCommentsByOffset($postId, $offset));
 
 			return $this->response(buildServerResponse(true, "ok", array("comments" => $comments)), 200);
 		}
