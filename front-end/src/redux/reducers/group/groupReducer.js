@@ -1,4 +1,4 @@
-import {ADD_GROUP_POSTS, ADD_NEW_POST, CHANGE_COMMENT_VALUE} from "../../actions/group/actions";
+import {ADD_GROUP_POSTS, ADD_NEW_POST} from "../../actions/group/actions";
 import update from "immutability-helper";
 
 const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, currentOffset: 0}, action) => {
@@ -14,17 +14,9 @@ const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, curren
             });
 
         case ADD_NEW_POST:
+            console.log(action);
             return update(state, {
                 groupPosts: {$unshift: [action.payload.post]}
-            });
-
-        case CHANGE_COMMENT_VALUE:
-            return update(state, {
-                groupPosts: { // groupPosts[postIndex]
-                    [action.payload.postIndex]: {
-                        newCommentValue: {$set: action.payload.commentValue}
-                    }
-                }
             });
     }
 };

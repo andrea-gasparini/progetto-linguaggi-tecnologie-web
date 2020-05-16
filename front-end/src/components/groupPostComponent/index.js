@@ -4,8 +4,6 @@ import './style.css';
 import {API_SERVER_URL} from "../../globalConstants";
 import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
-import {connect} from "react-redux";
-
 
 class GroupPostComponent extends Component {
 
@@ -29,19 +27,18 @@ class GroupPostComponent extends Component {
         // in base a quanto scroll ci sarebbe con una sola riga, reimposto l'altezza
         e.target.style.height = e.target.scrollHeight + "px";
 
-        let {indexPost} = this.props;
-        this.props.changeCommentValue(indexPost, e.target.value);
-        //this.setState({newCommentValue: e.target.value});
+        this.setState({newCommentValue: e.target.value});
     };
 
     toggleActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
     render() {
-        let {username, realname, publishDate, text, picture, comments, filesList, groupId, indexPost, newCommentValue} = this.props;
+        let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
         return (
             <Fragment>
                 <div className={"post"}>
                     <div>
+
                         <div className={"post-header"}>
                             <div className={"profile-pic noselectText"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${picture}")`, backgroundSize: "cover", borderRadius: "50%"}}/>
                             <div className={"d-flex flex-column"}>
@@ -69,7 +66,7 @@ class GroupPostComponent extends Component {
                     </div>
 
                     {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
-                        <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/${groupId}/${filesList[file].serverName}`, type: filesList[file].type}} />
+                        <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
                     ))}
 
                     <div className={"post-comments"}>
@@ -78,15 +75,13 @@ class GroupPostComponent extends Component {
                     ))}
                     </div>
 
-
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
-                            id={"post_comment_" + indexPost}
                             rows={1}
                             placeholder={"Aggiungi un commento al post.."}
                             onChange={e => this.handleTextAreaValue(e)}
                             onFocus={() => this.toggleActiveState()}
-                            onBlur={() => this.toggleActiveState()}>{newCommentValue}</textarea>
+                            onBlur={() => this.toggleActiveState()} />
                         <PlusCircle className={"new-comment-icon"} />
                     </div>
 
@@ -97,4 +92,4 @@ class GroupPostComponent extends Component {
 
 }
 
-export default connect()(GroupPostComponent);
+export default GroupPostComponent;
