@@ -4,6 +4,7 @@ import {Send} from "react-feather";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {tryAddMessage} from "../../redux/actions/chat";
+import {API_SERVER_URL} from "../../globalConstants";
 
 const mapStateToProps = (state) => ({...state.chatReducer});
 
@@ -26,6 +27,7 @@ class GroupChatComponent extends Component {
         if(e.keyCode === 13) {
             dispatch(tryAddMessage(cookies.cookies.token, this.state.chatMessageValue, groupId));
             this.setState({chatMessageValue: ""});
+            this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
         }
     };
 
@@ -39,7 +41,7 @@ class GroupChatComponent extends Component {
                         <div ref={(ref) => this.chatMessagesRef = ref } className={"d-flex chatMessages flex-column"}>
                             {messages.map((value, index) => (
                                 <div key={index} className={"d-flex message myMessage"}>
-                                    <div className={"userIconMessage"}/>
+                                    <div className={"userIconMessage"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${value.picture}")`}}/>
                                     <div className={"messageText p-2"}>
                                         <div className={"username"}>{value.username}</div>
                                         <div style={{marginBottom: 10}}>{value.message}</div>

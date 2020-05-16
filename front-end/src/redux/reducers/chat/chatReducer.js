@@ -7,7 +7,6 @@ const chatReducer = (state = {messages: []}, action) => {
             return state;
 
         case ADD_MESSAGE_TO_CHAT:
-            console.log(action);
             return update(state, {
                 messages: {$push: [action.payload.message]}
             })
