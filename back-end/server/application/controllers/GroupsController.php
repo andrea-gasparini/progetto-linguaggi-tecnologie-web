@@ -289,7 +289,9 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 					"realname" => $user[0]->realname,
 					"created_at" => date("Y-m-d H:i:s"),
 					"file_uploaded" => json_encode($filesArray),
-					"id" => $postId
+					"id" => $postId,
+					"comments" => [],
+					"commentsCount" => 0
 				);
 				return $this->response(buildServerResponse(true, "Post creato con successo.", array("filesUploaded" => $filesArray, "newPost" => $post)), 200);
 			}
@@ -379,6 +381,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 			foreach($postsData as $key => $value) {
 				$postsData[$key]->comments = $this->GroupsModel->getFirstComments($value->id);
+				$postsData[$key]->commentsCount = $this->GroupsModel->getNumberOfLeftComments($value->id) - 3;
 			}
 
 			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
