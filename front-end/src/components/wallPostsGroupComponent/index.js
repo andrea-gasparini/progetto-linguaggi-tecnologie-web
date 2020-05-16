@@ -24,7 +24,8 @@ class WallPostsGroupComponent extends Component {
                         picture={post.profile_picture}
                         text={post.post_text}
                         groupId={groupId}
-                        postId={post.id} />
+                        postId={post.id}
+                        postIndex={index} />
                 ))}
             </Fragment>
         )

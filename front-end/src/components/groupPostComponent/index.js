@@ -7,6 +7,8 @@ import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
 import axios from 'axios';
 import qs from 'querystring';
+import {connect} from "react-redux";
+import {addNewComment} from "../../redux/actions/group";
 
 class GroupPostComponent extends Component {
 
@@ -21,16 +23,24 @@ class GroupPostComponent extends Component {
     }
 
     addNewCommentRequest() {
-        let {cookies, groupId, postId} = this.props;
+        let {dispatch, cookies, groupId, postId, postIndex} = this.props;
         let { newCommentValue } = this.state;
 
-        axios.post(
-            `${API_SERVER_URL}/addComment`,
-            qs.stringify({ groupId, postId, newCommentValue }),
-            { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
-        ).then( /* Push nuovo commento nei visualizzati */ );
-
+        if (newCommentValue.trim() !== '') {
+            axios.post(
+                `${API_SERVER_URL}/addComment`,
+                qs.stringify({groupId, postId, newCommentValue}),
+                {headers: {'Authorization': `Bearer ${cookies.cookies.token}`}}
+            ).then(res => {
+                if (res.status) {
+                    dispatch(addNewComment(postIndex, res.data.data.comment));
+                    this.setState({newCommentValue: ''});
+                }
+            });
+        }
     }
+
+    handleEnterShiftKeyPress(e) { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest(); }
 
     handleNewCommentTextValue(e) {
         // setto sempre ad una riga l'altezza della textarea
@@ -49,6 +59,7 @@ class GroupPostComponent extends Component {
 
     render() {
         let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
+        let {newCommentValue} = this.state;
         return (
             <Fragment>
                 <div className={"post"}>
@@ -93,7 +104,9 @@ class GroupPostComponent extends Component {
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
                             rows={1}
+                            value={newCommentValue}
                             placeholder={"Aggiungi un commento al post.."}
+                            onKeyDown={(e) => this.handleEnterShiftKeyPress(e)}
                             onChange={e => this.handleNewCommentTextValue(e)}
                             onFocus={() => this.toggleNewCommentActiveState()}
                             onBlur={() => this.toggleNewCommentActiveState()} />
@@ -107,4 +120,4 @@ class GroupPostComponent extends Component {
 
 }
 
-export default withCookies(GroupPostComponent);
+export default withCookies(connect()(GroupPostComponent));

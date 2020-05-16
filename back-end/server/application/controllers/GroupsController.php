@@ -340,7 +340,14 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			$commentId = $this->GroupsModel->addComment($data);
 			// se va a buon fine possiamo anche restituire il commento da aggiungere poi al redux (da fare in fase di frontend).
 			if(FILTER_VAR($commentId, FILTER_VALIDATE_INT))
-				return $this->response(buildServerResponse(true, "Commento aggiunto con successo.", array("comment" => array())), 200);
+				return $this->response(buildServerResponse(true, "Commento aggiunto con successo.", array("comment" => array(
+					"commentId" => $commentId,
+					"commentText" => $commentText,
+					"createdAt" => date("Y-m-d H:i:s"),
+					"picture" => $user[0]->profile_picture,
+					"realname" => $user[0]->realname,
+					"username" => $user[0]->username
+				))), 200);
 
 		}
 
