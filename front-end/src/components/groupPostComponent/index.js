@@ -69,7 +69,7 @@ class GroupPostComponent extends Component {
     }
 
     render() {
-        let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
+        let {username, realname, publishDate, text, picture, comments, commentsCount, filesList} = this.props;
         let {newCommentValue} = this.state;
         return (
             <Fragment>
@@ -104,14 +104,18 @@ class GroupPostComponent extends Component {
 
                     </div>
 
+                    {typeof comments !== "undefined" && comments.length > 0 &&
                     <div className={"post-comments"}>
-                        <div className={"load-comments"}>
-                            <span className={"noselectText"}>Carica altri commenti..</span>
-                        </div>
-                        {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
+                        {commentsCount > 0 &&
+                            <div className={"load-comments"}>
+                                <span className={"noselectText"}>Carica altri commenti..</span>
+                            </div>
+                        }
+                        {comments.map((comment, index) => (
                             <CommentComponent key={comment.commentId} realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
                         ))}
                     </div>
+                    }
 
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
