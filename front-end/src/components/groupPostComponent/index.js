@@ -20,7 +20,7 @@ class GroupPostComponent extends Component {
     handleTextAreaValue(e) {
         // setto sempre ad una riga l'altezza della textarea
         if (! this.state.textareaMinHeight)
-            this.state.textareaMinHeight = e.target.scrollHeight;
+            this.state.textareaMinHeight = Math.min(e.target.scrollHeight, 25);
         else
             e.target.style.height = this.state.textareaMinHeight + "px";
 
