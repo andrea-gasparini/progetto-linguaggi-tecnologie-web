@@ -8,7 +8,7 @@ class WallPostsGroupComponent extends Component {
         return(
             <Fragment>
                 {typeof posts !== "undefined" && posts.map((post, index) => (
-                    <GroupPostComponent key={index} filesList={JSON.parse(post.file_uploaded)} comments={post.comments} realname={post.realname} username={post.username} publishDate={post.created_at} picture={post.profile_picture} text={post.post_text} />
+                    <GroupPostComponent key={post.id} filesList={JSON.parse(post.file_uploaded)} comments={post.comments} realname={post.realname} username={post.username} publishDate={post.created_at} picture={post.profile_picture} text={post.post_text} />
                 ))}
             </Fragment>
         )
