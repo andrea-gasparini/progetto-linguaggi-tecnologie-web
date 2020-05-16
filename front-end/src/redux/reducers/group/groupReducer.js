@@ -1,4 +1,10 @@
-import {ADD_GROUP_POSTS, ADD_NEW_COMMENT, ADD_NEW_POST, RESET_GROUP_DATA} from "../../actions/group/actions";
+import {
+    ADD_GROUP_POSTS,
+    ADD_NEW_COMMENT,
+    ADD_NEW_POST,
+    LOAD_MORE_COMMENTS,
+    RESET_GROUP_DATA
+} from "../../actions/group/actions";
 import update from "immutability-helper";
 
 const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, currentOffset: 0}, action) => {
@@ -31,7 +37,15 @@ const groupReducer = (state = {groupPosts: [], hasOtherPostsToLoad: true, curren
                 groupPosts: { [action.payload.postIndex]: {
                         comments: { $push: [action.payload.comment] }
                 }}
-            })
+            });
+
+        case LOAD_MORE_COMMENTS:
+            return update(state, {
+                groupPosts: { [action.payload.postIndex]: {
+                        comments: { $unshift: action.payload.comments },
+                        commentsCount: { $set: state.groupPosts[action.payload.postIndex].commentsCount - 3 }
+                }}
+            });
     }
 };
 

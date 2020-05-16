@@ -1,4 +1,5 @@
 export const ADD_GROUP_POSTS = "ADD_GROUP_POSTS";
 export const ADD_NEW_POST = "ADD_NEW_POST";
 export const ADD_NEW_COMMENT = "ADD_NEW_COMMENT";
+export const LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS";
 export const RESET_GROUP_DATA = "RESET_GROUP_DATA";
