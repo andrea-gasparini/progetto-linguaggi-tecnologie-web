@@ -18,7 +18,7 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 0, validated: false };
+        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 1, validated: false };
 
         this.navigationItems = [
             {
@@ -41,7 +41,8 @@ class GroupHomeComponent extends Component {
         document.addEventListener('scroll', this.checkScroll);
         let {dispatch, cookies, history, userData, match} = this.props;
         await dispatch(validateToken(cookies, history, false, `/group/${match.params.id}`));
-        await dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
+        if(this.state.activeIndex === 1)
+            await dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
         this.setState({validated: true});
     }
 
