@@ -39,6 +39,8 @@ class GroupPostComponent extends Component {
 
     }
 
+    handleEnterShiftKeyPress(e) { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest(); }
+
     handleNewCommentTextValue(e) {
         // setto sempre ad una riga l'altezza della textarea
         if (! this.state.textareaMinHeight)
@@ -103,7 +105,7 @@ class GroupPostComponent extends Component {
                             rows={1}
                             value={newCommentValue}
                             placeholder={"Aggiungi un commento al post.."}
-                            onKeyDown={(e) => { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest() }}
+                            onKeyDown={(e) => this.handleEnterShiftKeyPress(e)}
                             onChange={e => this.handleNewCommentTextValue(e)}
                             onFocus={() => this.toggleNewCommentActiveState()}
                             onBlur={() => this.toggleNewCommentActiveState()} />
