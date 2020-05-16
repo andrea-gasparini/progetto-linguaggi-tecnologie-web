@@ -2,8 +2,11 @@ import React, {Component, Fragment} from "react";
 import {PlusCircle} from "react-feather";
 import './style.css';
 import {API_SERVER_URL} from "../../globalConstants";
+import {withCookies} from "react-cookie";
 import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
+import axios from 'axios';
+import qs from 'querystring';
 
 class GroupPostComponent extends Component {
 
@@ -17,10 +20,22 @@ class GroupPostComponent extends Component {
         }
     }
 
-    handleTextAreaValue(e) {
+    addNewCommentRequest() {
+        let {cookies, groupId, postId} = this.props;
+        let { newCommentValue } = this.state;
+
+        axios.post(
+            `${API_SERVER_URL}/addComment`,
+            qs.stringify({ groupId, postId, newCommentValue }),
+            { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
+        ).then( /* Push nuovo commento nei visualizzati */ );
+
+    }
+
+    handleNewCommentTextValue(e) {
         // setto sempre ad una riga l'altezza della textarea
         if (! this.state.textareaMinHeight)
-            this.state.textareaMinHeight = e.target.scrollHeight;
+            this.state.textareaMinHeight = Math.min(e.target.scrollHeight, 25);
         else
             e.target.style.height = this.state.textareaMinHeight + "px";
 
@@ -30,7 +45,7 @@ class GroupPostComponent extends Component {
         this.setState({newCommentValue: e.target.value});
     };
 
-    toggleActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
+    toggleNewCommentActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
     render() {
         let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
@@ -79,10 +94,10 @@ class GroupPostComponent extends Component {
                         <textarea
                             rows={1}
                             placeholder={"Aggiungi un commento al post.."}
-                            onChange={e => this.handleTextAreaValue(e)}
-                            onFocus={() => this.toggleActiveState()}
-                            onBlur={() => this.toggleActiveState()} />
-                        <PlusCircle className={"new-comment-icon"} />
+                            onChange={e => this.handleNewCommentTextValue(e)}
+                            onFocus={() => this.toggleNewCommentActiveState()}
+                            onBlur={() => this.toggleNewCommentActiveState()} />
+                        <PlusCircle className={"new-comment-icon"} onClick={() => this.addNewCommentRequest()} />
                     </div>
 
                 </div>
@@ -92,4 +107,4 @@ class GroupPostComponent extends Component {
 
 }
 
-export default GroupPostComponent;
+export default withCookies(GroupPostComponent);

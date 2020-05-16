@@ -311,7 +311,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
 
 			$groupId = $this->input->post('groupId');
-			$commentText = $this->input->post('commentText');
+			$commentText = $this->input->post('newCommentValue');
+			if (!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Group id non valido."));
+
 			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
 				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
 
