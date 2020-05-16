@@ -105,9 +105,12 @@ class GroupPostComponent extends Component {
                     </div>
 
                     <div className={"post-comments"}>
-                    {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
-                        <CommentComponent key={comment.commentId} realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
-                    ))}
+                        <div className={"load-comments"}>
+                            <span className={"noselectText"}>Carica altri commenti..</span>
+                        </div>
+                        {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
+                            <CommentComponent key={comment.commentId} realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
+                        ))}
                     </div>
 
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
