@@ -18,7 +18,7 @@ class GroupHomeComponent extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 1 };
+        this.state = { showActiveMenuItem: true, isLoadingPost: false, activeIndex: 1, validated: false };
 
         this.navigationItems = [
             {
@@ -37,11 +37,19 @@ class GroupHomeComponent extends Component {
         ];
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         document.addEventListener('scroll', this.checkScroll);
         let {dispatch, cookies, history, userData, match} = this.props;
-        dispatch(validateToken(cookies, history, false, `/group/${match.params.id}`));
-        dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
+        await dispatch(validateToken(cookies, history, false, `/group/${match.params.id}`));
+        if(this.state.activeIndex === 1)
+            await dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
+        this.setState({validated: true});
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        let {dispatch, cookies, match} = this.props;
+        if(this.state !== prevState && this.state.activeIndex !== prevState.activeIndex && this.state.activeIndex === 1)
+            dispatch(loadPosts(cookies.cookies.token, 0, match.params.id));
     }
 
     toggleActiveMenuItem(e) {
@@ -76,51 +84,65 @@ class GroupHomeComponent extends Component {
     };
 
     render() {
-        let {history, groupPosts, match} = this.props;
-        return (
-            <Fragment>
-                <HeaderComponent history={history} />
-                <section className={"d-flex justify-content-center"}>
-                    <div className={"home d-flex flex-column"}>
-                        {this.getActivePage() === "Bacheca" &&
+        if(this.state.validated) {
+            let {history, groupPosts, match, dispatch} = this.props;
+            return (
+                <Fragment>
+                    <HeaderComponent history={history}/>
+                    <section className={"d-flex justify-content-center"}>
+                        <div className={"home d-flex flex-column"}>
+                            {this.getActivePage() === "Bacheca" &&
                             <div className={"d-flex mb-3 w-100"}>
                                 <CreatePostComponent groupId={match.params.id}/>
                             </div>
-                        }
-                        <div className={"d-flex flex-row"}>
+                            }
+                            <div className={"d-flex flex-row"}>
 
-                            <div className={"left-content mr-3"}>
-                                <div className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
-                                    {this.navigationItems.map((value, index) =>
-                                        <div
-                                            onClick={() => this.changeActiveMenuItem(index)}
-                                            onMouseOver={(e) => {this.toggleActiveMenuItem(e)}}
-                                            onMouseOut={(e) => {this.toggleActiveMenuItem(e)}}
-                                            className={["menu-item", this.state.showActiveMenuItem && index === this.state.activeIndex ? "active" : ""].join(" ")}
-                                            key={index}>
-                                            {value.icon}
-                                            <span>{value.label}</span>
-                                        </div>
-                                    )}
+                                <div className={"left-content mr-3"}>
+                                    <div
+                                        className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
+                                        {this.navigationItems.map((value, index) =>
+                                            <div
+                                                onClick={() => this.changeActiveMenuItem(index)}
+                                                onMouseOver={(e) => {
+                                                    this.toggleActiveMenuItem(e)
+                                                }}
+                                                onMouseOut={(e) => {
+                                                    this.toggleActiveMenuItem(e)
+                                                }}
+                                                className={["menu-item", this.state.showActiveMenuItem && index === this.state.activeIndex ? "active" : ""].join(" ")}
+                                                key={index}>
+                                                {value.icon}
+                                                <span>{value.label}</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
+
+                                <div className={"main-content d-flex flex-column align-items-center"}>
+                                    {this.getActivePage() === "Bacheca" &&
+                                    <WallPostsGroupComponent groupId={match.params.id} dispatch={dispatch}
+                                                             posts={groupPosts}/>
+                                    }
+
+                                    {this.getActivePage() === "Chat" &&
+                                    <GroupChatComponent groupId={match.params.id}/>
+                                    }
+
+                                </div>
+
                             </div>
-
-                            <div className={"main-content d-flex flex-column align-items-center"}>
-                                {this.getActivePage() === "Bacheca" &&
-                                    <WallPostsGroupComponent posts={groupPosts} />
-                                }
-
-                                {this.getActivePage() === "Chat" &&
-                                    <GroupChatComponent />
-                                }
-
-                            </div>
-
                         </div>
-                    </div>
-                </section>
-            </Fragment>
-        );
+                    </section>
+                </Fragment>
+            );
+        } else {
+            return(
+                <Fragment>
+
+                </Fragment>
+            )
+        }
     }
 
 }
