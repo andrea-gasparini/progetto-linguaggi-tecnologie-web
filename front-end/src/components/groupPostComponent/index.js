@@ -103,6 +103,7 @@ class GroupPostComponent extends Component {
                             rows={1}
                             value={newCommentValue}
                             placeholder={"Aggiungi un commento al post.."}
+                            onKeyDown={(e) => { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest() }}
                             onChange={e => this.handleNewCommentTextValue(e)}
                             onFocus={() => this.toggleNewCommentActiveState()}
                             onBlur={() => this.toggleNewCommentActiveState()} />
