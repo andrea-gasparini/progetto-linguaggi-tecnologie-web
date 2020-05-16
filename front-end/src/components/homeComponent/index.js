@@ -9,6 +9,7 @@ import {withCookies} from "react-cookie";
 import {validateToken} from "../../redux/actions/login";
 import CreateGroupModalComponent from "../modalsComponents/createGroupModalComponent";
 import DeleteGroupModalComponent from "../modalsComponents/deleteGroupModalComponent";
+import FooterComponent from "../footerComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -54,7 +55,7 @@ class HomeComponent extends Component {
         return(
             <Fragment>
                 <HeaderComponent history={history} />
-                <section className={"d-flex justify-content-center"}>
+                <section className={"d-flex flex-column align-items-center justify-content-center"}>
                     <div className={"d-flex homeContainerGroups flex-column"}>
                         <div className={"d-flex myGroupsTitle text-muted justify-content-between"}>
                             <div className={"groupsCount"}>
@@ -78,6 +79,7 @@ class HomeComponent extends Component {
                             }
                         </div>
                     </div>
+                    <FooterComponent />
                 </section>
                 {showInviteModal &&
                     <InviteModalComponent groupId={currentGroupId} closeModal={this.showInviteModal} />

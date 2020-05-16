@@ -10,6 +10,7 @@ import GroupPostComponent from "../groupPostComponent";
 import {loadPosts} from "../../redux/actions/group";
 import WallPostsGroupComponent from "../wallPostsGroupComponent";
 import GroupChatComponent from "../groupChatComponent";
+import FooterComponent from "../footerComponent";
 
 const mapStateToProps = (state) => ({...state.groupReducer});
 
@@ -117,6 +118,7 @@ class GroupHomeComponent extends Component {
                                             </div>
                                         )}
                                     </div>
+                                    <FooterComponent left={true} />
                                 </div>
 
                                 <div className={"main-content d-flex flex-column align-items-center"}>
