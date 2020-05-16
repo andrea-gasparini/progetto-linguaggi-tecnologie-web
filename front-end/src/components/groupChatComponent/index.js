@@ -22,12 +22,14 @@ class GroupChatComponent extends Component {
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
     }
 
-    checkSendMessage = (e) => {
+    checkSendMessage = async (e) => {
         let {dispatch, cookies, groupId} = this.props;
         if(e.keyCode === 13) {
-            dispatch(tryAddMessage(cookies.cookies.token, this.state.chatMessageValue, groupId));
-            this.setState({chatMessageValue: ""});
-            this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+            if(this.state.chatMessageValue.length > 0 && this.state.chatMessageValue.trim().length > 0) {
+                await dispatch(tryAddMessage(cookies.cookies.token, this.state.chatMessageValue, groupId));
+                this.setState({chatMessageValue: ""});
+                this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+            }
         }
     };
 
