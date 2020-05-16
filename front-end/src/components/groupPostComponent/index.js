@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import {PlusCircle} from "react-feather";
 import './style.css';
 import {API_SERVER_URL} from "../../globalConstants";
+import {withCookies} from "react-cookie";
 import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
 
@@ -92,4 +93,4 @@ class GroupPostComponent extends Component {
 
 }
 
-export default GroupPostComponent;
+export default withCookies(GroupPostComponent);
