@@ -6,7 +6,7 @@
 }
 
 .chatMessages {
-    height: 100%;
+    height: auto;
     overflow-y: auto;
     padding-bottom: 20px;
 }
@@ -56,21 +56,6 @@
     margin-top: 20px;
 }
 
-.messageText:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-right-color: #822433;
-    border-left: 0;
-    border-bottom: 0;
-    bottom: 0px;
-    margin-left: -10px;
-    border-radius: 0 0 0 3px;
-}
-
 .hourSentMessage {
     bottom: 0;
     right: 5px;
@@ -118,3 +103,28 @@
     margin-left: -10px;
     border-radius: 0 0 0 3px;
 }
+
+.myMessage {
+    justify-content: flex-end;
+}
+
+.myMessage > .messageText {
+    margin-right: 60px;
+    margin-left: 0;
+    border-radius: 5px 5px 0px 5px;
+}
+
+.myMessage > .messageText:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #822433;
+    border-right: 0;
+    border-bottom: 0;
+    bottom: 0;
+    margin-right: -10px;
+}
+

@@ -1,7 +1,10 @@
 import React, {Component, Fragment} from "react";
 import './style.css';
-import {ChevronLeft, ChevronRight, Send} from "react-feather";
+import {Send} from "react-feather";
 import {connect} from "react-redux";
+import {withCookies} from "react-cookie";
+import {tryAddMessage} from "../../redux/actions/chat";
+import {API_SERVER_URL} from "../../globalConstants";
 
 const mapStateToProps = (state) => ({...state.chatReducer});
 
@@ -9,57 +12,62 @@ class GroupChatComponent extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            chatMessageValue: ''
+        }
     }
 
     componentDidMount() {
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
     }
 
+    checkSendMessage = (e) => {
+        let {dispatch, cookies, groupId} = this.props;
+        if(e.keyCode === 13) {
+            dispatch(tryAddMessage(cookies.cookies.token, this.state.chatMessageValue, groupId));
+            this.setState({chatMessageValue: ""});
+            this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+        }
+    };
+
     render() {
+        let {chatMessageValue} = this.state;
+        let {messages} = this.props;
         return(
             <Fragment>
                 <div className={"d-flex flex-row"} style={{width: "100%", position: "relative"}}>
-                    <div className={"d-flex chatBox flex-column justify-content-between"}>
+                    <div className={"d-flex chatBox flex-column"}>
                         <div ref={(ref) => this.chatMessagesRef = ref } className={"d-flex chatMessages flex-column"}>
-                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((value, index) => (
-                                <div key={index} className={"d-flex message"}>
-                                    <div className={"userIconMessage"}/>
+                            {messages.map((value, index) => (
+                                <div key={index} className={"d-flex message myMessage"}>
+                                    <div className={"userIconMessage"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${value.picture}")`}}/>
                                     <div className={"messageText p-2"}>
-                                        <div className={"username"}>Username</div>
-                                        <div>Ciao io sono edoaardo e questo è un messaggio moltoo lungo {index}</div>
-                                        <div className={"hourSentMessage"}>18:10</div>
+                                        <div className={"username"}>{value.username}</div>
+                                        <div style={{marginBottom: 10}}>{value.message}</div>
+                                        <div className={"hourSentMessage"}>{`${new Date(value.date).getHours()}:${new Date(value.date).getMinutes()}`}</div>
                                     </div>
                                 </div>
                             ))}
 
-                            <div className={"d-flex message"}>
+                            {/*<div className={"d-flex message"}>
                                 <div className={"userIconMessage"}/>
                                 <div className={"messageText p-2 otherMessage"}>
                                     <div className={"username"}>Username</div>
                                     <div>Ciao io sono edoaardo e questo è un messaggio moltoo lungo</div>
                                     <div className={"hourSentMessage"}>18:10</div>
                                 </div>
-                            </div>
+                            </div>*/}
                         </div>
                         <div className={"d-flex sendMessageInput align-items-center justify-content-between"}>
-                            <input type={"text"} className={"form-control messageInputArea"} placeholder={"Inserisci un messaggio..."} />
+                            <input onChange={(e) => this.setState({chatMessageValue: e.target.value})} value={chatMessageValue} onKeyDown={(e) => this.checkSendMessage(e)} type={"text"} className={"form-control messageInputArea"} placeholder={"Inserisci un messaggio..."} />
                             <Send className={"sendMessageIcon"} />
                         </div>
                     </div>
-                    {/*<div className={"d-flex flex-column onlineUsers  p-1"}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((user, index) => (
-                        <div title={`${user} è online ora!` } key={index} className={"d-flex userBoxOnline align-items-center"}>
-                            <div className={"userOnline"} />
-                            <div className={"text-muted"} style={{marginLeft: 10}}>
-                                {user}
-                            </div>
-                        </div>
-                    ))}
-                    </div>*/}
                 </div>
             </Fragment>
         )
     }
 }
 
-export default connect(mapStateToProps)(GroupChatComponent);
+export default withCookies(connect(mapStateToProps)(GroupChatComponent));

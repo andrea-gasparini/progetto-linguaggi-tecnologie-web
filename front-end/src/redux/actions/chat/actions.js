@@ -1,0 +1,1 @@
+export const ADD_MESSAGE_TO_CHAT = "ADD_MESSAGE_TO_CHAT";

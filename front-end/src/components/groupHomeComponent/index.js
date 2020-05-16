@@ -111,7 +111,7 @@ class GroupHomeComponent extends Component {
                                 }
 
                                 {this.getActivePage() === "Chat" &&
-                                    <GroupChatComponent />
+                                    <GroupChatComponent groupId={match.params.id} />
                                 }
 
                             </div>

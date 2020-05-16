@@ -221,6 +221,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
 
 			$groupId = $this->input->post('groupId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Gruppo id non valido"));
+
 			$postText = $this->input->post('postText');
 			if(!$this->GroupsModel->isGroupMember($userId, $groupId))
 				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
@@ -291,7 +295,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			}
 
 
-			return $this->response(buildServerResponse(false, "Errore nell'inserimento del post.", ), 200);
+			return $this->response(buildServerResponse(false, "Errore nell'inserimento del post."), 200);
 
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
@@ -360,6 +364,10 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
 
 			$groupId = $this->input->post('groupId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Gruppo id non valido"));
+
 			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
 				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
 
@@ -376,6 +384,45 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+	public function sendMessageToGroupChat_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Gruppo id non valido"));
+
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi creare un post in un gruppo al quale non appartieni."), 200);
+
+			$chatMessage = $this->input->post("message");
+			if(strlen($chatMessage) <= 0 || strlen(trim($chatMessage)) <= 0)
+				return $this->response(buildServerResponse(false, "Inserisci un messaggio da inviare."), 200);
+
+			$chat = $this->GroupsModel->getChatId($groupId);
+
+			$data = array(
+				"user_id" => $user[0]->id,
+				"chat_id" => $chat[0]->id,
+				"message" => $chatMessage,
+				"created_at" => "now()"
+			);
+
+			$messageId = $this->GroupsModel->addChatMessage($data);
+
+			if($messageId > 0)
+				return $this->response(buildServerResponse(true, "Messaggio inviato.", array("user_id" => $userId, "message" => $chatMessage, "username" => $user[0]->username, "picture" => $user[0]->profile_picture, "date" => date("Y-m-d H:i:s"))), 200);
+
+			return $this->response(buildServerResponse(false, "Errore durante l'invio"), 200);
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token"), 200);
 	}
 
 }
