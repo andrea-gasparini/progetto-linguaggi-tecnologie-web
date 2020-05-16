@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {getChatMessages, resetChatData, tryAddMessage} from "../../redux/actions/chat";
 import {API_SERVER_URL} from "../../globalConstants";
+import socket from "../../websocket";
 
 const mapStateToProps = (state) => ({...state.chatReducer});
 
@@ -15,7 +16,14 @@ class GroupChatComponent extends Component {
 
         this.state = {
             chatMessageValue: '',
-        }
+        };
+
+        socket.on('receivingMessage', (data) => {
+            console.log(data);
+        });
+
+        socket.emit('newConnectionToChat', {groupId: props.groupId});
+
     }
 
     async componentDidMount() {

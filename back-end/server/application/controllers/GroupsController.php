@@ -458,7 +458,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			$messageId = $this->GroupsModel->addChatMessage($data);
 
 			if($messageId > 0)
-				return $this->response(buildServerResponse(true, "Messaggio inviato.", array("user_id" => $userId, "message" => $chatMessage, "username" => $user[0]->username, "picture" => $user[0]->profile_picture, "date" => date("Y-m-d H:i:s"))), 200);
+				return $this->response(buildServerResponse(true, "Messaggio inviato.", array("user_id" => $userId, "message" => $chatMessage, "username" => $user[0]->username, "picture" => $user[0]->profile_picture, "date" => date("Y-m-d H:i:s"), "ismine" => "t")), 200);
 
 			return $this->response(buildServerResponse(false, "Errore durante l'invio"), 200);
 		}

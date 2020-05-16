@@ -2,6 +2,7 @@ import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
 import {ADD_MESSAGE_TO_CHAT, ADD_MESSAGES_LOADED, RESET_CHAT_DATA, SET_REQUESTING_CHAT_MESSAGES} from "./actions";
+import socket from "../../../websocket";
 
 export const setRequesting = (value) =>  ({
     type: SET_REQUESTING_CHAT_MESSAGES,
@@ -48,6 +49,7 @@ export const tryAddMessage = (token, message, groupId) => {
         }).then((res) => {
             if(res.status) {
                 dispatch(addMessageToChat(res.data.data));
+                socket.emit('newMessage', res.data.data);
             }
 
         }).catch((err) => {
