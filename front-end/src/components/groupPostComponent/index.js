@@ -96,15 +96,13 @@ class GroupPostComponent extends Component {
                         <div className={"post-body"}>
                             <p>{text}</p>
                             <div className={"attachments"}>
-                                {/* */}
+                                {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
+                                    <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
+                                ))}
                             </div>
                         </div>
 
                     </div>
-
-                    {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
-                        <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
-                    ))}
 
                     <div className={"post-comments"}>
                     {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
