@@ -1,18 +1,28 @@
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
-import {ADD_MESSAGE_TO_CHAT, ADD_MESSAGES_LOADED, RESET_CHAT_DATA} from "./actions";
+import {ADD_MESSAGE_TO_CHAT, ADD_MESSAGES_LOADED, RESET_CHAT_DATA, SET_REQUESTING_CHAT_MESSAGES} from "./actions";
 
+export const setRequesting = (value) =>  ({
+    type: SET_REQUESTING_CHAT_MESSAGES,
+    payload: {
+        value
+    }
+});
 
 export const getChatMessages = (token, groupId, offset) => {
     return async dispatch => {
+        dispatch(setRequesting(true));
         return await axios.post(`${API_SERVER_URL}/getChatMessages`, qs.stringify({groupId, offset}), {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         }).then((res) => {
             if(res.status) {
-                dispatch(addMessagesLoaded(res.data.data.messages.reverse()));
+                dispatch(addMessagesLoaded(res.data.data.messages.reverse(), res.data.data.canLoadOtherMessagesChat, res.data.data.newOffset));
+                setTimeout(() => {
+                    dispatch(setRequesting(false));
+                }, 800); // .8 secondi di cooldown a richiesta.
             }
         }).catch((err) => {
             console.log(err);
@@ -20,10 +30,12 @@ export const getChatMessages = (token, groupId, offset) => {
     }
 };
 
-export const addMessagesLoaded = (messages) => ({
+export const addMessagesLoaded = (messages, canLoadOtherMessagesChat, newOffset) => ({
     type: ADD_MESSAGES_LOADED,
     payload: {
-        messages
+        messages,
+        canLoadOtherMessagesChat,
+        newOffset
     }
 });
 

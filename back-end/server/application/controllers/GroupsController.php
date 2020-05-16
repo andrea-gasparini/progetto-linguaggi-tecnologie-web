@@ -482,12 +482,13 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 				return $this->response(buildServerResponse(false, "Non puoi leggere i messaggi di una chat di gruppo a cui non appartieni."), 200);
 
 			$offset = $this->input->post('offset');
-			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT) === false) // ho dovuto mettere === false perché altrimenti 0 viene preso come false...love php
-				return $this->response(buildServerResponse(false, "Errore nel recupero dei messaggi."), 200);
+			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
+				$offset = 0;
 
 			$chat = $this->GroupsModel->getChatId($groupId);
-			$messages = $this->GroupsModel->getChatMessages($chat[0]->id, $offset);
-			return $this->response(buildServerResponse(true, "ok", array("messages" => $messages)), 200);
+			$messages = $this->GroupsModel->getChatMessages($chat[0]->id, $offset, $userId);
+			$newOffset = $offset + 30;
+			return $this->response(buildServerResponse(true, "ok", array("messages" => $messages, "canLoadOtherMessagesChat" => count($messages) == 30, "newOffset" => $newOffset)), 200);
 		}
 
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);

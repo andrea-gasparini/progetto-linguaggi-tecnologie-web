@@ -14,7 +14,7 @@ class GroupChatComponent extends Component {
         super(props);
 
         this.state = {
-            chatMessageValue: ''
+            chatMessageValue: '',
         }
     }
 
@@ -22,12 +22,27 @@ class GroupChatComponent extends Component {
         let {dispatch, cookies, groupId, offsetChatMessages} = this.props;
         await dispatch(getChatMessages(cookies.cookies.token, groupId, offsetChatMessages));
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+        this.chatMessagesRef.addEventListener('scroll', this.scrollingChat);
     }
 
     componentWillUnmount() {
         let {dispatch} = this.props;
         dispatch(resetChatData());
+        this.chatMessagesRef.removeEventListener('scroll', this.scrollingChat);
     }
+
+    scrollingChat = async () => {
+        let {dispatch, cookies, groupId, offsetChatMessages, canLoadOtherMessagesChat, isRequestingChatMessages} = this.props;
+
+        if(this.chatMessagesRef.scrollTop < 400 && !isRequestingChatMessages && canLoadOtherMessagesChat) {
+            let scrollTop = this.chatMessagesRef.scrollTop;
+            let scrollHeight = this.chatMessagesRef.scrollHeight;
+            this.setState({isRequestingMessages: true});
+            await dispatch(getChatMessages(cookies.cookies.token, groupId, offsetChatMessages));
+            this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight - scrollHeight + scrollTop;
+        }
+    };
+
 
     checkSendMessage = async (e) => {
         let {dispatch, cookies, groupId} = this.props;
@@ -42,9 +57,7 @@ class GroupChatComponent extends Component {
 
     transformDate = (date) => {
         let d = new Date(date);
-        let hours = d.getHours() < 10 ?  `0${d.getHours()}` : d.getHours();
-        let minutes = d.getMinutes() < 10 ?  `0${d.getMinutes()}` : d.getMinutes();
-        return  `${hours}:${minutes}`;
+        return  `${d.toLocaleTimeString().substr(0, 5)}`;
     };
 
     render() {
@@ -56,9 +69,9 @@ class GroupChatComponent extends Component {
                     <div className={"d-flex chatBox flex-column"}>
                         <div ref={(ref) => this.chatMessagesRef = ref } className={"d-flex chatMessages flex-column"}>
                             {messages.map((value, index) => (
-                                <div key={index} className={"d-flex message myMessage"}>
+                                <div key={index} className={["d-flex message", value.ismine === "t" ? "myMessage" : ""].join(" ")}>
                                     <div className={"userIconMessage"} style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${value.picture}")`}}/>
-                                    <div className={"messageText p-2"}>
+                                    <div className={["messageText p-2", value.ismine !== "t" ? "otherMessage" : ""].join(" ")}>
                                         <div className={"username"}>{value.username}</div>
                                         <div style={{marginBottom: 10}}>{value.message}</div>
                                         <div className={"hourSentMessage"}>{this.transformDate(value.date)}</div>
