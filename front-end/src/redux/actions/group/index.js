@@ -35,11 +35,11 @@ export const addNewPost = (post) => ({
     }
 });
 
-export const addNewComment = (postIndex, newCommentValue) => ({
+export const addNewComment = (postIndex, comment) => ({
    type: ADD_NEW_COMMENT,
    payload: {
        postIndex,
-       newCommentValue
+       comment
    }
 });
 

@@ -7,6 +7,8 @@ import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
 import axios from 'axios';
 import qs from 'querystring';
+import {connect} from "react-redux";
+import {addNewComment} from "../../redux/actions/group";
 
 class GroupPostComponent extends Component {
 
@@ -21,14 +23,14 @@ class GroupPostComponent extends Component {
     }
 
     addNewCommentRequest() {
-        let {cookies, groupId, postId} = this.props;
+        let {dispatch, cookies, groupId, postId, postIndex} = this.props;
         let { newCommentValue } = this.state;
 
         axios.post(
             `${API_SERVER_URL}/addComment`,
             qs.stringify({ groupId, postId, newCommentValue }),
             { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
-        ).then( /* Push nuovo commento nei visualizzati */ );
+        ).then(res => { if (res.status) dispatch(addNewComment(postIndex, res.data.data.comment)) });
 
     }
 
@@ -107,4 +109,4 @@ class GroupPostComponent extends Component {
 
 }
 
-export default withCookies(GroupPostComponent);
+export default withCookies(connect()(GroupPostComponent));
