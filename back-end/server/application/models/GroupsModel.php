@@ -79,7 +79,7 @@ class GroupsModel extends CI_Model {
 
 	public function addPostToGroup($dataPost) {
 		if($this->db->insert("posts", $dataPost))
-			return true;
+			return $this->db->insert_id("posts_id_seq");
 		return false;
 	}
 
@@ -93,6 +93,66 @@ class GroupsModel extends CI_Model {
 	public function addComment($data) {
 		$this->db->insert("comments", $data);
 		return $this->db->insert_id("comments_id_seq");
+	}
+
+	public function loadPosts($groupId, $offset) {
+		$this->db->select("p.*, u.username, u.realname, u.profile_picture");
+		$this->db->where("group_id", $groupId);
+		$this->db->where("p.user_id", "u.id", FALSE);
+		$this->db->order_by("p.created_at", "desc");
+		$this->db->limit(15, $offset);
+		$query = $this->db->get("posts p, users u");
+		return $query->result();
+	}
+
+	public function getFirstComments($postId) {
+		$this->db->select("c.id as commentId, c.comment_text as commentText, c.created_at as createdAt, u.realname, u.username, u.profile_picture as picture");
+		$this->db->where("c.post_id", $postId);
+		$this->db->where("c.user_id", "u.id", FALSE);
+		$this->db->limit(3);
+		$this->db->order_by("c.created_at", "DESC");
+		$query = $this->db->get("comments c, users u");
+		return $query->result();
+	}
+
+	public function getCommentsByOffset($postId, $offset) {
+		$this->db->select("c.id as commentId, c.comment_text as commentText, c.created_at as createdAt, u.realname, u.username, u.profile_picture as picture");
+		$this->db->where("c.post_id", $postId);
+		$this->db->where("c.user_id", "u.id", FALSE);
+		$this->db->limit(3, $offset);
+		$this->db->order_by("createdAt", "DESC");
+		$query = $this->db->get("comments c, users u");
+		return $query->result();
+	}
+
+	public function getNumberOfLeftComments($postId) {
+		$this->db->select("id");
+		$this->db->where("c.post_id", $postId);
+		$query = $this->db->get("comments c");
+		return $query->num_rows();
+	}
+
+	public function getChatId($groupId) {
+		$this->db->select("*");
+		$this->db->where("group_id", $groupId);
+		$query = $this->db->get("chats");
+		return $query->result();
+	}
+
+	public function addChatMessage($data) {
+		$this->db->insert("chats_messages", $data);
+		return $this->db->insert_id("chats_messages_id_seq");
+	}
+
+	public function getChatMessages($chatId, $offset, $userId) {
+		$this->db->select("cm.user_id, cm.chat_id, cm.message, cm.created_at as date, u.username, u.profile_picture as picture");
+		$this->db->select("CASE WHEN cm.user_id = ".$userId." THEN TRUE ELSE FALSE END as isMine", FALSE);
+		$this->db->where("chat_id", $chatId);
+		$this->db->where("u.id", "cm.user_id", FALSE);
+		$this->db->order_by("cm.created_at", "DESC");
+		$this->db->limit(30, $offset);
+		$query = $this->db->get("chats_messages cm, users u");
+		return $query->result();
 	}
 
 }

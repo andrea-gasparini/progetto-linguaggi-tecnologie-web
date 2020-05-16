@@ -7,6 +7,7 @@ import {API_SERVER_URL} from "../../globalConstants";
 import {FilePlus} from "react-feather";
 import FilePreviewComponent from "../filePreviewComponent";
 import axios from "axios";
+import {addNewPost} from "../../redux/actions/group";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -32,7 +33,7 @@ class CreatePostComponent extends Component {
     trySendPost = (e) => {
         this.setState({showError: false});
         e.preventDefault();
-        let {cookies} = this.props;
+        let {cookies, dispatch, groupId} = this.props;
         let {postFiles, postText} = this.state;
         let postFilesData = new FormData();
         postFiles.map((value) => {
@@ -40,7 +41,7 @@ class CreatePostComponent extends Component {
         });
 
         postFilesData.append("postText", postText);
-        postFilesData.append("groupId", 11); // da cambiare il gruppo id dinamicamente.
+        postFilesData.append("groupId", groupId); // da cambiare il gruppo id dinamicamente.
         axios.post(`${API_SERVER_URL}/createPost`, postFilesData, {
             headers: {
                 "Authorization": `Bearer ${cookies.cookies.token}`
@@ -50,6 +51,7 @@ class CreatePostComponent extends Component {
             if(status) {
                 this.inputFile.value = '';
                 this.setState({postFiles: [], postText: ''});
+                dispatch(addNewPost(data.newPost));
             } else {
                 this.setState({showError: true, errorText: message})
             }
@@ -86,7 +88,8 @@ class CreatePostComponent extends Component {
 
     hideWriting = (e) => {
         e.preventDefault();
-        this.setState({isWriting: false});
+        this.inputFile.value = '';
+        this.setState({isWriting: false, postText: '', postFiles: [], showError: false});
     };
 
     render() {
@@ -121,7 +124,7 @@ class CreatePostComponent extends Component {
 
                                     <div>
                                         {postFiles.map((value, index) => (
-                                            <FilePreviewComponent key={index} file={value} removeFile={this.removeFile} />
+                                            <FilePreviewComponent toUploadState={true} key={index} file={value} removeFile={this.removeFile} />
                                         ))}
                                     </div>
 

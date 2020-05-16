@@ -1,9 +1,16 @@
 .filePreviewContainer {
-    width: 100%;
     border-radius: 5px;
     border: 1px solid #afafaf;
     border-left: none;
     height: 70px;
+}
+
+.filePreviewContainer.largeContainer {
+    width: 100%;
+}
+
+.filePreviewContainer.smallContainer {
+    width: 40%;
 }
 
 .removeFileFromListIcon {
@@ -34,11 +41,24 @@
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
+    color: #822433;
 }
 
 .previewFileName:hover {
     cursor: pointer;
     color: #822433;
+}
+
+.linkToFile {
+    color: #822433;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.linkToFile:hover {
+    color: #822433;
+    opacity: .7;
+    text-decoration: none;
 }
 
 .showBorder {

@@ -2,6 +2,7 @@ import React, {Component, Fragment} from "react";
 import "./style.css";
 import {MoreVertical} from "react-feather";
 import {API_SERVER_URL} from "../../globalConstants";
+import {Link} from "react-router-dom";
 
 class GroupCardComponent extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class GroupCardComponent extends Component {
                         <div className={"cardGroupImage"} />
                         <div className={"d-flex justify-content-between pl-3 pr-3 pt-2 align-items-center"} style={{width: "100%"}}>
                             <div title={groupTitle} className={"cardGroupTitle"}>
-                                {groupTitle}
+                                <Link style={{color: "white"}} to={`/group/${groupId}`}>{groupTitle}</Link>
                             </div>
                             <div className={"cardGroupOptionsIcon"}>
                                 {ownerId === viewerId &&
