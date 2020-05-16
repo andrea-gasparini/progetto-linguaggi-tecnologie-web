@@ -26,17 +26,18 @@ class GroupPostComponent extends Component {
         let {dispatch, cookies, groupId, postId, postIndex} = this.props;
         let { newCommentValue } = this.state;
 
-        axios.post(
-            `${API_SERVER_URL}/addComment`,
-            qs.stringify({ groupId, postId, newCommentValue }),
-            { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
-        ).then(res => {
-            if (res.status) {
-                dispatch(addNewComment(postIndex, res.data.data.comment));
-                this.setState({newCommentValue: ''});
-            }
-        });
-
+        if (newCommentValue.trim() !== '') {
+            axios.post(
+                `${API_SERVER_URL}/addComment`,
+                qs.stringify({groupId, postId, newCommentValue}),
+                {headers: {'Authorization': `Bearer ${cookies.cookies.token}`}}
+            ).then(res => {
+                if (res.status) {
+                    dispatch(addNewComment(postIndex, res.data.data.comment));
+                    this.setState({newCommentValue: ''});
+                }
+            });
+        }
     }
 
     handleEnterShiftKeyPress(e) { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest(); }
