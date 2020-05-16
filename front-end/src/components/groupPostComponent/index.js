@@ -63,6 +63,11 @@ class GroupPostComponent extends Component {
 
     toggleNewCommentActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
+    formatDate(postgreDate) {
+        let parsedDate = new Date(postgreDate);
+        return parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    }
+
     render() {
         let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
         let {newCommentValue} = this.state;
@@ -83,7 +88,7 @@ class GroupPostComponent extends Component {
                                     </span>
                                 </div>
                                 <span className={"publish-date"}>
-                                    {publishDate}
+                                    {this.formatDate(publishDate)}
                                 </span>
                             </div>
                         </div>
