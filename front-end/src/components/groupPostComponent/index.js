@@ -8,7 +8,7 @@ import FilePreviewComponent from "../filePreviewComponent";
 import axios from 'axios';
 import qs from 'querystring';
 import {connect} from "react-redux";
-import {addNewComment} from "../../redux/actions/group";
+import {addNewComment, loadMoreComments} from "../../redux/actions/group";
 
 class GroupPostComponent extends Component {
 
@@ -38,6 +38,17 @@ class GroupPostComponent extends Component {
                 }
             });
         }
+    }
+
+    loadMoreCommentsRequest() {
+        let {dispatch, cookies, groupId, postId, postIndex, comments} = this.props;
+        let offset = comments.length;
+
+        axios.post(
+            `${API_SERVER_URL}/loadMoreComments`,
+            qs.stringify({groupId, postId, offset}),
+            {headers: {'Authorization': `Bearer ${cookies.cookies.token}`}}
+        ).then(res => dispatch(loadMoreComments(postIndex, res.data.data.comments)));
     }
 
     handleEnterShiftKeyPress(e) {
@@ -108,7 +119,11 @@ class GroupPostComponent extends Component {
                     <div className={["post-comments", commentsCount > 0 ? "" : "no-more-comments"].join(" ")}>
                         {commentsCount > 0 &&
                             <div className={"load-comments"}>
-                                <span className={"noselectText"}>Carica altri commenti..</span>
+                                <span
+                                    className={"noselectText"}
+                                    onClick={() => this.loadMoreCommentsRequest()}>
+                                    Carica altri commenti..
+                                </span>
                             </div>
                         }
                         {comments.map((comment, index) => (
