@@ -30,7 +30,12 @@ class GroupPostComponent extends Component {
             `${API_SERVER_URL}/addComment`,
             qs.stringify({ groupId, postId, newCommentValue }),
             { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
-        ).then(res => { if (res.status) dispatch(addNewComment(postIndex, res.data.data.comment)) });
+        ).then(res => {
+            if (res.status) {
+                dispatch(addNewComment(postIndex, res.data.data.comment));
+                this.setState({newCommentValue: ''});
+            }
+        });
 
     }
 
@@ -51,6 +56,7 @@ class GroupPostComponent extends Component {
 
     render() {
         let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
+        let {newCommentValue} = this.state;
         return (
             <Fragment>
                 <div className={"post"}>
@@ -95,6 +101,7 @@ class GroupPostComponent extends Component {
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
                             rows={1}
+                            value={newCommentValue}
                             placeholder={"Aggiungi un commento al post.."}
                             onChange={e => this.handleNewCommentTextValue(e)}
                             onFocus={() => this.toggleNewCommentActiveState()}
