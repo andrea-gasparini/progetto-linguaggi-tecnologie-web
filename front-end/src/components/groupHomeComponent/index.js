@@ -76,7 +76,7 @@ class GroupHomeComponent extends Component {
     };
 
     render() {
-        let {history, groupPosts, match} = this.props;
+        let {history, groupPosts, match, dispatch} = this.props;
         return (
             <Fragment>
                 <HeaderComponent history={history} />
@@ -107,7 +107,7 @@ class GroupHomeComponent extends Component {
 
                             <div className={"main-content d-flex flex-column align-items-center"}>
                                 {this.getActivePage() === "Bacheca" &&
-                                    <WallPostsGroupComponent posts={groupPosts} />
+                                    <WallPostsGroupComponent dispatch={dispatch} posts={groupPosts} />
                                 }
 
                                 {this.getActivePage() === "Chat" &&

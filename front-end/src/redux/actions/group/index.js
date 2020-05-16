@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
-import {ADD_GROUP_POSTS, ADD_NEW_POST} from "./actions";
+import {ADD_GROUP_POSTS, ADD_NEW_POST, RESET_GROUP_DATA} from "./actions";
 
 export const loadPosts = (token, offset, groupId) => {
     return async dispatch => {
@@ -33,4 +33,8 @@ export const addNewPost = (post) => ({
     payload: {
         post
     }
+});
+
+export const resetDataGroup = () => ({
+    type: RESET_GROUP_DATA,
 });
