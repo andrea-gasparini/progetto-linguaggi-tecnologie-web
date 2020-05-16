@@ -356,7 +356,6 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
 
-
 	public function getGroupPosts_post() {
 		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
 		if($tokenData["status"]) {
@@ -385,6 +384,44 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			}
 
 			return $this->response(buildServerResponse(true, "ok", array("posts" => $postsData, "hasOtherPostsToLoad" => count($postsData) >= 15)));
+		}
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
+
+	public function loadMoreComments_post() {
+		// parametri da passare: header Authorization con token utente, per quanto riguarda i dati post sono: groupId, postId e offset.
+		$tokenData = validateAuthorizationToken($this->input->get_request_header('Authorization'));
+		if($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Group id non valido"));
+
+			if (!$this->GroupsModel->isGroupMember($userId, $groupId))
+				return $this->response(buildServerResponse(false, "Non puoi inserire un commento in un gruppo al quale non appartieni."), 200);
+
+			$postId = $this->input->post('postId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Post id non valido"));
+
+			if(count($this->GroupsModel->getPostFromGroup($postId, $groupId)) <= 0)
+				return $this->response(buildServerResponse(false, "Non puoi inserire un commento in un post che non esiste o non appartiene al gruppo."), 200);
+
+			$offset = $this->input->post('offset');
+
+			if(!FILTER_VAR($offset, FILTER_VALIDATE_INT))
+				$offset = 0;
+
+			$comments = $this->GroupsModel->getCommentsByOffset($postId, $offset);
+
+			return $this->response(buildServerResponse(true, "ok", array("comments" => $comments)), 200);
 		}
 		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
 	}
