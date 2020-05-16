@@ -1,0 +1,11 @@
+.left-footer {
+    padding: 10px 5px;
+    font-size: 0.8em;
+}
+
+.center-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
