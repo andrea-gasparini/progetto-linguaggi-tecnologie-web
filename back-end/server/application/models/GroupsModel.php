@@ -115,6 +115,13 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function getNumberOfLeftComments($postId) {
+		$this->db->select("id");
+		$this->db->where("c.post_id", $postId);
+		$query = $this->db->get("comments c");
+		return $query->num_rows();
+	}
+
 	public function getChatId($groupId) {
 		$this->db->select("*");
 		$this->db->where("group_id", $groupId);

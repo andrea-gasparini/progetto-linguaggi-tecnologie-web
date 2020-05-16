@@ -18,6 +18,7 @@ class WallPostsGroupComponent extends Component {
                         key={post.id}
                         filesList={JSON.parse(post.file_uploaded)}
                         comments={post.comments}
+                        commentsCount={post.commentsCount}
                         realname={post.realname}
                         username={post.username}
                         publishDate={post.created_at}

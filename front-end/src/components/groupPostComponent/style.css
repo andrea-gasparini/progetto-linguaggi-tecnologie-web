@@ -33,7 +33,29 @@
 
 .post .post-comments {
     border-top: 1px solid #afafaf;
+    padding: 0.7em 0 1.1em;
+}
+
+.post .post-comments.no-more-comments {
     padding: 1.1em 0;
+}
+
+.post-comments .load-comments {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.7em;
+}
+
+.load-comments span {
+    cursor: pointer;
+    font-weight: bold;
+    color: #822433;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.load-comments span:hover {
+    background-color: #afafaf1A;
 }
 
 .post .post-new-comment {

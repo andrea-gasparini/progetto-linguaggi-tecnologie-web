@@ -63,8 +63,13 @@ class GroupPostComponent extends Component {
 
     toggleNewCommentActiveState() { this.setState({newCommentIsActive: ! this.state.newCommentIsActive}) }
 
+    formatDate(postgreDate) {
+        let parsedDate = new Date(postgreDate);
+        return parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    }
+
     render() {
-        let {username, realname, publishDate, text, picture, comments, filesList} = this.props;
+        let {username, realname, publishDate, text, picture, comments, commentsCount, filesList} = this.props;
         let {newCommentValue} = this.state;
         return (
             <Fragment>
@@ -83,7 +88,7 @@ class GroupPostComponent extends Component {
                                     </span>
                                 </div>
                                 <span className={"publish-date"}>
-                                    {publishDate}
+                                    {this.formatDate(publishDate)}
                                 </span>
                             </div>
                         </div>
@@ -91,21 +96,26 @@ class GroupPostComponent extends Component {
                         <div className={"post-body"}>
                             <p>{text}</p>
                             <div className={"attachments"}>
-                                {/* */}
+                                {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
+                                    <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
+                                ))}
                             </div>
                         </div>
 
                     </div>
 
-                    {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
-                        <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
-                    ))}
-
-                    <div className={"post-comments"}>
-                    {typeof comments !== "undefined" && comments.length > 0 &&  comments.map((comment, index) => (
-                        <CommentComponent key={comment.commentId} realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
-                    ))}
+                    {typeof comments !== "undefined" && comments.length > 0 &&
+                    <div className={["post-comments", commentsCount > 0 ? "" : "no-more-comments"].join(" ")}>
+                        {commentsCount > 0 &&
+                            <div className={"load-comments"}>
+                                <span className={"noselectText"}>Carica altri commenti..</span>
+                            </div>
+                        }
+                        {comments.map((comment, index) => (
+                            <CommentComponent key={comment.commentId} realname={comment.realname} username={comment.username} createdAt={comment.createdAt} text={comment.commentText} picture={comment.picture} />
+                        ))}
                     </div>
+                    }
 
                     <div className={["post-new-comment", this.state.newCommentIsActive ? "active" : ""].join(" ")}>
                         <textarea
