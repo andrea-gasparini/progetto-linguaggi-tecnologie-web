@@ -3,6 +3,7 @@
 !/back-end/server/uploads/groupsFiles/default_image_preview.png
 /back-end/server/uploads/profilePictures/*
 !/back-end/server/uploads/profilePictures/default_user_profile_image.png
+/back-end/serverChat/node_modules/
 
 /front-end/node_modules/
 
