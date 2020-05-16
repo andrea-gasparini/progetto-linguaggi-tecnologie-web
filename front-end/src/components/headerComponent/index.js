@@ -37,7 +37,7 @@ class HeaderComponent extends Component {
 
             {
                 text: "Esci",
-                path: "/logout",
+                path: "/",
                 pathName: "Logout"
             }
         ]
@@ -75,7 +75,12 @@ class HeaderComponent extends Component {
 
     switchNavigationPage = (pathName, path) => {
         let {history} = this.props;
-        this.setState({currentActive: pathName});
+
+        if (pathName === "Logout")
+            document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+        else
+            this.setState({currentActive: pathName});
+
         history.push(path);
     };
 
