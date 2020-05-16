@@ -5,6 +5,8 @@ import {API_SERVER_URL} from "../../globalConstants";
 import {withCookies} from "react-cookie";
 import CommentComponent from "../groupPostCommentComponent";
 import FilePreviewComponent from "../filePreviewComponent";
+import axios from 'axios';
+import qs from 'querystring';
 
 class GroupPostComponent extends Component {
 
@@ -16,6 +18,18 @@ class GroupPostComponent extends Component {
             newCommentValue: "",
             newCommentIsActive: false
         }
+    }
+
+    addNewCommentRequest() {
+        let {cookies, groupId, postId} = this.props;
+        let { newCommentValue } = this.state;
+
+        axios.post(
+            `${API_SERVER_URL}/addComment`,
+            qs.stringify({ groupId, postId, newCommentValue }),
+            { headers: { 'Authorization': `Bearer ${cookies.cookies.token}` } }
+        ).then( /* Push nuovo commento nei visualizzati */ );
+
     }
 
     handleNewCommentTextValue(e) {
@@ -83,7 +97,7 @@ class GroupPostComponent extends Component {
                             onChange={e => this.handleNewCommentTextValue(e)}
                             onFocus={() => this.toggleNewCommentActiveState()}
                             onBlur={() => this.toggleNewCommentActiveState()} />
-                        <PlusCircle className={"new-comment-icon"} />
+                        <PlusCircle className={"new-comment-icon"} onClick={() => this.addNewCommentRequest()} />
                     </div>
 
                 </div>
