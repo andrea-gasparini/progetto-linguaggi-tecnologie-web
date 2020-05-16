@@ -115,4 +115,16 @@ class GroupsModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function getChatId($groupId) {
+		$this->db->select("*");
+		$this->db->where("group_id", $groupId);
+		$query = $this->db->get("chats");
+		return $query->result();
+	}
+
+	public function addChatMessage($data) {
+		$this->db->insert("chats_messages", $data);
+		return $this->db->insert_id("chats_messages_id_seq");
+	}
+
 }
