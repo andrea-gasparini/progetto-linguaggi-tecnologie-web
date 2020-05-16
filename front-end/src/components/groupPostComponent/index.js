@@ -40,7 +40,13 @@ class GroupPostComponent extends Component {
         }
     }
 
-    handleEnterShiftKeyPress(e) { if (e.keyCode == 13 && ! e.shiftKey) this.addNewCommentRequest(); }
+    handleEnterShiftKeyPress(e) {
+        if (e.keyCode == 13 && ! e.shiftKey) {
+            e.preventDefault();
+            this.addNewCommentRequest();
+            e.target.style.height = this.state.textareaMinHeight + "px";
+        }
+    }
 
     handleNewCommentTextValue(e) {
         // setto sempre ad una riga l'altezza della textarea
