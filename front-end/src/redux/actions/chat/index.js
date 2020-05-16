@@ -1,8 +1,31 @@
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
-import {ADD_MESSAGE_TO_CHAT} from "./actions";
+import {ADD_MESSAGE_TO_CHAT, ADD_MESSAGES_LOADED, RESET_CHAT_DATA} from "./actions";
 
+
+export const getChatMessages = (token, groupId, offset) => {
+    return async dispatch => {
+        return await axios.post(`${API_SERVER_URL}/getChatMessages`, qs.stringify({groupId, offset}), {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then((res) => {
+            if(res.status) {
+                dispatch(addMessagesLoaded(res.data.data.messages.reverse()));
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+};
+
+export const addMessagesLoaded = (messages) => ({
+    type: ADD_MESSAGES_LOADED,
+    payload: {
+        messages
+    }
+});
 
 export const tryAddMessage = (token, message, groupId) => {
     return async dispatch => {
@@ -27,4 +50,9 @@ export const addMessageToChat = (message) => ({
     payload: {
         message
     }
+});
+
+
+export const resetChatData = () => ({
+    type: RESET_CHAT_DATA
 });

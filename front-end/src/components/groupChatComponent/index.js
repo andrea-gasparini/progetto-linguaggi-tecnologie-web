@@ -3,7 +3,7 @@ import './style.css';
 import {Send} from "react-feather";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
-import {tryAddMessage} from "../../redux/actions/chat";
+import {getChatMessages, resetChatData, tryAddMessage} from "../../redux/actions/chat";
 import {API_SERVER_URL} from "../../globalConstants";
 
 const mapStateToProps = (state) => ({...state.chatReducer});
@@ -18,8 +18,15 @@ class GroupChatComponent extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        let {dispatch, cookies, groupId, offsetChatMessages} = this.props;
+        await dispatch(getChatMessages(cookies.cookies.token, groupId, offsetChatMessages));
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
+    }
+
+    componentWillUnmount() {
+        let {dispatch} = this.props;
+        dispatch(resetChatData());
     }
 
     checkSendMessage = async (e) => {
@@ -31,6 +38,13 @@ class GroupChatComponent extends Component {
                 this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
             }
         }
+    };
+
+    transformDate = (date) => {
+        let d = new Date(date);
+        let hours = d.getHours() < 10 ?  `0${d.getHours()}` : d.getHours();
+        let minutes = d.getMinutes() < 10 ?  `0${d.getMinutes()}` : d.getMinutes();
+        return  `${hours}:${minutes}`;
     };
 
     render() {
@@ -47,7 +61,7 @@ class GroupChatComponent extends Component {
                                     <div className={"messageText p-2"}>
                                         <div className={"username"}>{value.username}</div>
                                         <div style={{marginBottom: 10}}>{value.message}</div>
-                                        <div className={"hourSentMessage"}>{`${new Date(value.date).getHours()}:${new Date(value.date).getMinutes()}`}</div>
+                                        <div className={"hourSentMessage"}>{this.transformDate(value.date)}</div>
                                     </div>
                                 </div>
                             ))}

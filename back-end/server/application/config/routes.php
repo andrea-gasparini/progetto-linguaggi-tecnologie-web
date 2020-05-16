@@ -69,3 +69,4 @@ $route['createPost'] = "GroupsController/createPost";
 $route['getGroupPosts'] = "GroupsController/getGroupPosts";
 $route['addComment'] = "GroupsController/addComment";
 $route['sendMessage'] = "GroupsController/sendMessageToGroupChat";
+$route['getChatMessages'] = "GroupsController/getChatMessages";

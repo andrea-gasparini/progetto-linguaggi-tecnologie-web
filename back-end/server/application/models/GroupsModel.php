@@ -127,4 +127,14 @@ class GroupsModel extends CI_Model {
 		return $this->db->insert_id("chats_messages_id_seq");
 	}
 
+	public function getChatMessages($chatId, $offset) {
+		$this->db->select("cm.user_id, cm.chat_id, cm.message, cm.created_at as date, u.username, u.profile_picture as picture");
+		$this->db->where("chat_id", $chatId);
+		$this->db->where("u.id", "cm.user_id", FALSE);
+		$this->db->order_by("cm.created_at", "DESC");
+		$this->db->limit(30, $offset);
+		$query = $this->db->get("chats_messages cm, users u");
+		return $query->result();
+	}
+
 }
