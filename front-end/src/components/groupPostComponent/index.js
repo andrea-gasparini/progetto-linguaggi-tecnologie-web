@@ -108,7 +108,7 @@ class GroupPostComponent extends Component {
                             <p>{text}</p>
                             <div className={"attachments"}>
                                 {typeof filesList !== "undefined" && Object.keys(filesList).length > 0 && Object.keys(filesList).map((file, index) => (
-                                    <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/11/${filesList[file].serverName}`, type: filesList[file].type}} />
+                                    <FilePreviewComponent key={index} toUploadState={false} file={{name: filesList[file].originalName, fileUrl: `${API_SERVER_URL}/uploads/groupsFiles/${this.props.groupId}/${filesList[file].serverName}`, type: filesList[file].type}} />
                                 ))}
                             </div>
                         </div>
