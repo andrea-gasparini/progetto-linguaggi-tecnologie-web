@@ -105,7 +105,7 @@ class CreatePostComponent extends Component {
                             <div className={"userProfilePictureImageCreatePost"}
                                  style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${userData.viewer.picture}")`}}/>
                             <div className={"textPost ml-3"}>
-                                Condividi qualcosa con il corso...
+                                Condividi qualcosa con il gruppo...
                             </div>
                         </Fragment>
                         }
@@ -119,7 +119,7 @@ class CreatePostComponent extends Component {
                                         </div>
                                     }
                                     <div className={"form-group"}>
-                                        <textarea value={postText} onChange={(e) => this.handleChangeTextareaPost(e)} className={"form-control w-100 textareaPostContainer"} rows={3} placeholder={"Condividi qualcosa con il corso..."}>{postText}</textarea>
+                                        <textarea value={postText} onChange={(e) => this.handleChangeTextareaPost(e)} className={"form-control w-100 textareaPostContainer"} rows={3} placeholder={"Condividi qualcosa con il gruppo..."}>{postText}</textarea>
                                     </div>
 
                                     <div>
