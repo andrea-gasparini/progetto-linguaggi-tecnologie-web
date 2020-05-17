@@ -33,7 +33,7 @@ class InviteModalComponent extends Component {
 
 
     checkCloseSearchUserResult = (e) => {
-        if(e.target.classList.contains("inviteModal") || e.target.classList.contains("inviteModalTitle") || e.target.classList.contains("usersInvitedList"))
+        if(e.target.classList.contains("modalBox") || e.target.classList.contains("modalTitle") || e.target.classList.contains("usersInvitedList"))
             this.setState({clickedToClose: true});
     };
 

@@ -3,10 +3,11 @@ import './style.css';
 import {Send} from "react-feather";
 import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
-import {getChatMessages, resetChatData, tryAddMessage} from "../../redux/actions/chat";
+import {addMessageToChat, getChatMessages, resetChatData, tryAddMessage} from "../../redux/actions/chat";
 import {API_SERVER_URL} from "../../globalConstants";
+import socket from "../../websocket";
 
-const mapStateToProps = (state) => ({...state.chatReducer});
+const mapStateToProps = (state) => ({...state.chatReducer, ...state.userReducer});
 
 class GroupChatComponent extends Component {
 
@@ -15,7 +16,8 @@ class GroupChatComponent extends Component {
 
         this.state = {
             chatMessageValue: '',
-        }
+        };
+
     }
 
     async componentDidMount() {
@@ -23,12 +25,25 @@ class GroupChatComponent extends Component {
         await dispatch(getChatMessages(cookies.cookies.token, groupId, offsetChatMessages));
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
         this.chatMessagesRef.addEventListener('scroll', this.scrollingChat);
+
+
+        socket.emit('handshakeUser', {...this.props.userData.viewer, token: cookies.cookies.token}); // il socket si connette e viene "registrato" nel server
+        socket.emit('joinChat', {groupId}); // joina nella chat
+        socket.on('handleNewMessage', (data) => {
+           // dobbiamo gestire il nuovo messaggio.
+           // l'unica cosa che dobbiamo aggiungere al data che ci arriva è se il messaggio è mio oppure no.
+           data.ismine = data.userId === this.props.userData.viewer.id ? "t" : "f"; // controlliamo che l'userId ricevuto dal data sia === al mio userId.
+           // se sono uguali, allora il messaggio è mio (così gestisco anche più finestre browser aperte sulla stessa chat)
+           dispatch(addMessageToChat(data));
+           this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight; // aggiorniamo l'altezza dello scroll.
+        });
     }
 
     componentWillUnmount() {
-        let {dispatch} = this.props;
+        let {dispatch, groupId} = this.props;
         dispatch(resetChatData());
         this.chatMessagesRef.removeEventListener('scroll', this.scrollingChat);
+        socket.emit('leaveRoom', {groupId}); // dobbiamo lasciare la chat.
     }
 
     scrollingChat = async () => {
