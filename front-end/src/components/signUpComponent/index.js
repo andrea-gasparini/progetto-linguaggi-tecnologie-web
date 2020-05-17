@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/signup";
 import {validateToken} from "../../redux/actions/login";
 import LogoComponent from "../logoComponent";
+import FooterComponent from "../footerComponent";
 
 const mapStateToProps = (state) => ({...state.signUpReducer});
 
@@ -60,7 +61,7 @@ class SignUpComponent extends Component
                 <Fragment>
                     <section
                         className={"d-flex flex-column justify-content-center align-items-center align-self-center h-100"}>
-                        <div className={"d-flex registerBox p-4 flex-column"}>
+                        <div className={"d-flex registerBox p-4 m-4 flex-column"}>
                             <LogoComponent />
                             <div className={"d-flex justify-content-center"}>
                                 <div className={"d-flex mt-4 signInText"}>
@@ -173,6 +174,7 @@ class SignUpComponent extends Component
                                 </form>
                             </div>
                         </div>
+                        <FooterComponent />
                     </section>
                 </Fragment>
             );
