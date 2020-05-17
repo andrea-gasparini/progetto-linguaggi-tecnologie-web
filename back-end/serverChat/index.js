@@ -6,15 +6,24 @@ let clients = {}; // socketId: [vari valori passati dal frontend magari , come i
 let rooms = {};
 
 io.on('connection', (socket) => {
-	console.log("Un utente si è connesso al ws " + socket.id);
-	socket.on('newMessage', (data) => {
-		io.emit('receivingMessage', {message: "we hai un messaggio"});
+
+	socket.on('handshakeUser', (data) => {
+		console.log("Handshaking data: " + JSON.stringify(data));
+		clients[socket.id] = data; // semplice setup, data è l'userData.viewer che abbiamo nel redux front-end userReducer.
 	});
-	
-	socket.on('newConnectionToChat', (data) => {
-		socket.join(data.groupId);
-		console.log(io.sockets.adapter.rooms);
+
+	socket.on('joinChat', (data) => {
+		let {groupId} = data;
+		if(!(groupId in rooms)) { // significa che è il primo utente a connettersi alla stanza.
+			rooms[groupId] = [socket.id]; // mettiamo il socket id nella room
+		} else {
+			rooms[groupId].push(socket.id) // altrimenti la stanza già era stata creata (quindi già c'erano altri utenti dentro) e pushiamo il socket.id
+		}
+
+		socket.join(groupId); // infine l'utente joina nella room.
+		console.log(clients[socket.id].username + " joined in room " + groupId);
 	});
+
 });
 
 http.listen(3000, () => {

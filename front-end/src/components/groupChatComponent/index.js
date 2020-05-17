@@ -7,7 +7,7 @@ import {getChatMessages, resetChatData, tryAddMessage} from "../../redux/actions
 import {API_SERVER_URL} from "../../globalConstants";
 import socket from "../../websocket";
 
-const mapStateToProps = (state) => ({...state.chatReducer});
+const mapStateToProps = (state) => ({...state.chatReducer, ...state.userReducer});
 
 class GroupChatComponent extends Component {
 
@@ -18,12 +18,6 @@ class GroupChatComponent extends Component {
             chatMessageValue: '',
         };
 
-        socket.on('receivingMessage', (data) => {
-            console.log(data);
-        });
-
-        socket.emit('newConnectionToChat', {groupId: props.groupId});
-
     }
 
     async componentDidMount() {
@@ -31,6 +25,10 @@ class GroupChatComponent extends Component {
         await dispatch(getChatMessages(cookies.cookies.token, groupId, offsetChatMessages));
         this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight;
         this.chatMessagesRef.addEventListener('scroll', this.scrollingChat);
+
+
+        socket.emit('handshakeUser', {...this.props.userData.viewer, token: cookies.cookies.token}); // il socket si connette e viene "registrato" nel server
+        socket.emit('joinChat', {groupId}); // joina nella chat
     }
 
     componentWillUnmount() {
