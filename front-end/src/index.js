@@ -11,7 +11,6 @@ import SignUpComponent from "./components/signUpComponent";
 import HomeComponent from "./components/homeComponent";
 import TestComponent from "./components/TestComponent";
 import GroupHomeComponent from "./components/groupHomeComponent";
-import CreatePostComponent from "./components/createPostComponent";
 
 const routing = (
     <Provider store={store}>
@@ -23,7 +22,6 @@ const routing = (
                     <Route path={"/home"} component={HomeComponent} />
                     <Route path={"/test"} component={TestComponent} />
                     <Route path={"/group/:id"} component={GroupHomeComponent} />
-                    <Route path={"/testpost"} component={CreatePostComponent} />
                 </Switch>
             </Router>
         </CookiesProvider>
