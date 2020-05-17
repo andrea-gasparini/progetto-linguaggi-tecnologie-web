@@ -49,7 +49,7 @@ export const tryAddMessage = (token, message, groupId) => {
         }).then((res) => {
             if(res.status) {
                 dispatch(addMessageToChat(res.data.data));
-                socket.emit('newMessage', res.data.data);
+                socket.emit('newChatMessage', {token: res.data.data.chatToken});
             }
 
         }).catch((err) => {

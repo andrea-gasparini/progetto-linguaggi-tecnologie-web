@@ -4,6 +4,7 @@ let io = require("socket.io")(http);
 
 let clients = {}; // socketId: [vari valori passati dal frontend magari , come il token]
 let rooms = {};
+let jwtSecret = "";
 
 io.on('connection', (socket) => {
 
@@ -22,6 +23,11 @@ io.on('connection', (socket) => {
 
 		socket.join(groupId); // infine l'utente joina nella room.
 		console.log(clients[socket.id].username + " joined in room " + groupId);
+	});
+
+	socket.on('newChatMessage', (data) => {
+		console.log("Nuovo messaggio ricevuto: " + JSON.stringify(data));
+		let {token} = data; // i dati che riceviamo (importanti).
 	});
 
 });
