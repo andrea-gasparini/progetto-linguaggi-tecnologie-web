@@ -1,0 +1,13 @@
+.settingsContainer {
+    max-width: 960px;
+    margin-top: 105px;
+    width: 100%;
+}
+
+.profilePic {
+    background-image: url("http://localhost:8888/uploads/profilePictures/default_user_profile_image.png");
+    background-size: cover !important;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
