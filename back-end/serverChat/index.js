@@ -1,10 +1,11 @@
 let app = require("express")();
 let http = require("http").createServer(app);
 let io = require("socket.io")(http);
+let jwt = require("jsonwebtoken");
 
 let clients = {}; // socketId: [vari valori passati dal frontend magari , come il token]
 let rooms = {};
-let jwtSecret = "";
+let jwtSecret = "102390293adodiXOsdpospaodslALxA*DéDSADAS°ç°ç"; // deve essere uguale a quella del server php.
 
 io.on('connection', (socket) => {
 
@@ -26,10 +27,21 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('newChatMessage', (data) => {
-		console.log("Nuovo messaggio ricevuto: " + JSON.stringify(data));
 		let {token} = data; // i dati che riceviamo (importanti).
+		try {
+			let decodedToken = jwt.verify(token, jwtSecret);
+			socket.to(decodedToken.groupId).emit('handleNewMessage', {...decodedToken}); // emitto alla stanza groupId il nuovo messaggio ricevuto.
+			console.log("Messaggio inviato alla room: " + decodedToken.groupId);
+		} catch(err) {
+			console.log(err);
+			// significa che l'utente ha inviato un token non valido, hacker.
+		}
 	});
 
+	socket.on('leaveRoom', (data) => {
+		let {groupId} = data;
+		socket.leave(groupId); // lascia la room.
+	});
 });
 
 http.listen(3000, () => {
