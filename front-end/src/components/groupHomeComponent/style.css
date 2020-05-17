@@ -14,10 +14,13 @@
     width: 100%;
 }
 
-.navigation-menu {
+.left-sticky {
     position: sticky;
-    width: 100%;
     top: 85px;
+}
+
+.navigation-menu {
+    width: 100%;
     padding: 15px;
     border-radius: 5px;
     border: 1px solid #afafaf;

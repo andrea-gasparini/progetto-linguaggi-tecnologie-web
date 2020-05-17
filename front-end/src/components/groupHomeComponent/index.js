@@ -100,25 +100,27 @@ class GroupHomeComponent extends Component {
                             <div className={"d-flex flex-row"}>
 
                                 <div className={"left-content mr-3"}>
-                                    <div
-                                        className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
-                                        {this.navigationItems.map((value, index) =>
-                                            <div
-                                                onClick={() => this.changeActiveMenuItem(index)}
-                                                onMouseOver={(e) => {
-                                                    this.toggleActiveMenuItem(e)
-                                                }}
-                                                onMouseOut={(e) => {
-                                                    this.toggleActiveMenuItem(e)
-                                                }}
-                                                className={["menu-item", this.state.showActiveMenuItem && index === this.state.activeIndex ? "active" : ""].join(" ")}
-                                                key={index}>
-                                                {value.icon}
-                                                <span>{value.label}</span>
-                                            </div>
-                                        )}
+                                    <div className={"left-sticky"}>
+                                        <div
+                                            className={"navigation-menu noselectText d-flex flex-column align-items-start"}>
+                                            {this.navigationItems.map((value, index) =>
+                                                <div
+                                                    onClick={() => this.changeActiveMenuItem(index)}
+                                                    onMouseOver={(e) => {
+                                                        this.toggleActiveMenuItem(e)
+                                                    }}
+                                                    onMouseOut={(e) => {
+                                                        this.toggleActiveMenuItem(e)
+                                                    }}
+                                                    className={["menu-item", this.state.showActiveMenuItem && index === this.state.activeIndex ? "active" : ""].join(" ")}
+                                                    key={index}>
+                                                    {value.icon}
+                                                    <span>{value.label}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <FooterComponent left={true} />
                                     </div>
-                                    <FooterComponent left={true} />
                                 </div>
 
                                 <div className={"main-content d-flex flex-column align-items-center"}>

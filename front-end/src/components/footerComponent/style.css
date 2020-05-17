@@ -1,4 +1,5 @@
 .left-footer {
+    position: sticky;
     padding: 10px 5px;
     font-size: 0.8em;
 }
