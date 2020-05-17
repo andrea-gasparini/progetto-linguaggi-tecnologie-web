@@ -14,6 +14,10 @@
     margin-right: 0px;
 }
 
+.cardGroupDescription {
+    max-width: 245px;
+}
+
 .cardGroupHeader {
     width: 100%;
     position: relative;

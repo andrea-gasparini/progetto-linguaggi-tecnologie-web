@@ -13,7 +13,7 @@ class WallPostsGroupComponent extends Component {
         let {groupId, posts} = this.props;
         return(
             <Fragment>
-                {typeof posts !== "undefined" && posts.map((post, index) => (
+                {typeof posts !== "undefined" && posts.length > 0 && posts.map((post, index) => (
                     <GroupPostComponent
                         key={post.id}
                         filesList={JSON.parse(post.file_uploaded)}
@@ -28,6 +28,13 @@ class WallPostsGroupComponent extends Component {
                         postId={post.id}
                         postIndex={index} />
                 ))}
+
+                {(typeof posts === "undefined" || typeof posts !== "undefined" && posts.length  <= 0) &&
+                    <div className={"d-flex mt-5 text-muted"}>
+                        Non c'è nessun post pubblicato nel gruppo.
+                    </div>
+                }
+
             </Fragment>
         )
     }
