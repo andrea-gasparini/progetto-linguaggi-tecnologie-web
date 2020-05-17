@@ -6,6 +6,7 @@
 /back-end/serverChat/node_modules/
 
 /front-end/node_modules/
+/front-end/release/
 
 !.gitkeep
 
