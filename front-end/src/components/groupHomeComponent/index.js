@@ -11,8 +11,10 @@ import {loadPosts} from "../../redux/actions/group";
 import WallPostsGroupComponent from "../wallPostsGroupComponent";
 import GroupChatComponent from "../groupChatComponent";
 import FooterComponent from "../footerComponent";
+import {resetChatData} from "../../redux/actions/chat";
 
-const mapStateToProps = (state) => ({...state.groupReducer});
+const mapStateToProps = (state) => ({...state.groupReducer, ...state.chatReducer});
+
 
 class GroupHomeComponent extends Component {
 
@@ -51,6 +53,9 @@ class GroupHomeComponent extends Component {
         let {dispatch, cookies, match} = this.props;
         if(this.state !== prevState && this.state.activeIndex !== prevState.activeIndex && this.state.activeIndex === 1)
             dispatch(loadPosts(cookies.cookies.token, 0, match.params.id));
+
+        if(this.state !== prevState && this.state.activeIndex !== prevState.activeIndex && prevState.activeIndex === 0)
+            dispatch(resetChatData());
     }
 
     toggleActiveMenuItem(e) {
