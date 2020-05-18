@@ -13,7 +13,7 @@ import GroupChatComponent from "../groupChatComponent";
 import FooterComponent from "../footerComponent";
 import {resetChatData} from "../../redux/actions/chat";
 
-const mapStateToProps = (state) => ({...state.groupReducer, ...state.chatReducer});
+const mapStateToProps = (state) => ({...state.groupReducer, ...state.chatReducer, ...state.userReducer});
 
 
 class GroupHomeComponent extends Component {
@@ -42,10 +42,15 @@ class GroupHomeComponent extends Component {
 
     async componentDidMount() {
         document.addEventListener('scroll', this.checkScroll);
-        let {dispatch, cookies, history, userData, match} = this.props;
+        let {dispatch, cookies, history, match} = this.props;
         await dispatch(validateToken(cookies, history, false, `/group/${match.params.id}`));
         if(this.state.activeIndex === 1)
             await dispatch(loadPosts(cookies.cookies.token, 0, match.params.id)); // terzo parametro è il groupId da prendere dinamicamente.
+
+        let {userData} = await this.props;
+        if(userData.userGroups.filter(x => x.id === match.params.id) <= 0)
+            history.push('/');
+
         this.setState({validated: true});
     }
 
