@@ -63,9 +63,9 @@ class GroupChatComponent extends Component {
     };
 
 
-    checkSendMessage = async (e) => {
+    checkSendMessage = async (e, fromIcon = false) => {
         let {dispatch, cookies, groupId} = this.props;
-        if(e.keyCode === 13) {
+        if(e !== null && e.keyCode === 13 || fromIcon) {
             if(this.state.chatMessageValue.length > 0 && this.state.chatMessageValue.trim().length > 0) {
                 await dispatch(tryAddMessage(cookies.cookies.token, this.state.chatMessageValue, groupId));
                 this.setState({chatMessageValue: ""});
@@ -100,7 +100,7 @@ class GroupChatComponent extends Component {
                         </div>
                         <div className={"d-flex sendMessageInput align-items-center justify-content-between"}>
                             <input onChange={(e) => this.setState({chatMessageValue: e.target.value})} value={chatMessageValue} onKeyDown={(e) => this.checkSendMessage(e)} type={"text"} className={"form-control messageInputArea"} placeholder={"Inserisci un messaggio..."} />
-                            <Send className={"sendMessageIcon"} />
+                            <Send onClick={() => this.checkSendMessage(null, true)} className={"sendMessageIcon"} />
                         </div>
                     </div>
                 </div>
