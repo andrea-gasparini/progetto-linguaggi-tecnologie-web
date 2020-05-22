@@ -72,7 +72,7 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 				return $this->response(buildServerResponse(false, "La vecchia password è errata.", array("oldPasswordHasError" => true)), 200);
 
 			if(strlen($newPassword) < 8)
-				return $this->response(buildServerResponse(false, "La nuova password deve contenere almeno 8 caratteri."), 200);
+				return $this->response(buildServerResponse(false, "La nuova password deve contenere almeno 8 caratteri.", array("newPasswordHasError" => true, "confirmNewPasswordHasError" => true)), 200);
 
 			if($newPassword != $confirmNewPassword)
 				return $this->response(buildServerResponse(false, "Le due nuove password non coincidono.", array("newPasswordHasError" => true, "confirmNewPasswordHasError" => true)));
