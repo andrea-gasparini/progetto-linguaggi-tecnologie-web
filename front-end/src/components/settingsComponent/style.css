@@ -26,3 +26,23 @@
     opacity: 0.8;
     transition: .1s ease-in-out all;
 }
+
+.settingsContainer .editButton {
+    display: flex;
+    align-items: center;
+
+    background-color: #e4e6eb;
+    font-weight: 500;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    transition: .1s ease-in-out all;
+}
+
+.editButton:hover {
+    background-color: lightgrey;
+}
+
+.editButton span { margin-left: 5px; }

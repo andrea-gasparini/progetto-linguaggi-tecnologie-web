@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {withCookies} from "react-cookie";
 import {setPassword, setUsername, validateToken} from "../../redux/actions/login";
 import {API_SERVER_URL} from "../../globalConstants";
-import {Camera} from "react-feather";
+import {Camera, Mail, Key} from "react-feather";
 import {Link} from "react-router-dom";
 import {setSignUpConfirmPassword, setSignUpPassword} from "../../redux/actions/signup";
 
@@ -83,8 +83,21 @@ class SettingsComponent extends Component {
                             </div>
                             <h3 className={"mt-2"}>Andrea Gasparini</h3>
                             <p>Hello from settings component!</p>
-                            <span onClick={() => this.toggleEmailForm()}>Clicca qui per modificare la tua email</span>
-                            <span onClick={() => this.togglePasswordForm()}>Clicca qui per modificare la tua password</span>
+
+                            <div className={"d-flex"}>
+
+                                <div className={"editButton"} onClick={() => this.togglePasswordForm()}>
+                                    <Key size={18}/>
+                                    <span>Modifica password</span>
+                                </div>
+
+                                <div className={"editButton"} onClick={() => this.toggleEmailForm()}>
+                                    <Mail size={18}/>
+                                    <span>Modifica email</span>
+                                </div>
+
+                            </div>
+
                             {emailFormIsVisible &&
                                 <form onSubmit={(e) => this.editEmailRequest(e)} method={"post"} action={"/"}
                                       className={"w-50 mt-4"}>
