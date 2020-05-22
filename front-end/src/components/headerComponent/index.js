@@ -84,7 +84,7 @@ class HeaderComponent extends Component {
         let {userData, dispatch, cookies, loadingMyInvitation} = this.props;
         return(
             <Fragment>
-                <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
+                <nav className={["noselectText d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
                     <div className={"d-flex navbarContainer justify-content-around"}>
                         <LogoComponent size={50}/>
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
