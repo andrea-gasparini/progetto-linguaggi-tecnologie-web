@@ -111,14 +111,15 @@ class SettingsComponent extends Component {
     editPictureRequest(e) {
         e.preventDefault();
 
-        this.setState({file: e.target.files[0]})
-
-        let {cookies} = this.props;
+        let {userData, dispatch, cookies} = this.props;
         const formData = new FormData();
         formData.append("file", e.target.files[0], e.target.files[0].name);
+
         return axios.post(`${API_SERVER_URL}/changeProfilePicture`, formData, {
             headers: { "Authorization": `Bearer ${cookies.cookies.token}` }
-        });
+        }).then(res =>
+            dispatch(setUserData({...userData, viewer: { ...userData.viewer, picture: res.data.data.imageName }}))
+        );
     }
 
     render() {
