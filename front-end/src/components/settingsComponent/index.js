@@ -85,7 +85,7 @@ class SettingsComponent extends Component {
                             <h3 className={"mt-2"}>{userData.viewer.realname}</h3>
                             <p className={"text-muted"}>{userData.viewer.email}</p>
 
-                            <div className={"d-flex"}>
+                            <div className={"d-flex noselectText"}>
 
                                 <div className={"editButton"} onClick={() => this.togglePasswordForm()}>
                                     <Key size={18}/>
