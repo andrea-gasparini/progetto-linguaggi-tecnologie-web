@@ -198,6 +198,7 @@ class SettingsComponent extends Component {
                                 </form>
                             }
                         </div>
+                        <FooterComponent/>
                     </section>
                 </Fragment>
             )
