@@ -37,7 +37,7 @@ class HeaderComponent extends Component {
 
             {
                 text: "Esci",
-                path: "/logout",
+                path: "/",
                 pathName: "Logout"
             }
         ]
@@ -75,13 +75,18 @@ class HeaderComponent extends Component {
 
     switchNavigationPage = (pathName, path) => {
         let {history} = this.props;
-        this.setState({currentActive: pathName});
+
+        if (pathName === "Logout")
+            document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+        else
+            this.setState({currentActive: pathName});
+
         history.push(path);
     };
 
     render() {
         let {currentActive, showActive, showShadow, showDropdown} = this.state;
-        let {userData, dispatch, cookies, loadingMyInvitation} = this.props;
+        let {userData, dispatch, cookies, loadingMyInvitation, history} = this.props;
         return(
             <Fragment>
                 <nav className={["d-flex navbar navbarClassroom justify-content-center", showShadow ? "navbarScrollShadow" : ""].join(" ")}>
@@ -90,7 +95,7 @@ class HeaderComponent extends Component {
                         <ul className={"d-flex navbar-nav flex-row align-items-center"}>
                             {this.navigationElements.map((value, index) => (
                                 <li onClick={(e) => this.switchNavigationPage(value.pathName, value.path)} key={index} className={"navbarElement"}>
-                                    <div onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={["navbarText", currentActive === value.pathName && showActive ? "active" : ""].join(" ")}>
+                                    <div onMouseLeave={(e) => this.switchActive(e)} onMouseEnter={(e) => this.switchActive(e)} className={["navbarText", history.location.pathname === value.path && showActive ? "active" : ""].join(" ")}>
                                         {value.text}
                                     </div>
                                 </li>
