@@ -114,9 +114,8 @@ class SettingsComponent extends Component {
         this.setState({file: e.target.files[0]})
 
         let {cookies} = this.props;
-        let {file} = this.state;
         const formData = new FormData();
-        formData.append("file", file, file.name);
+        formData.append("file", e.target.files[0], e.target.files[0].name);
         return axios.post(`${API_SERVER_URL}/changeProfilePicture`, formData, {
             headers: { "Authorization": `Bearer ${cookies.cookies.token}` }
         });
