@@ -48,3 +48,5 @@
 }
 
 .editButton span { margin-left: 5px; }
+
+.invalid-feedback { display: block; }
