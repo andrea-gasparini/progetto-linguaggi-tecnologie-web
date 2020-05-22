@@ -32,6 +32,9 @@ class SettingsComponent extends Component {
             oldPassword: '',
             newPassword: '',
             confirmNewPassword: '',
+            oldPasswordHasError: false,
+            newPasswordHasError: false,
+            confirmNewPasswordHasError: false,
             messageEditUserError: ''
         }
     }
@@ -84,16 +87,32 @@ class SettingsComponent extends Component {
         });
     }
 
-    editPasswordRequest() {}
+    editPasswordRequest(e) {
+        e.preventDefault();
+
+        let {oldPassword, newPassword, confirmNewPassword} = this.state;
+
+        axios.post(
+            `${API_SERVER_URL}/changePassword`,
+            qs.stringify({oldPassword, newPassword, confirmNewPassword}),
+            {headers: {'Authorization': `Bearer ${this.props.cookies.cookies.token}`}}
+        ).then(res => {
+            if (res.data.status) {
+                this.setState({oldPassword: '', newPassword: '', confirmNewPassword: '', messageEditUserError: '',
+                    passwordFormIsVisible: false, oldPasswordHasError: false, newPasswordHasError: false, confirmNewPasswordHasError: false});
+            }
+            else {
+                let {oldPasswordHasError, newPasswordHasError, confirmNewPasswordHasError} = res.data.data;
+                this.setState({oldPasswordHasError, newPasswordHasError, confirmNewPasswordHasError, messageEditUserError: res.data.message});
+            }
+        });
+    }
 
     render() {
         let {history, userData} = this.props;
         let {profilePicHover, emailFormIsVisible, passwordFormIsVisible, newEmail, confirmNewEmail, newEmailHasError,
-            confirmNewEmailHasError, oldPassword, newPassword, confirmNewPassword, messageEditUserError} = this.state;
-
-        let oldPasswordHasError = '';
-        let newPasswordHasError = '';
-        let confirmNewPasswordHasError = '';
+            confirmNewEmailHasError, oldPassword, newPassword, confirmNewPassword, oldPasswordHasError,
+            newPasswordHasError, confirmNewPasswordHasError, messageEditUserError} = this.state;
 
         return (typeof userData !== "undefined") ?
             (
@@ -164,10 +183,10 @@ class SettingsComponent extends Component {
                             }
 
                             {passwordFormIsVisible &&
-                                <form onSubmit={(e) => this.editPasswordRequest()} method={"post"} action={"/"} className={"w-50 mt-4"}>
+                                <form onSubmit={(e) => this.editPasswordRequest(e)} method={"post"} className={"w-50 mt-4"}>
                                     <div className={"form-group"}>
-                                        <input onChange={(e) => {}} value={oldPassword}
-                                               required autoComplete={"off"} type={"password"}
+                                        <input onChange={(e) => {this.setState({oldPassword: e.target.value})}}
+                                               value={oldPassword} required autoComplete={"off"} type={"password"}
                                                className={["form-control", oldPasswordHasError ? "is-invalid" : ""].join(" ")}
                                                aria-describedby={"passwordHelp"} placeholder={"Password"}/>
                                         {!oldPasswordHasError &&
@@ -185,13 +204,12 @@ class SettingsComponent extends Component {
 
                                     <div className={"form-group"}>
                                         <div className={"d-flex flex-column"}>
-                                            <input onChange={(e) => {}}
-                                                   value={newPassword}
-                                                   required autoComplete={"off"} type={"password"}
+                                            <input onChange={(e) => {this.setState({newPassword: e.target.value})}}
+                                                   value={newPassword} required autoComplete={"off"} type={"password"}
                                                    className={["mb-2 form-control mr-4", newPasswordHasError ? "is-invalid" : ""].join(" ")}
                                                    aria-describedby={"passwordHelp"} placeholder={"Nuova password"}/>
 
-                                            <input onChange={(e) => {}}
+                                            <input onChange={(e) => {this.setState({confirmNewPassword: e.target.value})}}
                                                    value={confirmNewPassword}
                                                    required autoComplete={"off"} type={"password"}
                                                    className={["form-control", confirmNewPasswordHasError ? "is-invalid" : ""].join(" ")}
@@ -203,7 +221,7 @@ class SettingsComponent extends Component {
                                         </small>
                                         }
 
-                                        {!(newPasswordHasError || confirmNewPasswordHasError) &&
+                                        {(newPasswordHasError || confirmNewPasswordHasError) &&
                                         <div className={"invalid-feedback"} style={{display: "block"}}>
                                             {messageEditUserError}
                                         </div>
