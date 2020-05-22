@@ -16,7 +16,7 @@ class SettingsController extends \chriskacerguis\RestServer\RestController {
 		$token = validateAuthorizationToken($this->input->get_request_header('Authorization'));
 		if($token["status"]) {
 			$newEmail = $this->input->post('newEmail');
-			$confirmNewEmail = $this->input->post('newEmail');
+			$confirmNewEmail = $this->input->post('confirmNewEmail');
 			$userId = $token["data"]["userId"];
 
 			$user = $this->UserModel->getUserById($userId);
