@@ -38,5 +38,12 @@ function loadDataUser($userId, $username) {
 	$userGroups = $ci->UserModel->getUserGroups($userId);
 	$userPicture = $ci->UserModel->getUserPicture($userId)[0]->profile_picture;
 	$userNotificationsCount = $ci->UserModel->getInvitationsCountToRead($userId);
-	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array("username" => $username, "id" => $userId, "picture" => $userPicture));
+	$user = $ci->UserModel->getUserById($userId)[0];
+	return array("userGroups" => $userGroups, "userNotifications" => $userNotificationsCount, "viewer" => array(
+		"username" => $username,
+		"id" => $userId,
+		"picture" => $userPicture,
+		"realname" => $user->realname,
+		"email" => $user->email,
+	));
 }

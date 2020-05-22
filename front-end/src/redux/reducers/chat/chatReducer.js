@@ -1,7 +1,7 @@
 import {
     ADD_MESSAGE_TO_CHAT,
     ADD_MESSAGES_LOADED,
-    RESET_CHAT_DATA,
+    RESET_CHAT_DATA, SET_REF_CHAT_MESSAGES,
     SET_REQUESTING_CHAT_MESSAGES
 } from "../../actions/chat/actions";
 import update from "immutability-helper";
@@ -34,6 +34,12 @@ const chatReducer = (state = {messages: [], offsetChatMessages: 0, canLoadOtherM
                 messages: {$unshift: action.payload.messages},
                 offsetChatMessages: {$set: action.payload.newOffset},
                 canLoadOtherMessagesChat: {$set: action.payload.canLoadOtherMessagesChat},
+            });
+        }
+
+        case SET_REF_CHAT_MESSAGES: {
+            return update(state, {
+                refChatMessages: {$set: action.payload.refChatMessages}
             });
         }
     }

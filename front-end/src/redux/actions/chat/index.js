@@ -1,7 +1,13 @@
 import axios from "axios";
 import {API_SERVER_URL} from "../../../globalConstants";
 import qs from "querystring";
-import {ADD_MESSAGE_TO_CHAT, ADD_MESSAGES_LOADED, RESET_CHAT_DATA, SET_REQUESTING_CHAT_MESSAGES} from "./actions";
+import {
+    ADD_MESSAGE_TO_CHAT,
+    ADD_MESSAGES_LOADED,
+    RESET_CHAT_DATA,
+    SET_REF_CHAT_MESSAGES,
+    SET_REQUESTING_CHAT_MESSAGES
+} from "./actions";
 import socket from "../../../websocket";
 
 export const setRequesting = (value) =>  ({
@@ -70,3 +76,10 @@ export const addMessageToChat = (message) => ({
 export const resetChatData = () => ({
     type: RESET_CHAT_DATA
 });
+
+export const setRef = (refChatMessages) => ({
+    type: SET_REF_CHAT_MESSAGES,
+    payload: {
+        refChatMessages
+    }
+})
