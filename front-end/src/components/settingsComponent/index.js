@@ -7,8 +7,12 @@ import {setPassword, setUsername, validateToken} from "../../redux/actions/login
 import {API_SERVER_URL} from "../../globalConstants";
 import {Camera, Mail, Key} from "react-feather";
 import {Link} from "react-router-dom";
-import {setSignUpConfirmPassword, setSignUpPassword} from "../../redux/actions/signup";
+import {resetDataSignup, setErrorSignUp, setSignUpConfirmPassword, setSignUpPassword} from "../../redux/actions/signup";
 import FooterComponent from "../footerComponent";
+import axios from "axios";
+import qs from "querystring";
+import {addNewComment} from "../../redux/actions/group";
+import {setUserData} from "../../redux/actions/user";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -23,9 +27,12 @@ class SettingsComponent extends Component {
             passwordFormIsVisible: false,
             newEmail: '',
             confirmNewEmail: '',
+            newEmailHasError: false,
+            confirmNewEmailHasError: false,
             oldPassword: '',
             newPassword: '',
-            confirmNewPassword: ''
+            confirmNewPassword: '',
+            messageEditUserError: ''
         }
     }
 
@@ -54,20 +61,39 @@ class SettingsComponent extends Component {
         this.setState({passwordFormIsVisible: !this.state.passwordFormIsVisible});
     }
 
-    editEmailRequest() {}
+    editEmailRequest(e) {
+        e.preventDefault();
+
+        let {newEmail, confirmNewEmail} = this.state;
+        let {userData, cookies, dispatch} = this.props;
+
+        axios.post(
+            `${API_SERVER_URL}/changeEmail`,
+            qs.stringify({newEmail, confirmNewEmail}),
+            {headers: {'Authorization': `Bearer ${cookies.cookies.token}`}}
+        ).then(res => {
+            if (res.data.status) {
+                this.setState({newEmail: '', confirmNewEmail: '', messageEditUserError: '', emailFormIsVisible: false,
+                    newEmailHasError: false, confirmNewEmailHasError: false});
+                dispatch(setUserData({...userData, viewer: { ...userData.viewer, email: newEmail }}));
+            }
+            else {
+                let {newEmailHasError, confirmNewEmailHasError} = res.data.data;
+                this.setState({newEmailHasError, confirmNewEmailHasError, messageEditUserError: res.data.message});
+            }
+        });
+    }
 
     editPasswordRequest() {}
 
     render() {
         let {history, userData} = this.props;
-        let {profilePicHover, emailFormIsVisible, passwordFormIsVisible, newEmail, confirmNewEmail, oldPassword, newPassword, confirmNewPassword} = this.state;
+        let {profilePicHover, emailFormIsVisible, passwordFormIsVisible, newEmail, confirmNewEmail, newEmailHasError,
+            confirmNewEmailHasError, oldPassword, newPassword, confirmNewPassword, messageEditUserError} = this.state;
 
-        let newEmailHasError = '';
-        let confirmNewEmailHasError = '';
         let oldPasswordHasError = '';
         let newPasswordHasError = '';
         let confirmNewPasswordHasError = '';
-        let messageEditUserError = '';
 
         return (typeof userData !== "undefined") ?
             (
@@ -100,18 +126,15 @@ class SettingsComponent extends Component {
                             </div>
 
                             {emailFormIsVisible &&
-                                <form onSubmit={(e) => this.editEmailRequest(e)} method={"post"} action={"/"}
-                                      className={"w-50 mt-4"}>
+                                <form onSubmit={(e) => this.editEmailRequest(e)} method={"post"} className={"w-50 mt-4"}>
                                     <div className={"form-group"}>
                                         <div className={"d-flex flex-column"}>
-                                            <input onChange={(e) => {
-                                            }} value={newEmail}
+                                            <input onChange={(e) => {this.setState({newEmail: e.target.value})}} value={newEmail}
                                                    required autoComplete={"off"} type={"email"}
                                                    className={["mb-2 form-control", newEmailHasError ? "is-invalid" : ""].join(" ")}
                                                    aria-describedby={"emailHelp"} placeholder={"Indirizzo email"}/>
 
-                                            <input onChange={(e) => {
-                                            }} value={confirmNewEmail}
+                                            <input onChange={(e) => {this.setState({confirmNewEmail: e.target.value})}} value={confirmNewEmail}
                                                    required autoComplete={"off"} type={"email"}
                                                    className={["form-control", confirmNewEmailHasError ? "is-invalid" : ""].join(" ")}
                                                    aria-describedby={"emailHelp"} placeholder={"Conferma indirizzo email"}/>
@@ -122,7 +145,7 @@ class SettingsComponent extends Component {
                                         </small>
                                         }
 
-                                        {!(newEmailHasError || confirmNewEmailHasError) &&
+                                        {(newEmailHasError || confirmNewEmailHasError) &&
                                         <div className={"invalid-feedback"}>
                                             {messageEditUserError}
                                         </div>
