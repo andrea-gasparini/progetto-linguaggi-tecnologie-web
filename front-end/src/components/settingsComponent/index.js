@@ -8,6 +8,7 @@ import {API_SERVER_URL} from "../../globalConstants";
 import {Camera, Mail, Key} from "react-feather";
 import {Link} from "react-router-dom";
 import {setSignUpConfirmPassword, setSignUpPassword} from "../../redux/actions/signup";
+import FooterComponent from "../footerComponent";
 
 const mapStateToProps = (state) => ({...state.userReducer});
 
@@ -81,8 +82,8 @@ class SettingsComponent extends Component {
                                 onMouseLeave={() => this.togglePicHover()}>
                                 {profilePicHover && <Camera size={30} />}
                             </div>
-                            <h3 className={"mt-2"}>Andrea Gasparini</h3>
-                            <p>Hello from settings component!</p>
+                            <h3 className={"mt-2"}>{userData.viewer.realname}</h3>
+                            <p className={"text-muted"}>{userData.viewer.email}</p>
 
                             <div className={"d-flex"}>
 
