@@ -108,6 +108,20 @@ class SettingsComponent extends Component {
         });
     }
 
+    editPictureRequest(e) {
+        e.preventDefault();
+
+        this.setState({file: e.target.files[0]})
+
+        let {cookies} = this.props;
+        let {file} = this.state;
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+        return axios.post(`${API_SERVER_URL}/changeProfilePicture`, formData, {
+            headers: { "Authorization": `Bearer ${cookies.cookies.token}` }
+        });
+    }
+
     render() {
         let {history, userData} = this.props;
         let {profilePicHover, emailFormIsVisible, passwordFormIsVisible, newEmail, confirmNewEmail, newEmailHasError,
@@ -120,13 +134,15 @@ class SettingsComponent extends Component {
                     <HeaderComponent history={history} />
                     <section className={"d-flex flex-column align-items-center justify-content-center"}>
                         <div className={"settingsContainer"}>
-                            <div
+                            <label
+                                htmlFor={"newPic"}
                                 className={"profilePic"}
                                 style={{backgroundImage: `url("${API_SERVER_URL}/uploads/profilePictures/${userData.viewer.picture}")`}}
                                 onMouseEnter={() => this.togglePicHover()}
                                 onMouseLeave={() => this.togglePicHover()}>
                                 {profilePicHover && <Camera size={30} />}
-                            </div>
+                            </label>
+                            <input hidden id="newPic" type={"file"} onChange={(e) => this.editPictureRequest(e)} />
                             <h3 className={"mt-2"}>{userData.viewer.realname}</h3>
                             <p className={"text-muted"}>{userData.viewer.email}</p>
 
