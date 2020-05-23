@@ -60,8 +60,8 @@ class UserModel extends CI_Model
 	public function searchUser($username, $userId) {
 		$this->db->select("id, username, profile_picture"); // seleziona id, username
 		$this->db->group_start(); // (
-		$this->db->like("username", $username);
-		$this->db->or_like("email", $username);
+		$this->db->like("lower(username)", strtolower($username));
+		$this->db->or_like("lower(email)", strtolower($username));
 		$this->db->group_end(); // )
 		$this->db->where("id !=", $userId); // userId differente dal mio.
 		$this->db->limit(50); // limitato a 50 per motivi di efficienza (se ci sono molti utenti registrati).
