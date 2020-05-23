@@ -71,3 +71,4 @@ $route['addComment'] = "GroupsController/addComment";
 $route['sendMessage'] = "GroupsController/sendMessageToGroupChat";
 $route['getChatMessages'] = "GroupsController/getChatMessages";
 $route['loadMoreComments'] = "GroupsController/loadMoreComments";
+$route['getUsers'] = "GroupsController/getUsers";
