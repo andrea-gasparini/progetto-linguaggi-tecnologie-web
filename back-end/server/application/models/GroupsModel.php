@@ -2,6 +2,14 @@
 
 class GroupsModel extends CI_Model {
 
+	public function getUsers($groupId) {
+		$this->db->select("u.id, u.realname, u.profile_picture");
+		$this->db->where("gm.group_id", $groupId);
+		$this->db->where("u.id", "gm.user_id", FALSE);
+		$query = $this->db->get("groupsMemberships gm, users u");
+		return $query->result();
+	}
+
 	public function getGroupById($id) {
 		$this->db->select("*");
 		$this->db->where("id", $id);

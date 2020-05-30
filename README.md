@@ -39,3 +39,5 @@ Come ultimo passo andrà importato il database.  La struttura di quest'ultimo si
 		
 ## Autori ##
 &copy; 2020 **[Andrea Gasparini](https://github.com/andrea-gasparini)** & **[Edoardo Di Paolo](https://github.com/aedoardo)**.
+
+_Il progetto potrebbe presentare falle di sicurezza._

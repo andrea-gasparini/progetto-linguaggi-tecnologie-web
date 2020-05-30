@@ -9,6 +9,28 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 		parent::__construct($config);
 	}
 
+	public function getUsers_post() {
+		$tokenData = validateAuthorizationToken($this->input->get_request_header("Authorization"));
+
+		if ($tokenData["status"]) {
+			$userId = $tokenData["data"]["userId"];
+			$user = $this->UserModel->getUserById($userId);
+
+			if (count($user) <= 0)
+				return $this->response(buildServerResponse(false, "Utente non autenticato."), 200);
+
+			$groupId = $this->input->post('groupId');
+
+			if(!FILTER_VAR($groupId, FILTER_VALIDATE_INT))
+				return $this->response(buildServerResponse(false, "Group id non valido"));
+
+			$users = $this->GroupsModel->getUsers($groupId);
+
+			return $this->response(buildServerResponse(true, "ok", $users, 200));
+		}
+
+		return $this->response(buildServerResponse(false, "Errore autorizzazione token."), 200);
+	}
 
 	public function createGroup_post() {
 		$tokenData = validateAuthorizationToken($this->input->get_request_header("Authorization"));

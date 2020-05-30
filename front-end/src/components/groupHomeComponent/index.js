@@ -12,6 +12,7 @@ import WallPostsGroupComponent from "../wallPostsGroupComponent";
 import GroupChatComponent from "../groupChatComponent";
 import FooterComponent from "../footerComponent";
 import {resetChatData} from "../../redux/actions/chat";
+import GroupMembersComponent from "../groupMembersComponent";
 
 const mapStateToProps = (state) => ({...state.groupReducer, ...state.chatReducer, ...state.userReducer});
 
@@ -141,6 +142,10 @@ class GroupHomeComponent extends Component {
 
                                     {this.getActivePage() === "Chat" &&
                                     <GroupChatComponent groupId={match.params.id}/>
+                                    }
+
+                                    {this.getActivePage() === "Membri" &&
+                                        <GroupMembersComponent groupId={match.params.id}/>
                                     }
 
                                 </div>
