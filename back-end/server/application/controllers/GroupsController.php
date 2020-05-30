@@ -279,6 +279,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 
 			$postId = $this->GroupsModel->addPostToGroup($data);
 			if($postId) {
+				date_default_timezone_set('Europe/Rome');
 				// devo farmi tornare il post da aggiungere al redux
 				$post = array(
 					"user_id" => $userId,
@@ -340,6 +341,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			);
 
 			$commentId = $this->GroupsModel->addComment($data);
+			date_default_timezone_set('Europe/Rome');
 			// se va a buon fine possiamo anche restituire il commento da aggiungere poi al redux (da fare in fase di frontend).
 			if(FILTER_VAR($commentId, FILTER_VALIDATE_INT))
 				return $this->response(buildServerResponse(true, "Commento aggiunto con successo.", array("comment" => array(
@@ -456,7 +458,7 @@ class GroupsController extends \chriskacerguis\RestServer\RestController
 			);
 
 			$messageId = $this->GroupsModel->addChatMessage($data);
-
+			date_default_timezone_set('Europe/Rome');
 			// generiamo il token utile per il websocket (per un po' di sicurezza diciamo..)
 			$chatToken = AUTHORIZATION::generateToken(array("id" => $messageId, "userId" => $userId, "message" => $chatMessage, "groupId" => $groupId, "username" => $user[0]->username, "picture" => $user[0]->profile_picture, "date" => date("Y-m-d H:i:s")));
 
