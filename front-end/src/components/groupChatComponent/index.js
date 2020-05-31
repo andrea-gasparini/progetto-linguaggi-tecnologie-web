@@ -17,7 +17,6 @@ class GroupChatComponent extends Component {
         this.state = {
             chatMessageValue: '',
         };
-
     }
 
     async componentDidMount() {
@@ -48,6 +47,7 @@ class GroupChatComponent extends Component {
         this.chatMessagesRef.removeEventListener('scroll', this.scrollingChat);
         let {dispatch, groupId} = this.props;
         socket.emit('leaveRoom', {groupId}); // dobbiamo lasciare la chat.
+        dispatch(resetChatData());
     }
 
     scrollingChat = async () => {
